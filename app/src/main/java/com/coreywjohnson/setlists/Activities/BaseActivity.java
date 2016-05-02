@@ -7,11 +7,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
 import com.coreywjohnson.setlists.R;
+import com.coreywjohnson.setlists.views.BaseView;
 
 /**
  * Created by corey on 24-Apr-16.
  */
-public class BaseActivity extends AppCompatActivity {
+public class BaseActivity extends AppCompatActivity implements BaseView {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -32,7 +33,8 @@ public class BaseActivity extends AppCompatActivity {
         return false;
     }
 
-    public void makeSnackbar(String text) {
+    @Override
+    public void makeTextSnackbar(String text) {
         Snackbar.make(getWindow().getDecorView(), text, Snackbar.LENGTH_SHORT).show();
     }
 }
