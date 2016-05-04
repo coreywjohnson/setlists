@@ -3,6 +3,10 @@ package com.coreywjohnson.setlists;
 import android.app.Application;
 import android.content.Context;
 
+import com.coreywjohnson.setlists.components.AppComponent;
+import com.coreywjohnson.setlists.components.DaggerAppComponent;
+import com.coreywjohnson.setlists.modules.AppModule;
+
 /**
  * Created by coreyjohnson on 4/05/16.
  */

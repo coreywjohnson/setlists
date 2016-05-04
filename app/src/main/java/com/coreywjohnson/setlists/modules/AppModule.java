@@ -1,7 +1,9 @@
-package com.coreywjohnson.setlists;
+package com.coreywjohnson.setlists.modules;
 
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+
+import com.coreywjohnson.setlists.App;
 
 import javax.inject.Singleton;
 

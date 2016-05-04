@@ -5,7 +5,10 @@ import android.support.annotation.Nullable;
 
 import com.coreywjohnson.setlists.App;
 import com.coreywjohnson.setlists.R;
+import com.coreywjohnson.setlists.components.DaggerMainComponent;
+import com.coreywjohnson.setlists.components.MainComponent;
 import com.coreywjohnson.setlists.fragments.SearchFragment;
+import com.coreywjohnson.setlists.modules.MainModule;
 import com.coreywjohnson.setlists.presenters.MainPresenter;
 import com.coreywjohnson.setlists.views.MainView;
 
@@ -20,8 +23,11 @@ public class MainActivity extends BaseActivity implements MainView {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        App.getAppComponent(getApplicationContext()).inject(this);
-        mainPresenter.init(this);
+        MainComponent mainComponent = DaggerMainComponent.builder()
+                .appComponent(App.getAppComponent(getApplicationContext()))
+                .mainModule(new MainModule(this))
+                .build();
+        mainComponent.inject(this);
 
         // Create Search Fragment
         SearchFragment searchFragment = SearchFragment.newInstance();

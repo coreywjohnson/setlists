@@ -9,25 +9,27 @@ import javax.inject.Inject;
 /**
  * Created by corey on 02-May-16.
  */
-public class SearchPresenter extends Presenter<SearchView> implements SearchArtistInteractor.SearchArtistCallback {
+public class SearchPresenter extends Presenter implements SearchArtistInteractor.SearchArtistCallback {
     private SearchArtistInteractor mInteractor;
+    private SearchView mSearchView;
 
     @Inject
-    public SearchPresenter() {
+    public SearchPresenter(SearchArtistInteractor interactor, SearchView searchView) {
+        mInteractor = interactor;
+        mSearchView = searchView;
     }
 
     public void onSearch(String query) {
-        mInteractor = new SearchArtistInteractor(this);
-        mInteractor.execute(query);
+        mInteractor.execute(query, this);
     }
 
     @Override
     public void onSuccess(SearchResponse searchResponse) {
-        mView.addItems(searchResponse.getSetlists().getSetlist());
+        mSearchView.addItems(searchResponse.getSetlists().getSetlist());
     }
 
     @Override
     public void onError(String error) {
-        mView.makeTextSnackbar(error);
+        mSearchView.makeTextSnackbar(error);
     }
 }

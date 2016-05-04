@@ -11,7 +11,11 @@ import android.view.ViewGroup;
 
 import com.coreywjohnson.setlists.App;
 import com.coreywjohnson.setlists.R;
+import com.coreywjohnson.setlists.components.DaggerSearchComponent;
+import com.coreywjohnson.setlists.components.SearchComponent;
+import com.coreywjohnson.setlists.interactors.SearchArtistInteractor;
 import com.coreywjohnson.setlists.models.Setlist;
+import com.coreywjohnson.setlists.modules.SearchModule;
 import com.coreywjohnson.setlists.presenters.SearchPresenter;
 import com.coreywjohnson.setlists.views.SearchView;
 
@@ -26,6 +30,9 @@ public class SearchFragment extends BaseFragment implements SearchView {
     @Inject
     SearchPresenter mPresenter;
 
+    @Inject
+    SearchArtistInteractor searchArtistInteractor;
+
     public static SearchFragment newInstance() {
         return new SearchFragment();
     }
@@ -33,13 +40,17 @@ public class SearchFragment extends BaseFragment implements SearchView {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        App.getAppComponent(getContext()).inject(this);
+        SearchComponent searchComponent =
+                DaggerSearchComponent.builder()
+                        .appComponent(App.getAppComponent(getContext()))
+                        .searchModule(new SearchModule(this))
+                        .build();
+        searchComponent.inject(this);
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        mPresenter.init(this);
         return super.onCreateView(inflater, container, savedInstanceState);
     }
 
