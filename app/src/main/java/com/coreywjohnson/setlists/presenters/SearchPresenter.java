@@ -4,15 +4,16 @@ import com.coreywjohnson.setlists.interactors.SearchArtistInteractor;
 import com.coreywjohnson.setlists.models.SearchResponse;
 import com.coreywjohnson.setlists.views.SearchView;
 
+import javax.inject.Inject;
+
 /**
  * Created by corey on 02-May-16.
  */
-public class SearchPresenter implements SearchArtistInteractor.SearchArtistCallback {
-    private SearchView searchView;
+public class SearchPresenter extends Presenter<SearchView> implements SearchArtistInteractor.SearchArtistCallback {
     private SearchArtistInteractor mInteractor;
 
-    public SearchPresenter(SearchView view) {
-        searchView = view;
+    @Inject
+    public SearchPresenter() {
     }
 
     public void onSearch(String query) {
@@ -22,11 +23,11 @@ public class SearchPresenter implements SearchArtistInteractor.SearchArtistCallb
 
     @Override
     public void onSuccess(SearchResponse searchResponse) {
-        searchView.addItems(searchResponse.getSetlists().getSetlist());
+        mView.addItems(searchResponse.getSetlists().getSetlist());
     }
 
     @Override
     public void onError(String error) {
-        searchView.makeTextSnackbar(error);
+        mView.makeTextSnackbar(error);
     }
 }

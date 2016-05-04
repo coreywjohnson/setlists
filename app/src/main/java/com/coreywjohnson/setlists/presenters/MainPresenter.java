@@ -2,13 +2,15 @@ package com.coreywjohnson.setlists.presenters;
 
 import com.coreywjohnson.setlists.views.MainView;
 
+import javax.inject.Inject;
+
 /**
  * Created by corey on 24-Apr-16.
  */
-public class MainPresenter extends BasePresenter {
-    private MainView mainView;
+public class MainPresenter extends Presenter<MainView> {
 
-    public MainPresenter(MainView view) {
-        mainView = view;
+    @Inject
+    public MainPresenter() {
+
     }
 }
