@@ -21,7 +21,7 @@ import com.coreywjohnson.setlists.models.Setlist;
 import com.coreywjohnson.setlists.modules.SearchModule;
 import com.coreywjohnson.setlists.presenters.SearchPresenter;
 import com.coreywjohnson.setlists.views.SearchView;
-import com.coreywjohnson.setlists.widgets.SimpleItemSpacer;
+import com.coreywjohnson.setlists.widgets.SimpleItemDivider;
 
 import java.util.List;
 
@@ -58,7 +58,7 @@ public class SearchFragment extends BaseFragment implements SearchView {
         mBinding = DataBindingUtil.inflate(inflater, getLayout(), container, false);
         mBinding.recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mBinding.recyclerView.setAdapter(mAdapter);
-        mBinding.recyclerView.addItemDecoration(new SimpleItemSpacer(getResources().getDimensionPixelOffset(R.dimen.setlist_spacing)));
+        mBinding.recyclerView.addItemDecoration(new SimpleItemDivider(getContext()));
 
         return mBinding.getRoot();
     }

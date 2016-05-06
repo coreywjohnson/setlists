@@ -32,8 +32,10 @@ public class MainActivity extends BaseActivity implements MainView {
         // Create Search Fragment
         SearchFragment searchFragment = SearchFragment.newInstance();
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, searchFragment)
-                .commit();
+        if (savedInstanceState == null) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, searchFragment)
+                    .commit();
+        }
     }
 
     @Override
