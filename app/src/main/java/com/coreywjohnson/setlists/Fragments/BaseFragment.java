@@ -12,7 +12,7 @@ import com.coreywjohnson.setlists.views.BaseView;
 /**
  * Created by corey on 02-May-16.
  */
-public class BaseFragment extends Fragment implements BaseView {
+public abstract class BaseFragment extends Fragment implements BaseView {
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -35,6 +35,8 @@ public class BaseFragment extends Fragment implements BaseView {
     protected int getMenu() {
         return 0;
     }
+
+    protected abstract int getLayout();
 
     @Override
     public void makeTextSnackbar(String text) {

@@ -8,6 +8,9 @@ import com.coreywjohnson.setlists.models.Setlist;
 import com.coreywjohnson.setlists.widgets.SetlistWidget;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import javax.inject.Inject;
 
 /**
  * Created by coreyjohnson on 5/05/16.
@@ -15,6 +18,7 @@ import java.util.ArrayList;
 public class SetlistAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private ArrayList<Setlist> mAdapterData;
 
+    @Inject
     public SetlistAdapter() {
         mAdapterData = new ArrayList<>();
     }
@@ -34,7 +38,7 @@ public class SetlistAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         return mAdapterData.size();
     }
 
-    public void addItems(ArrayList<Setlist> setlists) {
+    public void addItems(List<Setlist> setlists) {
         int rangeStart = mAdapterData.size();
         mAdapterData.addAll(setlists);
         notifyItemRangeInserted(rangeStart, setlists.size());

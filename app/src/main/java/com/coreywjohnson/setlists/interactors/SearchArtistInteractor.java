@@ -23,7 +23,7 @@ public class SearchArtistInteractor {
     }
 
     public void execute(String query, final SearchArtistCallback callback) {
-        Call<SearchResponse> request = mSetlistService.searchByArtist(query);
+        Call<SearchResponse> request = mSetlistService.searchByArtist(query, 2);
         request.enqueue(new Callback<SearchResponse>() {
             @Override
             public void onResponse(Call<SearchResponse> call, Response<SearchResponse> response) {

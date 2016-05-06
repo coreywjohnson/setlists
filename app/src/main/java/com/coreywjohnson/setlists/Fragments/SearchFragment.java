@@ -1,7 +1,9 @@
 package com.coreywjohnson.setlists.fragments;
 
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -11,13 +13,15 @@ import android.view.ViewGroup;
 
 import com.coreywjohnson.setlists.App;
 import com.coreywjohnson.setlists.R;
+import com.coreywjohnson.setlists.adapter.SetlistAdapter;
 import com.coreywjohnson.setlists.components.DaggerSearchComponent;
 import com.coreywjohnson.setlists.components.SearchComponent;
-import com.coreywjohnson.setlists.interactors.SearchArtistInteractor;
+import com.coreywjohnson.setlists.databinding.FragmentSearchBinding;
 import com.coreywjohnson.setlists.models.Setlist;
 import com.coreywjohnson.setlists.modules.SearchModule;
 import com.coreywjohnson.setlists.presenters.SearchPresenter;
 import com.coreywjohnson.setlists.views.SearchView;
+import com.coreywjohnson.setlists.widgets.SimpleItemSpacer;
 
 import java.util.List;
 
@@ -28,10 +32,10 @@ import javax.inject.Inject;
  */
 public class SearchFragment extends BaseFragment implements SearchView {
     @Inject
-    SearchPresenter mPresenter;
-
+    SetlistAdapter mAdapter;
     @Inject
-    SearchArtistInteractor searchArtistInteractor;
+    SearchPresenter mPresenter;
+    private FragmentSearchBinding mBinding;
 
     public static SearchFragment newInstance() {
         return new SearchFragment();
@@ -51,7 +55,12 @@ public class SearchFragment extends BaseFragment implements SearchView {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return super.onCreateView(inflater, container, savedInstanceState);
+        mBinding = DataBindingUtil.inflate(inflater, getLayout(), container, false);
+        mBinding.recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        mBinding.recyclerView.setAdapter(mAdapter);
+        mBinding.recyclerView.addItemDecoration(new SimpleItemSpacer(getResources().getDimensionPixelOffset(R.dimen.setlist_spacing)));
+
+        return mBinding.getRoot();
     }
 
     @Override
@@ -62,6 +71,11 @@ public class SearchFragment extends BaseFragment implements SearchView {
     @Override
     protected int getMenu() {
         return R.menu.menu_search;
+    }
+
+    @Override
+    protected int getLayout() {
+        return R.layout.fragment_search;
     }
 
     @Override
@@ -85,6 +99,6 @@ public class SearchFragment extends BaseFragment implements SearchView {
 
     @Override
     public void addItems(List<Setlist> setlistList) {
-
+        mAdapter.addItems(setlistList);
     }
 }
