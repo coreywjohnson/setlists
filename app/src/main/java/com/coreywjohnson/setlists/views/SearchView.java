@@ -9,4 +9,8 @@ import java.util.List;
  */
 public interface SearchView extends BaseView {
     void addItems(List<Setlists.Setlist> setlistList);
+
+    void removeAllItems();
+
+    void hideRefresh();
 }

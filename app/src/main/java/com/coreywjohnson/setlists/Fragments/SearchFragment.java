@@ -3,6 +3,7 @@ package com.coreywjohnson.setlists.fragments;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -21,7 +22,6 @@ import com.coreywjohnson.setlists.models.Setlists;
 import com.coreywjohnson.setlists.modules.SearchModule;
 import com.coreywjohnson.setlists.presenters.SearchPresenter;
 import com.coreywjohnson.setlists.views.SearchView;
-import com.coreywjohnson.setlists.widgets.SimpleItemDivider;
 
 import java.util.List;
 
@@ -30,7 +30,7 @@ import javax.inject.Inject;
 /**
  * Created by corey on 24-Apr-16.
  */
-public class SearchFragment extends BaseFragment implements SearchView {
+public class SearchFragment extends BaseFragment implements SearchView, SetlistAdapter.AdapterListener, SwipeRefreshLayout.OnRefreshListener {
     @Inject
     SetlistAdapter mAdapter;
     @Inject
@@ -47,7 +47,7 @@ public class SearchFragment extends BaseFragment implements SearchView {
         SearchComponent searchComponent =
                 DaggerSearchComponent.builder()
                         .appComponent(App.getAppComponent(getContext()))
-                        .searchModule(new SearchModule(this))
+                        .searchModule(new SearchModule(this, this))
                         .build();
         searchComponent.inject(this);
     }
@@ -58,7 +58,8 @@ public class SearchFragment extends BaseFragment implements SearchView {
         mBinding = DataBindingUtil.inflate(inflater, getLayout(), container, false);
         mBinding.recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mBinding.recyclerView.setAdapter(mAdapter);
-        mBinding.recyclerView.addItemDecoration(new SimpleItemDivider(getContext()));
+
+        mBinding.refreshView.setOnRefreshListener(this);
 
         return mBinding.getRoot();
     }
@@ -100,5 +101,25 @@ public class SearchFragment extends BaseFragment implements SearchView {
     @Override
     public void addItems(List<Setlists.Setlist> setlistList) {
         mAdapter.addItems(setlistList);
+    }
+
+    @Override
+    public void removeAllItems() {
+        mAdapter.removeAllItems();
+    }
+
+    @Override
+    public void hideRefresh() {
+        mBinding.refreshView.setRefreshing(false);
+    }
+
+    @Override
+    public void onLoadMore() {
+        mPresenter.loadMore();
+    }
+
+    @Override
+    public void onRefresh() {
+        mPresenter.refresh();
     }
 }

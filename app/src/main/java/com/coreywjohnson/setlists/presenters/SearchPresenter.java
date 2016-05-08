@@ -12,6 +12,8 @@ import javax.inject.Inject;
 public class SearchPresenter extends Presenter implements SearchArtistInteractor.SearchArtistCallback {
     private SearchArtistInteractor mInteractor;
     private SearchView mSearchView;
+    private String mQuery;
+    private int mPageNo = -1;
 
     @Inject
     public SearchPresenter(SearchArtistInteractor interactor, SearchView searchView) {
@@ -20,11 +22,24 @@ public class SearchPresenter extends Presenter implements SearchArtistInteractor
     }
 
     public void onSearch(String query) {
-        mInteractor.execute(query, this);
+        mSearchView.removeAllItems();
+        mQuery = query;
+        mPageNo = 1;
+        mInteractor.execute(mQuery, mPageNo, this);
+    }
+
+    public void loadMore() {
+        mPageNo++;
+        mInteractor.execute(mQuery, mPageNo, this);
+    }
+
+    public void refresh() {
+        onSearch(mQuery);
     }
 
     @Override
     public void onSuccess(Setlists searchResponse) {
+        mSearchView.hideRefresh();
         mSearchView.addItems(searchResponse.getSetlist());
     }
 

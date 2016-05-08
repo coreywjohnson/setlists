@@ -17,10 +17,13 @@ import javax.inject.Inject;
  */
 public class SetlistAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private ArrayList<Setlists.Setlist> mAdapterData;
+    private AdapterListener mListener;
+    private boolean mIsLoading = false;
 
     @Inject
-    public SetlistAdapter() {
+    public SetlistAdapter(AdapterListener adapterListener) {
         mAdapterData = new ArrayList<>();
+        mListener = adapterListener;
     }
 
     @Override
@@ -31,6 +34,11 @@ public class SetlistAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         ((SetlistWidget) holder).setSetlist(mAdapterData.get(position));
+
+        if (position > mAdapterData.size() - 10 && !mIsLoading) {
+            mListener.onLoadMore();
+            mIsLoading = true;
+        }
     }
 
     @Override
@@ -42,5 +50,16 @@ public class SetlistAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         int rangeStart = mAdapterData.size();
         mAdapterData.addAll(setlists);
         notifyItemRangeInserted(rangeStart, setlists.size());
+        mIsLoading = false;
+    }
+
+    public void removeAllItems() {
+        int rangeEnd = mAdapterData.size();
+        mAdapterData.clear();
+        notifyItemRangeRemoved(0, rangeEnd);
+    }
+
+    public interface AdapterListener {
+        void onLoadMore();
     }
 }
