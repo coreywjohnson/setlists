@@ -3,11 +3,16 @@ package com.coreywjohnson.setlists.widgets;
 import android.databinding.DataBindingUtil;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import com.coreywjohnson.setlists.R;
 import com.coreywjohnson.setlists.databinding.WidgetSetlistBinding;
 import com.coreywjohnson.setlists.models.Setlists;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * Created by coreyjohnson on 5/05/16.
@@ -27,5 +32,20 @@ public class SetlistWidget extends RecyclerView.ViewHolder {
 
     public void setSetlist(Setlists.Setlist setlist) {
         mBinding.setSetlist(setlist);
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
+        try {
+            Date date = simpleDateFormat.parse(setlist.getEventDate());
+            mBinding.dateDay.setText(new SimpleDateFormat("d").format(date));
+            mBinding.dateMonth.setText(new SimpleDateFormat("MMM").format(date));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        mBinding.getRoot().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
     }
 }

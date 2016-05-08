@@ -10,15 +10,32 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:orientation="horizontal">
+        android:layout_height="70dp"
+        android:background="?attr/selectableItemBackground"
+        android:orientation="horizontal"
+        android:padding="8dp">
 
 
-        <View
+        <LinearLayout
             android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
             android:layout_marginRight="8dp"
-            android:background="@color/colorPrimaryLight" />
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/date_day"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal" />
+
+            <TextView
+                android:id="@+id/date_month"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal" />
+
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -29,13 +46,15 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="1"
                 android:text='@{setlist.artist.name+" @ "+setlist.venue.name}'
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Headline" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:text="@{setlist.venue.city.toString()}"
+                android:text='@{setlist.venue.city.name +", " + setlist.venue.city.country.name}'
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Subhead" />
 
         </LinearLayout>
