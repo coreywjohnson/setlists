@@ -28,7 +28,6 @@ public class SearchArtistInteractor {
             @Override
             public void onResponse(Call<Setlists> call, Response<Setlists> response) {
                 if (response.isSuccessful()) {
-                    Log.i("response", response.toString());
                     callback.onSuccess(response.body());
                 } else {
                     Log.i("Error", response.message());
