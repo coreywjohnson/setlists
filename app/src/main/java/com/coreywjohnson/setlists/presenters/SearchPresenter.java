@@ -46,5 +46,6 @@ public class SearchPresenter extends Presenter implements SearchArtistInteractor
     @Override
     public void onError(String error) {
         mSearchView.makeTextSnackbar(error);
+        mSearchView.onError();
     }
 }

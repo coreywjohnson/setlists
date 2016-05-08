@@ -104,6 +104,11 @@ public class SearchFragment extends BaseFragment implements SearchView, SetlistA
     }
 
     @Override
+    public void onError() {
+        mBinding.refreshView.setRefreshing(false);
+    }
+
+    @Override
     public void removeAllItems() {
         mAdapter.removeAllItems();
     }

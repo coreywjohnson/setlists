@@ -81,7 +81,11 @@ public class SetlistAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     public void removeAllItems() {
         int rangeEnd = mAdapterData.size();
         mAdapterData.clear();
-        notifyItemRangeRemoved(0, rangeEnd);
+        if (mIsLoading) {
+            notifyItemRangeRemoved(0, rangeEnd + 1);
+        } else {
+            notifyItemRangeRemoved(0, rangeEnd);
+        }
     }
 
     public interface AdapterListener {
