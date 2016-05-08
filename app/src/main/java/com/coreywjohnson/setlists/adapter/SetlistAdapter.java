@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import com.coreywjohnson.setlists.models.Setlists;
+import com.coreywjohnson.setlists.widgets.LoadingWidget;
 import com.coreywjohnson.setlists.widgets.SetlistWidget;
 
 import java.util.ArrayList;
@@ -16,6 +17,8 @@ import javax.inject.Inject;
  * Created by coreyjohnson on 5/05/16.
  */
 public class SetlistAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+    public static final int ITEM_SETLIST = 1;
+    public static final int ITEM_LOADING = 2;
     private ArrayList<Setlists.Setlist> mAdapterData;
     private AdapterListener mListener;
     private boolean mIsLoading = false;
@@ -27,13 +30,28 @@ public class SetlistAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     }
 
     @Override
+    public int getItemViewType(int position) {
+        if (position == mAdapterData.size()) {
+            return ITEM_LOADING;
+        } else {
+            return ITEM_SETLIST;
+        }
+    }
+
+    @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return SetlistWidget.create(LayoutInflater.from(parent.getContext()), parent);
+        if (viewType == ITEM_SETLIST) {
+            return SetlistWidget.create(LayoutInflater.from(parent.getContext()), parent);
+        } else {
+            return LoadingWidget.create(LayoutInflater.from(parent.getContext()), parent);
+        }
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        ((SetlistWidget) holder).setSetlist(mAdapterData.get(position));
+        if (holder instanceof SetlistWidget) {
+            ((SetlistWidget) holder).setSetlist(mAdapterData.get(position));
+        }
 
         if (position > mAdapterData.size() - 10 && !mIsLoading) {
             mListener.onLoadMore();
@@ -43,10 +61,17 @@ public class SetlistAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     @Override
     public int getItemCount() {
-        return mAdapterData.size();
+        if (mIsLoading) {
+            return mAdapterData.size() + 1;
+        } else {
+            return mAdapterData.size();
+        }
     }
 
     public void addItems(List<Setlists.Setlist> setlists) {
+        if (mAdapterData.size() > 0) {
+            notifyItemRemoved(mAdapterData.size());
+        }
         int rangeStart = mAdapterData.size();
         mAdapterData.addAll(setlists);
         notifyItemRangeInserted(rangeStart, setlists.size());
