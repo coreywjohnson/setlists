@@ -3,7 +3,7 @@ package com.coreywjohnson.setlists.interactors;
 import android.util.Log;
 
 import com.coreywjohnson.setlists.data.SetlistService;
-import com.coreywjohnson.setlists.models.SearchResponse;
+import com.coreywjohnson.setlists.models.Setlists;
 
 import javax.inject.Inject;
 
@@ -23,10 +23,10 @@ public class SearchArtistInteractor {
     }
 
     public void execute(String query, final SearchArtistCallback callback) {
-        Call<SearchResponse> request = mSetlistService.searchByArtist(query, 2);
-        request.enqueue(new Callback<SearchResponse>() {
+        Call<Setlists> request = mSetlistService.searchByArtist(query, 1);
+        request.enqueue(new Callback<Setlists>() {
             @Override
-            public void onResponse(Call<SearchResponse> call, Response<SearchResponse> response) {
+            public void onResponse(Call<Setlists> call, Response<Setlists> response) {
                 if (response.isSuccessful()) {
                     Log.i("response", response.toString());
                     callback.onSuccess(response.body());
@@ -37,15 +37,16 @@ public class SearchArtistInteractor {
             }
 
             @Override
-            public void onFailure(Call<SearchResponse> call, Throwable t) {
+            public void onFailure(Call<Setlists> call, Throwable t) {
                 Log.i("Search Request", "Failed");
-                Log.i("Failure", t.getMessage());
+                Log.e("Failure", t.getMessage());
+                callback.onError(t.getMessage());
             }
         });
     }
 
     public interface SearchArtistCallback {
-        void onSuccess(SearchResponse searchResponse);
+        void onSuccess(Setlists searchResponse);
 
         void onError(String error);
     }

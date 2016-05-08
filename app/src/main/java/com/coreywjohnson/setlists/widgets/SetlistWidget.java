@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 
 import com.coreywjohnson.setlists.R;
 import com.coreywjohnson.setlists.databinding.WidgetSetlistBinding;
-import com.coreywjohnson.setlists.models.Setlist;
+import com.coreywjohnson.setlists.models.Setlists;
 
 /**
  * Created by coreyjohnson on 5/05/16.
@@ -25,7 +25,7 @@ public class SetlistWidget extends RecyclerView.ViewHolder {
         return new SetlistWidget(binding);
     }
 
-    public void setSetlist(Setlist setlist) {
+    public void setSetlist(Setlists.Setlist setlist) {
         mBinding.setSetlist(setlist);
     }
 }

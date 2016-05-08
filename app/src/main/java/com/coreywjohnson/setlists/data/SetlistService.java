@@ -1,6 +1,6 @@
 package com.coreywjohnson.setlists.data;
 
-import com.coreywjohnson.setlists.models.SearchResponse;
+import com.coreywjohnson.setlists.models.Setlists;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -13,5 +13,5 @@ public interface SetlistService {
     String BASE_API_URL = "http://api.setlist.fm/rest/0.1/";
 
     @GET("search/setlists.json")
-    Call<SearchResponse> searchByArtist(@Query("artistName") String artist, @Query("p") int pageNo);
+    Call<Setlists> searchByArtist(@Query("artistName") String artist, @Query("p") int pageNo);
 }

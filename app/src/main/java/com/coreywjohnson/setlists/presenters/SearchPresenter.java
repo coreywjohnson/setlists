@@ -1,7 +1,7 @@
 package com.coreywjohnson.setlists.presenters;
 
 import com.coreywjohnson.setlists.interactors.SearchArtistInteractor;
-import com.coreywjohnson.setlists.models.SearchResponse;
+import com.coreywjohnson.setlists.models.Setlists;
 import com.coreywjohnson.setlists.views.SearchView;
 
 import javax.inject.Inject;
@@ -24,8 +24,8 @@ public class SearchPresenter extends Presenter implements SearchArtistInteractor
     }
 
     @Override
-    public void onSuccess(SearchResponse searchResponse) {
-        mSearchView.addItems(searchResponse.getSetlists().getSetlist());
+    public void onSuccess(Setlists searchResponse) {
+        mSearchView.addItems(searchResponse.getSetlist());
     }
 
     @Override

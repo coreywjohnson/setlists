@@ -5,7 +5,7 @@ import com.coreywjohnson.setlists.data.SetlistService;
 import dagger.Module;
 import dagger.Provides;
 import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.converter.simplexml.SimpleXmlConverterFactory;
 
 /**
  * Created by coreyjohnson on 4/05/16.
@@ -17,7 +17,7 @@ public class InteractorsModule {
     public Retrofit retrofit() {
         return new Retrofit.Builder()
                 .baseUrl(SetlistService.BASE_API_URL)
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(SimpleXmlConverterFactory.create())
                 .build();
     }
 

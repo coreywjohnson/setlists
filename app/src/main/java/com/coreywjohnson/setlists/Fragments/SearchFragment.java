@@ -17,7 +17,7 @@ import com.coreywjohnson.setlists.adapter.SetlistAdapter;
 import com.coreywjohnson.setlists.components.DaggerSearchComponent;
 import com.coreywjohnson.setlists.components.SearchComponent;
 import com.coreywjohnson.setlists.databinding.FragmentSearchBinding;
-import com.coreywjohnson.setlists.models.Setlist;
+import com.coreywjohnson.setlists.models.Setlists;
 import com.coreywjohnson.setlists.modules.SearchModule;
 import com.coreywjohnson.setlists.presenters.SearchPresenter;
 import com.coreywjohnson.setlists.views.SearchView;
@@ -98,7 +98,7 @@ public class SearchFragment extends BaseFragment implements SearchView {
     }
 
     @Override
-    public void addItems(List<Setlist> setlistList) {
+    public void addItems(List<Setlists.Setlist> setlistList) {
         mAdapter.addItems(setlistList);
     }
 }

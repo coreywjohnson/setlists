@@ -4,7 +4,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
-import com.coreywjohnson.setlists.models.Setlist;
+import com.coreywjohnson.setlists.models.Setlists;
 import com.coreywjohnson.setlists.widgets.SetlistWidget;
 
 import java.util.ArrayList;
@@ -16,7 +16,7 @@ import javax.inject.Inject;
  * Created by coreyjohnson on 5/05/16.
  */
 public class SetlistAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    private ArrayList<Setlist> mAdapterData;
+    private ArrayList<Setlists.Setlist> mAdapterData;
 
     @Inject
     public SetlistAdapter() {
@@ -38,7 +38,7 @@ public class SetlistAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         return mAdapterData.size();
     }
 
-    public void addItems(List<Setlist> setlists) {
+    public void addItems(List<Setlists.Setlist> setlists) {
         int rangeStart = mAdapterData.size();
         mAdapterData.addAll(setlists);
         notifyItemRangeInserted(rangeStart, setlists.size());
