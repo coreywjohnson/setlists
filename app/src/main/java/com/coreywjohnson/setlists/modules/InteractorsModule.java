@@ -17,7 +17,7 @@ public class InteractorsModule {
     public Retrofit retrofit() {
         return new Retrofit.Builder()
                 .baseUrl(SetlistService.BASE_API_URL)
-                .addConverterFactory(SimpleXmlConverterFactory.create())
+                .addConverterFactory(SimpleXmlConverterFactory.createNonStrict())
                 .build();
     }
 

@@ -12,6 +12,6 @@ import retrofit2.http.Query;
 public interface SetlistService {
     String BASE_API_URL = "http://api.setlist.fm/rest/0.1/";
 
-    @GET("search/setlists.json")
+    @GET("search/setlists")
     Call<Setlists> searchByArtist(@Query("artistName") String artist, @Query("p") int pageNo);
 }
