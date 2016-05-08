@@ -33,8 +33,11 @@ dependencies {
     compile 'com.android.support:recyclerview-v7:23.3.0'
 
     compile 'com.squareup.retrofit2:retrofit:2.0.2'
-    compile 'com.squareup.retrofit2:converter-gson:2.0.2'
-    compile 'com.squareup.retrofit2:converter-simplexml:2.0.2'
+    compile('com.squareup.retrofit2:converter-simplexml:2.0.2') {
+        exclude group: 'xpp3', module: 'xpp3'
+        exclude group: 'stax', module: 'stax-api'
+        exclude group: 'stax', module: 'stax'
+    }
     compile 'com.google.code.gson:gson:2.6.2'
     compile 'org.glassfish:javax.annotation:10.0-b28'
     compile 'com.google.dagger:dagger:2.2'
