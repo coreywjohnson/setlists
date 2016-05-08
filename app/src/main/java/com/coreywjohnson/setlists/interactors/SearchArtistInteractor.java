@@ -16,6 +16,7 @@ import retrofit2.Response;
  */
 public class SearchArtistInteractor {
     private SetlistService mSetlistService;
+    private Call<Setlists> request;
 
     @Inject
     public SearchArtistInteractor(SetlistService setlistService) {
@@ -23,7 +24,8 @@ public class SearchArtistInteractor {
     }
 
     public void execute(String query, int pageNo, final SearchArtistCallback callback) {
-        Call<Setlists> request = mSetlistService.searchByArtist(query, pageNo);
+        cancel();
+        request = mSetlistService.searchByArtist(query, pageNo);
         request.enqueue(new Callback<Setlists>() {
             @Override
             public void onResponse(Call<Setlists> call, Response<Setlists> response) {
@@ -37,11 +39,20 @@ public class SearchArtistInteractor {
 
             @Override
             public void onFailure(Call<Setlists> call, Throwable t) {
-                Log.i("Search Request", "Failed");
-                Log.e("Failure", t.getMessage());
-                callback.onError(t.getMessage());
+                if (!call.isCanceled()) {
+                    Log.i("Search Request", "Failed");
+                    Log.e("Failure", t.getMessage());
+                    callback.onError(t.getMessage());
+                }
             }
         });
+    }
+
+    private void cancel() {
+        if (request != null) {
+            request.cancel();
+            request = null;
+        }
     }
 
     public interface SearchArtistCallback {
