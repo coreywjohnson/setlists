@@ -1,16 +1,25 @@
 package com.coreywjohnson.setlists.fragments;
 
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.LinearLayoutManager;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import com.coreywjohnson.setlists.App;
 import com.coreywjohnson.setlists.R;
+import com.coreywjohnson.setlists.adapter.SongAdapter;
 import com.coreywjohnson.setlists.components.DaggerSetlistComponent;
 import com.coreywjohnson.setlists.components.SetlistComponent;
+import com.coreywjohnson.setlists.databinding.FragmentSetlistBinding;
 import com.coreywjohnson.setlists.models.Setlists;
 import com.coreywjohnson.setlists.modules.SetlistModule;
 import com.coreywjohnson.setlists.presenters.SetlistPresenter;
 import com.coreywjohnson.setlists.views.SetlistView;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -22,6 +31,10 @@ public class SetlistFragment extends BaseFragment implements SetlistView {
 
     @Inject
     SetlistPresenter mPresenter;
+
+    @Inject
+    SongAdapter mAdapter;
+    FragmentSetlistBinding mBinding;
 
     public static SetlistFragment newInstance(Setlists.Setlist setlist) {
 
@@ -40,10 +53,27 @@ public class SetlistFragment extends BaseFragment implements SetlistView {
                 .setlistModule(new SetlistModule(this))
                 .build();
         setlistComponent.inject(this);
+
+        mPresenter.displaySetlist((Setlists.Setlist)getArguments().getSerializable(SETLIST));
+    }
+
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        mBinding = DataBindingUtil.inflate(inflater, getLayout(), container, false);
+        mBinding.recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        mBinding.recyclerView.setAdapter(mAdapter);
+
+        return mBinding.getRoot();
     }
 
     @Override
     protected int getLayout() {
         return R.layout.fragment_setlist;
+    }
+
+    @Override
+    public void addItems(List<Setlists.Song> setlistList) {
+        mAdapter.addItems(setlistList);
     }
 }

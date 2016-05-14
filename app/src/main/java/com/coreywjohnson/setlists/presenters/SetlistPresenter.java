@@ -1,5 +1,6 @@
 package com.coreywjohnson.setlists.presenters;
 
+import com.coreywjohnson.setlists.models.Setlists;
 import com.coreywjohnson.setlists.views.SetlistView;
 
 import javax.inject.Inject;
@@ -13,5 +14,9 @@ public class SetlistPresenter extends Presenter {
     @Inject
     SetlistPresenter(SetlistView setlistView) {
         mSetlistView = setlistView;
+    }
+
+    public void displaySetlist(Setlists.Setlist setlist) {
+        mSetlistView.addItems(setlist.getSets().get(0).getSong());
     }
 }

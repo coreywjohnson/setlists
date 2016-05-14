@@ -1,5 +1,6 @@
 package com.coreywjohnson.setlists.fragments;
 
+import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -36,6 +37,7 @@ public class SearchFragment extends BaseFragment implements SearchView, SetlistA
     @Inject
     SearchPresenter mPresenter;
     private FragmentSearchBinding mBinding;
+    private SearchFragmentListener mListener;
 
     public static SearchFragment newInstance() {
         return new SearchFragment();
@@ -99,6 +101,18 @@ public class SearchFragment extends BaseFragment implements SearchView, SetlistA
     }
 
     @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        mListener = (SearchFragmentListener) context;
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mListener = null;
+    }
+
+    @Override
     public void addItems(List<Setlists.Setlist> setlistList) {
         mAdapter.addItems(setlistList);
     }
@@ -125,11 +139,17 @@ public class SearchFragment extends BaseFragment implements SearchView, SetlistA
 
     @Override
     public void onSetlistClick(Setlists.Setlist setlist) {
-
+        if(mListener != null) {
+            mListener.onSetlistClick(setlist);
+        }
     }
 
     @Override
     public void onRefresh() {
         mPresenter.refresh();
+    }
+
+    public interface SearchFragmentListener {
+        void onSetlistClick(Setlists.Setlist setlist);
     }
 }

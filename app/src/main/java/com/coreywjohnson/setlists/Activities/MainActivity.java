@@ -8,6 +8,8 @@ import com.coreywjohnson.setlists.R;
 import com.coreywjohnson.setlists.components.DaggerMainComponent;
 import com.coreywjohnson.setlists.components.MainComponent;
 import com.coreywjohnson.setlists.fragments.SearchFragment;
+import com.coreywjohnson.setlists.fragments.SetlistFragment;
+import com.coreywjohnson.setlists.models.Setlists;
 import com.coreywjohnson.setlists.modules.MainModule;
 import com.coreywjohnson.setlists.presenters.MainPresenter;
 import com.coreywjohnson.setlists.views.MainView;
@@ -17,7 +19,7 @@ import javax.inject.Inject;
 /**
  * Created by corey on 24-Apr-16.
  */
-public class MainActivity extends BaseActivity implements MainView {
+public class MainActivity extends BaseActivity implements MainView, SearchFragment.SearchFragmentListener {
     @Inject MainPresenter mainPresenter;
 
     @Override
@@ -33,9 +35,22 @@ public class MainActivity extends BaseActivity implements MainView {
         SearchFragment searchFragment = SearchFragment.newInstance();
 
         if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, searchFragment)
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.fragment_container, searchFragment)
+                    .addToBackStack("Search")
                     .commit();
         }
+    }
+
+    public void showSetlist(Setlists.Setlist setlist) {
+        SetlistFragment setlistFragment = SetlistFragment.newInstance(setlist);
+
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment_container, setlistFragment)
+                .addToBackStack("Setlist")
+                .commit();
     }
 
     @Override
@@ -46,5 +61,10 @@ public class MainActivity extends BaseActivity implements MainView {
     @Override
     public boolean hasToolbar() {
         return true;
+    }
+
+    @Override
+    public void onSetlistClick(Setlists.Setlist setlist) {
+        showSetlist(setlist);
     }
 }

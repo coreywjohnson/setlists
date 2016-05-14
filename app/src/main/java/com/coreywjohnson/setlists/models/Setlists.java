@@ -9,7 +9,7 @@ import java.io.Serializable;
 import java.util.List;
 
 @Root(name = "setlists")
-public class Setlists {
+public class Setlists implements Serializable {
 
     @ElementList(name = "setlist", inline = true, required = false)
     List<Setlist> setlist;
@@ -184,7 +184,7 @@ public class Setlists {
 
     }
 
-    public static class Artist {
+    public static class Artist implements Serializable {
 
         @Element(name = "url", required = false)
         String url;
@@ -266,7 +266,7 @@ public class Setlists {
 
     }
 
-    public static class Venue {
+    public static class Venue implements Serializable {
 
         @Element(name = "city", required = false)
         City city;
@@ -322,7 +322,7 @@ public class Setlists {
 
     }
 
-    public static class City {
+    public static class City implements Serializable {
 
         @Element(name = "coords", required = false)
         Coords coords;
@@ -404,7 +404,7 @@ public class Setlists {
 
     }
 
-    public static class Coords {
+    public static class Coords implements Serializable {
 
         @Attribute(name = "lat", required = false)
         String lat;
@@ -434,7 +434,7 @@ public class Setlists {
 
     }
 
-    public static class Country {
+    public static class Country implements Serializable {
 
         @Attribute(name = "code", required = false)
         String code;
@@ -464,7 +464,7 @@ public class Setlists {
 
     }
 
-    public static class Song {
+    public static class Song implements Serializable {
 
         @Attribute(name = "name", required = false)
         String name;
@@ -507,7 +507,7 @@ public class Setlists {
 
     }
 
-    public static class Set {
+    public static class Set implements Serializable {
 
         @ElementList(name = "song", inline = true, required = false)
         List<Song> song;
@@ -537,7 +537,7 @@ public class Setlists {
 
     }
 
-    public static class Cover {
+    public static class Cover implements Serializable {
 
         @Element(name = "url", required = false)
         String url;
