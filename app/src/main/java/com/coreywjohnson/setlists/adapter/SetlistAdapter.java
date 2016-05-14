@@ -51,6 +51,7 @@ public class SetlistAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         if (holder instanceof SetlistWidget) {
             ((SetlistWidget) holder).setSetlist(mAdapterData.get(position));
+            ((SetlistWidget) holder).setListener(mListener);
         }
 
         if (position > mAdapterData.size() - 10 && !mIsLoading) {
@@ -90,5 +91,7 @@ public class SetlistAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     public interface AdapterListener {
         void onLoadMore();
+
+        void onSetlistClick(Setlists.Setlist setlist);
     }
 }

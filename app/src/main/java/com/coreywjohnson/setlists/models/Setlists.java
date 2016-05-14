@@ -5,6 +5,7 @@ import org.simpleframework.xml.Element;
 import org.simpleframework.xml.ElementList;
 import org.simpleframework.xml.Root;
 
+import java.io.Serializable;
 import java.util.List;
 
 @Root(name = "setlists")
@@ -62,7 +63,7 @@ public class Setlists {
     }
 
 
-    public static class Setlist {
+    public static class Setlist implements Serializable {
 
         @Element(name = "artist", required = false)
         Artist artist;

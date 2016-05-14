@@ -124,6 +124,11 @@ public class SearchFragment extends BaseFragment implements SearchView, SetlistA
     }
 
     @Override
+    public void onSetlistClick(Setlists.Setlist setlist) {
+
+    }
+
+    @Override
     public void onRefresh() {
         mPresenter.refresh();
     }

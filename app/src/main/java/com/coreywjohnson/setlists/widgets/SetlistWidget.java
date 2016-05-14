@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.coreywjohnson.setlists.R;
+import com.coreywjohnson.setlists.adapter.SetlistAdapter;
 import com.coreywjohnson.setlists.databinding.WidgetSetlistBinding;
 import com.coreywjohnson.setlists.models.Setlists;
 
@@ -19,6 +20,7 @@ import java.util.Date;
  */
 public class SetlistWidget extends RecyclerView.ViewHolder {
     private WidgetSetlistBinding mBinding;
+    private SetlistAdapter.AdapterListener mListener;
 
     public SetlistWidget(WidgetSetlistBinding binding) {
         super(binding.getRoot());
@@ -30,7 +32,7 @@ public class SetlistWidget extends RecyclerView.ViewHolder {
         return new SetlistWidget(binding);
     }
 
-    public void setSetlist(Setlists.Setlist setlist) {
+    public void setSetlist(final Setlists.Setlist setlist) {
         mBinding.setSetlist(setlist);
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
         try {
@@ -44,8 +46,14 @@ public class SetlistWidget extends RecyclerView.ViewHolder {
         mBinding.getRoot().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                if (mListener != null) {
+                    mListener.onSetlistClick(setlist);
+                }
             }
         });
+    }
+
+    public void setListener(SetlistAdapter.AdapterListener adapterListener) {
+        mListener = adapterListener;
     }
 }
