@@ -38,7 +38,6 @@ public class MainActivity extends BaseActivity implements MainView, SearchFragme
             getSupportFragmentManager()
                     .beginTransaction()
                     .replace(R.id.fragment_container, searchFragment)
-                    .addToBackStack("Search")
                     .commit();
         }
     }
@@ -56,11 +55,6 @@ public class MainActivity extends BaseActivity implements MainView, SearchFragme
     @Override
     public int getLayout() {
         return R.layout.activity_main;
-    }
-
-    @Override
-    public boolean hasToolbar() {
-        return true;
     }
 
     @Override

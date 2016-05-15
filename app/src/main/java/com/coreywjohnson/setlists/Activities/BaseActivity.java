@@ -4,9 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 
-import com.coreywjohnson.setlists.R;
 import com.coreywjohnson.setlists.views.BaseView;
 
 /**
@@ -18,19 +16,10 @@ public class BaseActivity extends AppCompatActivity implements BaseView {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(getLayout());
-
-        if (hasToolbar()) {
-            Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-            setSupportActionBar(toolbar);
-        }
     }
 
     public int getLayout() {
         return 0;
-    }
-
-    public boolean hasToolbar() {
-        return false;
     }
 
     @Override

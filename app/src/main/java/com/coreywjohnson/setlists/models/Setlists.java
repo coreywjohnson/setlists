@@ -6,6 +6,7 @@ import org.simpleframework.xml.ElementList;
 import org.simpleframework.xml.Root;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 @Root(name = "setlists")
@@ -99,6 +100,15 @@ public class Setlists implements Serializable {
 
         @Attribute(name = "versionId", required = false)
         String versionId;
+
+        public ArrayList<Song> getSetlistSongs() {
+            ArrayList<Song> songs = new ArrayList<>();
+            for (int i = 0; i < sets.size(); i++) {
+                Set set = sets.get(i);
+                songs.addAll(set.getSong());
+            }
+            return songs;
+        }
 
 
         public Artist getArtist() {

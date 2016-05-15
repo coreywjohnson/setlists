@@ -17,6 +17,6 @@ public class SetlistPresenter extends Presenter {
     }
 
     public void displaySetlist(Setlists.Setlist setlist) {
-        mSetlistView.addItems(setlist.getSets().get(0).getSong());
+        mSetlistView.addItems(setlist.getSetlistSongs());
     }
 }

@@ -28,6 +28,19 @@ public class SongWidget extends RecyclerView.ViewHolder {
 
     public void setSong(Setlists.Song song) {
         mBinding.setSong(song);
+        String infoText = "";
+        if (song.getCover() != null) {
+            infoText += "(" + song.getCover().getName() + " cover) ";
+        }
+        if (song.getInfo() != null) {
+            infoText += "(" + song.getInfo() + ")";
+        }
+        if (mBinding.textInfo.equals("")) {
+            mBinding.textInfo.setVisibility(View.GONE);
+        } else {
+            mBinding.textInfo.setVisibility(View.VISIBLE);
+            mBinding.textInfo.setText(infoText);
+        }
     }
 
     public void setSongNumber(int position) {
