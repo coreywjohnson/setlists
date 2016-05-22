@@ -9,6 +9,7 @@ import dagger.Component;
  * Created by coreyjohnson on 4/05/16.
  */
 
+@ActivityScope
 @Component(
         dependencies = AppComponent.class,
         modules = SearchModule.class
