@@ -35,7 +35,7 @@ public class SongWidget extends RecyclerView.ViewHolder {
         if (song.getInfo() != null) {
             infoText += "(" + song.getInfo() + ")";
         }
-        if (mBinding.textInfo.equals("")) {
+        if (infoText.equals("")) {
             mBinding.textInfo.setVisibility(View.GONE);
         } else {
             mBinding.textInfo.setVisibility(View.VISIBLE);
