@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Setlists</string>
     <string name="txt_search">Search</string>
+    <string name="txt_open_in_web">Open in Web</string>
 </resources>

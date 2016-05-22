@@ -97,7 +97,8 @@
                     style="@style/Base.Widget.AppCompat.Toolbar"
                     android:layout_width="match_parent"
                     android:layout_height="?attr/actionBarSize"
-                    app:layout_collapseMode="pin">
+                    app:layout_collapseMode="pin"
+                    app:popupTheme="@style/Widget.AppCompat.PopupMenu">
 
                     <TextView
                         android:layout_width="match_parent"

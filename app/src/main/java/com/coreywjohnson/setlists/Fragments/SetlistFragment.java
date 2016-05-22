@@ -1,6 +1,8 @@
 package com.coreywjohnson.setlists.fragments;
 
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -8,6 +10,7 @@ import android.support.design.widget.AppBarLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -98,6 +101,25 @@ public class SetlistFragment extends BaseFragment implements SetlistView {
     @Override
     protected int getLayout() {
         return R.layout.fragment_setlist;
+    }
+
+    @Override
+    protected int getMenu() {
+        return R.menu.menu_setlist;
+    }
+
+    @Override
+    protected boolean hasMenu() {
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        Setlists.Setlist setlist = (Setlists.Setlist) getArguments().getSerializable(SETLIST);
+        String webUrl = setlist.getUrl();
+        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(webUrl));
+        startActivity(browserIntent);
+        return true;
     }
 
     @Override
