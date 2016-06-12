@@ -14,4 +14,9 @@ public class MainPresenter extends Presenter {
     public MainPresenter(MainView mainView) {
         mMainView = mainView;
     }
+
+    public void onCreate() {
+        mMainView.showSetlistsSearch();
+        mMainView.setupView();
+    }
 }
