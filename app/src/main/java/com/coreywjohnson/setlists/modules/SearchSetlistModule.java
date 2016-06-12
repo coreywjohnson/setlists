@@ -1,7 +1,7 @@
 package com.coreywjohnson.setlists.modules;
 
 import com.coreywjohnson.setlists.adapter.SetlistAdapter;
-import com.coreywjohnson.setlists.views.SearchView;
+import com.coreywjohnson.setlists.views.SearchSetlistView;
 
 import dagger.Module;
 import dagger.Provides;
@@ -11,18 +11,18 @@ import dagger.Provides;
  */
 
 @Module
-public class SearchModule {
-    SearchView mSearchView;
+public class SearchSetlistModule {
+    SearchSetlistView mSearchSetlistView;
     SetlistAdapter.AdapterListener mAdapterListener;
 
-    public SearchModule(SearchView searchView, SetlistAdapter.AdapterListener adapterListener) {
-        mSearchView = searchView;
+    public SearchSetlistModule(SearchSetlistView searchSetlistView, SetlistAdapter.AdapterListener adapterListener) {
+        mSearchSetlistView = searchSetlistView;
         mAdapterListener = adapterListener;
     }
 
     @Provides
-    SearchView searchView() {
-        return mSearchView;
+    SearchSetlistView searchView() {
+        return mSearchSetlistView;
     }
 
     @Provides

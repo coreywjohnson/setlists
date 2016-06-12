@@ -7,7 +7,7 @@ import com.coreywjohnson.setlists.App;
 import com.coreywjohnson.setlists.R;
 import com.coreywjohnson.setlists.components.DaggerMainComponent;
 import com.coreywjohnson.setlists.components.MainComponent;
-import com.coreywjohnson.setlists.fragments.SearchFragment;
+import com.coreywjohnson.setlists.fragments.SearchSetlistFragment;
 import com.coreywjohnson.setlists.fragments.SetlistFragment;
 import com.coreywjohnson.setlists.models.Setlists;
 import com.coreywjohnson.setlists.modules.MainModule;
@@ -19,7 +19,7 @@ import javax.inject.Inject;
 /**
  * Created by corey on 24-Apr-16.
  */
-public class MainActivity extends BaseActivity implements MainView, SearchFragment.SearchFragmentListener {
+public class MainActivity extends BaseActivity implements MainView, SearchSetlistFragment.SearchFragmentListener {
     @Inject MainPresenter mainPresenter;
 
     @Override
@@ -32,7 +32,7 @@ public class MainActivity extends BaseActivity implements MainView, SearchFragme
         mainComponent.inject(this);
 
         // Create Search Fragment
-        SearchFragment searchFragment = SearchFragment.newInstance();
+        SearchSetlistFragment searchFragment = SearchSetlistFragment.newInstance();
 
         if (savedInstanceState == null) {
             getSupportFragmentManager()

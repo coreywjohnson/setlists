@@ -14,18 +14,18 @@ import retrofit2.Response;
 /**
  * Created by corey on 25-Apr-16.
  */
-public class SearchArtistInteractor {
+public class SearchSetlistByArtistInteractor {
     private SetlistService mSetlistService;
     private Call<Setlists> request;
 
     @Inject
-    public SearchArtistInteractor(SetlistService setlistService) {
+    public SearchSetlistByArtistInteractor(SetlistService setlistService) {
         mSetlistService = setlistService;
     }
 
     public void execute(String query, int pageNo, final SearchArtistCallback callback) {
         cancel();
-        request = mSetlistService.searchByArtist(query, pageNo);
+        request = mSetlistService.searchSetlistsByArtist(query, pageNo);
         request.enqueue(new Callback<Setlists>() {
             @Override
             public void onResponse(Call<Setlists> call, Response<Setlists> response) {

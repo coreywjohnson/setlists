@@ -13,5 +13,5 @@ public interface SetlistService {
     String BASE_API_URL = "http://api.setlist.fm/rest/0.1/";
 
     @GET("search/setlists")
-    Call<Setlists> searchByArtist(@Query("artistName") String artist, @Query("p") int pageNo);
+    Call<Setlists> searchSetlistsByArtist(@Query("artistName") String artist, @Query("p") int pageNo);
 }

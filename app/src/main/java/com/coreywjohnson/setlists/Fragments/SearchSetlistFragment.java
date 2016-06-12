@@ -17,13 +17,13 @@ import android.view.ViewGroup;
 import com.coreywjohnson.setlists.App;
 import com.coreywjohnson.setlists.R;
 import com.coreywjohnson.setlists.adapter.SetlistAdapter;
-import com.coreywjohnson.setlists.components.DaggerSearchComponent;
-import com.coreywjohnson.setlists.components.SearchComponent;
+import com.coreywjohnson.setlists.components.DaggerSearchSetlistComponent;
+import com.coreywjohnson.setlists.components.SearchSetlistComponent;
 import com.coreywjohnson.setlists.databinding.FragmentSearchBinding;
 import com.coreywjohnson.setlists.models.Setlists;
-import com.coreywjohnson.setlists.modules.SearchModule;
-import com.coreywjohnson.setlists.presenters.SearchPresenter;
-import com.coreywjohnson.setlists.views.SearchView;
+import com.coreywjohnson.setlists.modules.SearchSetlistModule;
+import com.coreywjohnson.setlists.presenters.SearchSetlistPresenter;
+import com.coreywjohnson.setlists.views.SearchSetlistView;
 
 import java.util.List;
 
@@ -32,27 +32,27 @@ import javax.inject.Inject;
 /**
  * Created by corey on 24-Apr-16.
  */
-public class SearchFragment extends BaseFragment implements SearchView, SetlistAdapter.AdapterListener, SwipeRefreshLayout.OnRefreshListener {
+public class SearchSetlistFragment extends BaseFragment implements SearchSetlistView, SetlistAdapter.AdapterListener, SwipeRefreshLayout.OnRefreshListener {
     @Inject
     SetlistAdapter mAdapter;
     @Inject
-    SearchPresenter mPresenter;
+    SearchSetlistPresenter mPresenter;
     private FragmentSearchBinding mBinding;
     private SearchFragmentListener mListener;
 
-    public static SearchFragment newInstance() {
-        return new SearchFragment();
+    public static SearchSetlistFragment newInstance() {
+        return new SearchSetlistFragment();
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        SearchComponent searchComponent =
-                DaggerSearchComponent.builder()
+        SearchSetlistComponent searchSetlistComponent =
+                DaggerSearchSetlistComponent.builder()
                         .appComponent(App.getAppComponent(getContext()))
-                        .searchModule(new SearchModule(this, this))
+                        .searchSetlistModule(new SearchSetlistModule(this, this))
                         .build();
-        searchComponent.inject(this);
+        searchSetlistComponent.inject(this);
     }
 
     @Nullable
@@ -141,7 +141,7 @@ public class SearchFragment extends BaseFragment implements SearchView, SetlistA
 
     @Override
     public void onSetlistClick(Setlists.Setlist setlist) {
-        if(mListener != null) {
+        if (mListener != null) {
             mListener.onSetlistClick(setlist);
         }
     }
