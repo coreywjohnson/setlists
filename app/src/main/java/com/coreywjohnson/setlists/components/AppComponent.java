@@ -1,5 +1,6 @@
 package com.coreywjohnson.setlists.components;
 
+import com.coreywjohnson.setlists.interactors.SearchArtistInteractor;
 import com.coreywjohnson.setlists.interactors.SearchSetlistByArtistInteractor;
 import com.coreywjohnson.setlists.modules.AppModule;
 import com.coreywjohnson.setlists.modules.InteractorsModule;
@@ -17,5 +18,7 @@ import dagger.Component;
         modules = {AppModule.class, InteractorsModule.class}
 )
 public interface AppComponent {
-    SearchSetlistByArtistInteractor provideSearchArtistInteractor();
+    SearchSetlistByArtistInteractor provideSearchSetlistByArtistInteractor();
+
+    SearchArtistInteractor provideSearchArtistInteractor();
 }
