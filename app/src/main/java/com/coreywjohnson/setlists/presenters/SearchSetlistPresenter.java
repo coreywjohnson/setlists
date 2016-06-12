@@ -9,7 +9,7 @@ import javax.inject.Inject;
 /**
  * Created by corey on 02-May-16.
  */
-public class SearchSetlistPresenter extends Presenter implements SearchSetlistByArtistInteractor.SearchArtistCallback {
+public class SearchSetlistPresenter extends Presenter implements SearchSetlistByArtistInteractor.SearchSetlistByArtistListener {
     private SearchSetlistByArtistInteractor mInteractor;
     private SearchSetlistView mSearchSetlistView;
     private String mQuery;

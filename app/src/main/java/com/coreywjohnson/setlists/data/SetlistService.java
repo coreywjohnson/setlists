@@ -1,5 +1,6 @@
 package com.coreywjohnson.setlists.data;
 
+import com.coreywjohnson.setlists.models.Artists;
 import com.coreywjohnson.setlists.models.Setlists;
 
 import retrofit2.Call;
@@ -14,4 +15,7 @@ public interface SetlistService {
 
     @GET("search/setlists")
     Call<Setlists> searchSetlistsByArtist(@Query("artistName") String artist, @Query("p") int pageNo);
+
+    @GET("search/artists")
+    Call<Artists> searchArtist(@Query("artistName") String artist, @Query("p") int pageNo);
 }

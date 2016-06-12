@@ -16,24 +16,24 @@ import retrofit2.Response;
  */
 public class SearchSetlistByArtistInteractor {
     private SetlistService mSetlistService;
-    private Call<Setlists> request;
+    private Call<Setlists> mRequest;
 
     @Inject
     public SearchSetlistByArtistInteractor(SetlistService setlistService) {
         mSetlistService = setlistService;
     }
 
-    public void execute(String query, int pageNo, final SearchArtistCallback callback) {
+    public void execute(String query, int pageNo, final SearchSetlistByArtistListener listener) {
         cancel();
-        request = mSetlistService.searchSetlistsByArtist(query, pageNo);
-        request.enqueue(new Callback<Setlists>() {
+        mRequest = mSetlistService.searchSetlistsByArtist(query, pageNo);
+        mRequest.enqueue(new Callback<Setlists>() {
             @Override
             public void onResponse(Call<Setlists> call, Response<Setlists> response) {
                 if (response.isSuccessful()) {
-                    callback.onSuccess(response.body());
+                    listener.onSuccess(response.body());
                 } else {
                     Log.i("Error", response.message());
-                    callback.onError(response.message());
+                    listener.onError(response.message());
                 }
             }
 
@@ -42,20 +42,20 @@ public class SearchSetlistByArtistInteractor {
                 if (!call.isCanceled()) {
                     Log.i("Search Request", "Failed");
                     Log.e("Failure", t.getMessage());
-                    callback.onError(t.getMessage());
+                    listener.onError(t.getMessage());
                 }
             }
         });
     }
 
     private void cancel() {
-        if (request != null) {
-            request.cancel();
-            request = null;
+        if (mRequest != null) {
+            mRequest.cancel();
+            mRequest = null;
         }
     }
 
-    public interface SearchArtistCallback {
+    public interface SearchSetlistByArtistListener {
         void onSuccess(Setlists searchResponse);
 
         void onError(String error);
