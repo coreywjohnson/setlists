@@ -1,5 +1,7 @@
 package com.coreywjohnson.setlists.interactors;
 
+import android.util.Log;
+
 import com.coreywjohnson.setlists.data.SetlistService;
 import com.coreywjohnson.setlists.models.Artists;
 
@@ -27,12 +29,21 @@ public class SearchArtistInteractor {
         mRequest.enqueue(new Callback<Artists>() {
             @Override
             public void onResponse(Call<Artists> call, Response<Artists> response) {
-                listener.onSuccess(response.body());
+                if (response.isSuccessful()) {
+                    listener.onSuccess(response.body());
+                } else {
+                    Log.i("Error", response.message());
+                    listener.onError(response.message());
+                }
             }
 
             @Override
             public void onFailure(Call<Artists> call, Throwable t) {
-                listener.onError(t.getMessage());
+                if (!call.isCanceled()) {
+                    Log.i("Search Request", "Failed");
+                    Log.e("Failure", t.getMessage());
+                    listener.onError(t.getMessage());
+                }
             }
         });
     }
