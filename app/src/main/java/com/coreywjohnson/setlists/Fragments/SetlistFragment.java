@@ -7,7 +7,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -24,6 +23,7 @@ import com.coreywjohnson.setlists.databinding.FragmentSetlistBinding;
 import com.coreywjohnson.setlists.models.Setlists;
 import com.coreywjohnson.setlists.modules.SetlistModule;
 import com.coreywjohnson.setlists.presenters.SetlistPresenter;
+import com.coreywjohnson.setlists.views.MainView;
 import com.coreywjohnson.setlists.views.SetlistView;
 
 import java.util.List;
@@ -71,7 +71,9 @@ public class SetlistFragment extends BaseFragment implements SetlistView {
         mBinding.recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mBinding.recyclerView.setAdapter(mAdapter);
         mBinding.setSetlist((Setlists.Setlist) getArguments().getSerializable(SETLIST));
-        ((AppCompatActivity) getActivity()).setSupportActionBar(mBinding.toolbar);
+//        ((AppCompatActivity) getActivity()).setSupportActionBar(mBinding.toolbar);
+//        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        ((MainView) getActivity()).setToolbar(mBinding.toolbar, false);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             getActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);

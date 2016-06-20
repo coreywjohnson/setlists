@@ -4,9 +4,9 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
-import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
-import android.view.View;
 
 import com.coreywjohnson.setlists.App;
 import com.coreywjohnson.setlists.R;
@@ -29,6 +29,7 @@ import javax.inject.Inject;
 public class MainActivity extends BaseActivity implements MainView, SearchSetlistFragment.SearchFragmentListener {
     @Inject MainPresenter mainPresenter;
     private ActivityMainBinding mBinding;
+    private ActionBarDrawerToggle mToggle;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -83,27 +84,6 @@ public class MainActivity extends BaseActivity implements MainView, SearchSetlis
                 }
             }
         });
-        mBinding.drawerLayout.addDrawerListener(new DrawerLayout.DrawerListener() {
-            @Override
-            public void onDrawerSlide(View drawerView, float slideOffset) {
-
-            }
-
-            @Override
-            public void onDrawerOpened(View drawerView) {
-
-            }
-
-            @Override
-            public void onDrawerClosed(View drawerView) {
-
-            }
-
-            @Override
-            public void onDrawerStateChanged(int newState) {
-
-            }
-        });
     }
 
     @Override
@@ -123,5 +103,18 @@ public class MainActivity extends BaseActivity implements MainView, SearchSetlis
                 .beginTransaction()
                 .replace(R.id.fragment_container, fragment)
                 .commit();
+    }
+
+    @Override
+    public void setToolbar(Toolbar toolbar, boolean showDrawerIndicator) {
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        if (showDrawerIndicator) {
+            mToggle = new ActionBarDrawerToggle(this, mBinding.drawerLayout, toolbar, R.string.txt_drawer_opened, R.string.txt_drawer_closed);
+            mBinding.drawerLayout.addDrawerListener(mToggle);
+            mToggle.syncState();
+        } else {
+            mToggle.setDrawerIndicatorEnabled(false);
+        }
     }
 }

@@ -5,7 +5,6 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -23,6 +22,7 @@ import com.coreywjohnson.setlists.databinding.FragmentSearchBinding;
 import com.coreywjohnson.setlists.models.Setlists;
 import com.coreywjohnson.setlists.modules.SearchSetlistModule;
 import com.coreywjohnson.setlists.presenters.SearchSetlistPresenter;
+import com.coreywjohnson.setlists.views.MainView;
 import com.coreywjohnson.setlists.views.SearchSetlistView;
 
 import java.util.List;
@@ -61,7 +61,7 @@ public class SearchSetlistFragment extends BaseFragment implements SearchSetlist
         mBinding = DataBindingUtil.inflate(inflater, getLayout(), container, false);
         mBinding.recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mBinding.recyclerView.setAdapter(mAdapter);
-        ((AppCompatActivity) getActivity()).setSupportActionBar(mBinding.toolbar);
+        getParentView().setToolbar(mBinding.toolbar, true);
 
         mBinding.refreshView.setOnRefreshListener(this);
 
@@ -132,6 +132,11 @@ public class SearchSetlistFragment extends BaseFragment implements SearchSetlist
     @Override
     public void hideRefresh() {
         mBinding.refreshView.setRefreshing(false);
+    }
+
+    @Override
+    public MainView getParentView() {
+        return (MainView) getActivity();
     }
 
     @Override
