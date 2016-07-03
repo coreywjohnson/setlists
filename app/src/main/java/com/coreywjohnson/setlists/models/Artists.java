@@ -5,10 +5,11 @@ import org.simpleframework.xml.Element;
 import org.simpleframework.xml.ElementList;
 import org.simpleframework.xml.Root;
 
+import java.io.Serializable;
 import java.util.List;
 
 @Root(name = "artists")
-public class Artists {
+public class Artists implements Serializable {
 
     @ElementList(name = "artist", inline = true, required = false)
     List<Artist> artist;
@@ -62,7 +63,7 @@ public class Artists {
     }
 
 
-    public static class Artist {
+    public static class Artist implements Serializable {
 
         @Element(name = "url", required = false)
         String url;

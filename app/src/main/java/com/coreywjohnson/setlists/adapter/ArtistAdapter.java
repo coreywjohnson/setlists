@@ -48,6 +48,7 @@ public class ArtistAdapter extends PaginatableAdapter<Artists.Artist> {
         super.onBindViewHolder(holder, position);
         if (holder instanceof ArtistWidget) {
             ((ArtistWidget) holder).setArtist(mAdapterData.get(position));
+            ((ArtistWidget) holder).setListener(mListener);
         }
     }
 

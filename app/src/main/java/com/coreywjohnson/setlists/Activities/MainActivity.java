@@ -106,7 +106,7 @@ public class MainActivity extends BaseActivity implements MainView, SearchSetlis
     }
 
     @Override
-    public void setToolbar(Toolbar toolbar, boolean showDrawerIndicator) {
+    public void setToolbar(Toolbar toolbar, boolean showDrawerIndicator, String title) {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         if (showDrawerIndicator) {
@@ -115,6 +115,9 @@ public class MainActivity extends BaseActivity implements MainView, SearchSetlis
             mToggle.syncState();
         } else {
             mToggle.setDrawerIndicatorEnabled(false);
+        }
+        if (title != null) {
+            getSupportActionBar().setTitle(title);
         }
     }
 }

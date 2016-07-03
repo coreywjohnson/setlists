@@ -61,7 +61,7 @@ public class SearchSetlistFragment extends BaseFragment implements SearchSetlist
         mBinding = DataBindingUtil.inflate(inflater, getLayout(), container, false);
         mBinding.recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mBinding.recyclerView.setAdapter(mAdapter);
-        getParentView().setToolbar(mBinding.toolbar, true);
+        getParentView().setToolbar(mBinding.toolbar, true, null);
 
         mBinding.refreshView.setOnRefreshListener(this);
 

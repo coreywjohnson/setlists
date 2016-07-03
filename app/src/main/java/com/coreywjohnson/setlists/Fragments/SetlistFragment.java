@@ -73,7 +73,7 @@ public class SetlistFragment extends BaseFragment implements SetlistView {
         mBinding.setSetlist((Setlists.Setlist) getArguments().getSerializable(SETLIST));
 //        ((AppCompatActivity) getActivity()).setSupportActionBar(mBinding.toolbar);
 //        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        ((MainView) getActivity()).setToolbar(mBinding.toolbar, false);
+        ((MainView) getActivity()).setToolbar(mBinding.toolbar, false, null);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             getActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
@@ -117,11 +117,19 @@ public class SetlistFragment extends BaseFragment implements SetlistView {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Setlists.Setlist setlist = (Setlists.Setlist) getArguments().getSerializable(SETLIST);
-        String webUrl = setlist.getUrl();
-        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(webUrl));
-        startActivity(browserIntent);
-        return true;
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                getActivity().onBackPressed();
+                return true;
+            case R.id.action_web:
+                Setlists.Setlist setlist = (Setlists.Setlist) getArguments().getSerializable(SETLIST);
+                String webUrl = setlist.getUrl();
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(webUrl));
+                startActivity(browserIntent);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     @Override

@@ -3,6 +3,7 @@
 
     <data>
 
+        <import type="android.view.View" />
         <variable
             name="artist"
             type="com.coreywjohnson.setlists.models.Artists.Artist" />
@@ -10,7 +11,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="72dp"
+        android:layout_height="48dp"
         android:background="?attr/selectableItemBackground"
         android:orientation="horizontal"
         android:paddingLeft="16dp"
@@ -33,9 +34,10 @@
 
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:text='@{artist.disambiguation}'
-                android:textAppearance="@style/Base.TextAppearance.AppCompat.Caption" />
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Caption"
+                android:visibility="@{artist.disambiguation == null ? View.GONE : View.VISIBLE}" />
 
         </LinearLayout>
 

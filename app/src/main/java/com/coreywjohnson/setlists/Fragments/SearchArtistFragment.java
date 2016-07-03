@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -62,7 +63,7 @@ public class SearchArtistFragment extends BaseFragment implements SearchArtistVi
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mBinding = DataBindingUtil.inflate(inflater, getLayout(), container, false);
-        getParentView().setToolbar(mBinding.toolbar, true);
+        getParentView().setToolbar(mBinding.toolbar, true, null);
         mBinding.recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mBinding.recyclerView.setAdapter(mAdapter);
         mBinding.refreshView.setOnRefreshListener(this);
@@ -146,6 +147,12 @@ public class SearchArtistFragment extends BaseFragment implements SearchArtistVi
 
     @Override
     public void onArtistClick(Artists.Artist artist) {
-
+        Log.i("Fragment", "adding fragment");
+        ArtistFragment.newInstance(artist);
+        getFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment_container, ArtistFragment.newInstance(artist))
+                .addToBackStack("artist")
+                .commit();
     }
 }

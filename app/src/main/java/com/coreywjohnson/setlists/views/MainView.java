@@ -12,5 +12,5 @@ public interface MainView extends BaseView {
 
     void showArtistsSearch();
 
-    void setToolbar(Toolbar toolbar, boolean showDrawerIndicator);
+    void setToolbar(Toolbar toolbar, boolean showDrawerIndicator, String title);
 }
