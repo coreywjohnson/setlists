@@ -4,6 +4,7 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
 import com.coreywjohnson.setlists.App;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 import javax.inject.Singleton;
 
@@ -26,5 +27,11 @@ public class AppModule {
     @Singleton
     public SharedPreferences provideSharedPreferences() {
         return PreferenceManager.getDefaultSharedPreferences(mApp);
+    }
+
+    @Provides
+    @Singleton
+    public FirebaseAnalytics provideFirebaseAnalytics() {
+        return FirebaseAnalytics.getInstance(mApp);
     }
 }
