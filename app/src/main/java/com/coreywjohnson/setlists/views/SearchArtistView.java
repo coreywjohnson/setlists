@@ -19,4 +19,6 @@ public interface SearchArtistView extends BaseView {
     void onError(String error);
 
     MainView getParentView();
+
+    void showArtist(Artists.Artist artist);
 }

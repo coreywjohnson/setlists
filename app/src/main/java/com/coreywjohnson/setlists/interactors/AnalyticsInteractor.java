@@ -13,6 +13,7 @@ import javax.inject.Inject;
  */
 public class AnalyticsInteractor {
     public static String CONTENT_TYPE_SETLIST = "setlist";
+    public static String CONTENT_TYPE_ARTIST = "artist";
 
     FirebaseAnalytics mFirebaseAnalytics;
 
