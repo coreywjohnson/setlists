@@ -15,6 +15,6 @@ public interface SearchSetlistView extends BaseView {
     void removeAllItems();
 
     void hideRefresh();
-
     MainView getParentView();
+    void openSetlist(Setlists.Setlist setlist);
 }
