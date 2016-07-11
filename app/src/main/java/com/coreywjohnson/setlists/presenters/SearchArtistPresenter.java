@@ -34,6 +34,7 @@ public class SearchArtistPresenter extends Presenter implements SearchArtistInte
     public void onSearch(String query) {
         mView.removeAllItems();
         mQuery = query;
+        mLoadCount = 0;
         mPageNo = 1;
         mSearchArtistInteractor.execute(mQuery, mPageNo, this);
         Map<String, String> properties = new HashMap<>();
@@ -47,6 +48,8 @@ public class SearchArtistPresenter extends Presenter implements SearchArtistInte
     }
 
     public void refresh() {
+        mLoadCount = 0;
+        mPageNo = 1;
         onSearch(mQuery);
     }
 

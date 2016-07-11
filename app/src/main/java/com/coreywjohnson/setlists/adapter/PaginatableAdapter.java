@@ -9,9 +9,8 @@ import java.util.List;
  */
 public abstract class PaginatableAdapter<T> extends BaseAdapter<T> {
     public static final int LOAD_OFFSET = 10;
-    public boolean mHasMoreItems = true;
-
     protected PaginatableAdapterListener mPaginatableAdapterListener;
+    private boolean mHasMoreItems = true;
 
     public PaginatableAdapter(PaginatableAdapterListener adapterListener) {
         mPaginatableAdapterListener = adapterListener;
@@ -19,7 +18,7 @@ public abstract class PaginatableAdapter<T> extends BaseAdapter<T> {
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        if (position > mAdapterData.size() - LOAD_OFFSET && !mIsLoading && mHasMoreItems) {
+        if (position > mAdapterData.size() - LOAD_OFFSET && !mIsLoading && ismHasMoreItems()) {
             mPaginatableAdapterListener.onLoadMore();
             mIsLoading = true;
         }
@@ -59,7 +58,15 @@ public abstract class PaginatableAdapter<T> extends BaseAdapter<T> {
             notifyItemRemoved(mAdapterData.size());
             mIsLoading = false;
         }
-        mHasMoreItems = false;
+        setHasMoreItems(false);
+    }
+
+    public boolean ismHasMoreItems() {
+        return mHasMoreItems;
+    }
+
+    public void setHasMoreItems(boolean mHasMoreItems) {
+        this.mHasMoreItems = mHasMoreItems;
     }
 
     public interface PaginatableAdapterListener extends AdapterListener {
