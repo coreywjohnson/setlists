@@ -127,7 +127,6 @@ public class ArtistFragment extends BaseFragment implements ArtistView, SetlistA
     @Override
     public void clearItems() {
         mAdapter.removeAllItems();
-        mAdapter.setHasMoreItems(true);
     }
 
     @Override

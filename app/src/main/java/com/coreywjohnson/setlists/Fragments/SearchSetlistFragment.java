@@ -115,22 +115,7 @@ public class SearchSetlistFragment extends BaseFragment implements SearchSetlist
     }
 
     @Override
-    public void addItems(List<Setlists.Setlist> setlistList) {
-        mAdapter.addItems(setlistList);
-    }
-
-    @Override
     public void onError() {
-        mBinding.refreshView.setRefreshing(false);
-    }
-
-    @Override
-    public void removeAllItems() {
-        mAdapter.removeAllItems();
-    }
-
-    @Override
-    public void hideRefresh() {
         mBinding.refreshView.setRefreshing(false);
     }
 
@@ -159,6 +144,33 @@ public class SearchSetlistFragment extends BaseFragment implements SearchSetlist
     @Override
     public void onRefresh() {
         mPresenter.refresh();
+    }
+
+    @Override
+    public void addItems(List<Setlists.Setlist> items, boolean hasMore) {
+        mAdapter.addItems(items);
+        if (!hasMore) {
+            mAdapter.notifyNoMoreItems();
+        }
+    }
+
+    @Override
+    public void clearItems() {
+        mAdapter.removeAllItems();
+    }
+
+    @Override
+    public void showLoading() {
+        if (mBinding != null) {
+            mBinding.refreshView.setRefreshing(true);
+        }
+    }
+
+    @Override
+    public void hideLoading() {
+        if (mBinding != null) {
+            mBinding.refreshView.setRefreshing(false);
+        }
     }
 
     public interface SearchFragmentListener {

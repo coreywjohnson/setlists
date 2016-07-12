@@ -14,12 +14,11 @@ import javax.inject.Inject;
 /**
  * Created by corey on 02-May-16.
  */
-public class SearchSetlistPresenter extends Presenter implements SearchSetlistByArtistInteractor.SearchSetlistByArtistListener {
+public class SearchSetlistPresenter extends PaginatablePresenter<Setlists.Setlist> implements SearchSetlistByArtistInteractor.SearchSetlistByArtistListener {
     private SearchSetlistByArtistInteractor mInteractor;
     private SearchSetlistView mSearchSetlistView;
     private AnalyticsInteractor mAnalyticsInteractor;
     private String mQuery;
-    private int mPageNo = -1;
 
     @Inject
     public SearchSetlistPresenter(SearchSetlistByArtistInteractor interactor, SearchSetlistView searchSetlistView, AnalyticsInteractor analyticsInteractor) {
@@ -29,9 +28,10 @@ public class SearchSetlistPresenter extends Presenter implements SearchSetlistBy
     }
 
     public void onSearch(String query) {
-        mSearchSetlistView.removeAllItems();
+        mSearchSetlistView.clearItems();
         mQuery = query;
         mPageNo = 1;
+        mLoadCount = 0;
         mInteractor.execute(mQuery, mPageNo, this);
         Map<String, String> properties = new HashMap<>();
         properties.put(FirebaseAnalytics.Param.SEARCH_TERM, query);
@@ -49,8 +49,9 @@ public class SearchSetlistPresenter extends Presenter implements SearchSetlistBy
 
     @Override
     public void onSuccess(Setlists searchResponse) {
-        mSearchSetlistView.hideRefresh();
-        mSearchSetlistView.addItems(searchResponse.getSetlist());
+        mLoadCount += searchResponse.getSetlist().size();
+        mSearchSetlistView.hideLoading();
+        mSearchSetlistView.addItems(searchResponse.getSetlist(), mLoadCount < Integer.parseInt(searchResponse.getTotal()));
     }
 
     @Override

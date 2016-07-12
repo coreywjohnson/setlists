@@ -18,7 +18,7 @@ public abstract class PaginatableAdapter<T> extends BaseAdapter<T> {
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        if (position > mAdapterData.size() - LOAD_OFFSET && !mIsLoading && ismHasMoreItems()) {
+        if (position > mAdapterData.size() - LOAD_OFFSET && !mIsLoading && mHasMoreItems) {
             mPaginatableAdapterListener.onLoadMore();
             mIsLoading = true;
         }
@@ -51,6 +51,7 @@ public abstract class PaginatableAdapter<T> extends BaseAdapter<T> {
         } else {
             notifyItemRangeRemoved(0, rangeEnd);
         }
+        mHasMoreItems = true;
     }
 
     public void notifyNoMoreItems() {
@@ -58,15 +59,7 @@ public abstract class PaginatableAdapter<T> extends BaseAdapter<T> {
             notifyItemRemoved(mAdapterData.size());
             mIsLoading = false;
         }
-        setHasMoreItems(false);
-    }
-
-    public boolean ismHasMoreItems() {
-        return mHasMoreItems;
-    }
-
-    public void setHasMoreItems(boolean mHasMoreItems) {
-        this.mHasMoreItems = mHasMoreItems;
+        mHasMoreItems = false;
     }
 
     public interface PaginatableAdapterListener extends AdapterListener {
