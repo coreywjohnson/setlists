@@ -7,6 +7,7 @@ package com.coreywjohnson.setlists.interactors;
 import android.util.Log;
 
 import com.coreywjohnson.setlists.data.SetlistService;
+import com.coreywjohnson.setlists.interfaces.PaginatableRequestListener;
 import com.coreywjohnson.setlists.models.Setlists;
 
 import javax.inject.Inject;
@@ -15,29 +16,31 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class GetArtistsSetlistsInteractor {
+public class GetArtistsSetlistsInteractor implements PaginatableRequest<Setlists.Setlist> {
     public static final String URL = "artist/%s/setlists";
 
     private SetlistService mSetlistService;
     private Call<Setlists> mRequest;
+    private PaginatableRequestListener<Setlists.Setlist> mListener;
+    private String mArtistMbid;
 
     @Inject
     public GetArtistsSetlistsInteractor(SetlistService setlistService) {
         mSetlistService = setlistService;
     }
 
-    public void execute(String mbid, int pageNo, final SearchSetlistByArtistListener listener) {
+    @Override
+    public void loadPage(int pageNo) {
         cancel();
-        Log.i("url", String.format(URL, mbid));
-        mRequest = mSetlistService.getSetlistsByArtist(String.format(URL, mbid), pageNo);
+        mRequest = mSetlistService.getSetlistsByArtist(String.format(URL, mArtistMbid), pageNo);
         mRequest.enqueue(new Callback<Setlists>() {
             @Override
             public void onResponse(Call<Setlists> call, Response<Setlists> response) {
                 if (response.isSuccessful()) {
-                    listener.onSuccess(response.body());
+                    mListener.onSuccess(response.body().getSetlist(), Integer.parseInt(response.body().getTotal()));
                 } else {
                     Log.i("Error", response.message());
-                    listener.onError(response.message());
+                    mListener.onError(response.message());
                 }
             }
 
@@ -46,23 +49,27 @@ public class GetArtistsSetlistsInteractor {
                 if (!call.isCanceled()) {
                     Log.i("Search Request", "Failed");
                     Log.e("Failure", t.getMessage());
-                    listener.onError(t.getMessage());
+                    mListener.onError(t.getMessage());
                 }
             }
         });
     }
 
-    private void cancel() {
+    @Override
+    public void setListener(PaginatableRequestListener<Setlists.Setlist> listener) {
+        mListener = listener;
+    }
+
+    @Override
+    public void cancel() {
         if (mRequest != null) {
             mRequest.cancel();
             mRequest = null;
         }
     }
 
-    public interface SearchSetlistByArtistListener {
-        void onSuccess(Setlists searchResponse);
-
-        void onError(String error);
+    public void setArtistMbid(String artistMbid) {
+        mArtistMbid = artistMbid;
     }
 }
 

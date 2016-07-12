@@ -133,7 +133,7 @@ public class SearchSetlistFragment extends BaseFragment implements SearchSetlist
 
     @Override
     public void onLoadMore() {
-        mPresenter.loadMore();
+        mPresenter.onLoadMore();
     }
 
     @Override
@@ -143,7 +143,7 @@ public class SearchSetlistFragment extends BaseFragment implements SearchSetlist
 
     @Override
     public void onRefresh() {
-        mPresenter.refresh();
+        mPresenter.onRefresh();
     }
 
     @Override

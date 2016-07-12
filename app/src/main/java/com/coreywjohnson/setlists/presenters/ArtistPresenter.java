@@ -15,7 +15,7 @@ import javax.inject.Inject;
 /**
  * Created by corey on 03-Jul-16.
  */
-public class ArtistPresenter extends PaginatablePresenter<Setlists.Setlist> implements GetArtistsSetlistsInteractor.SearchSetlistByArtistListener {
+public class ArtistPresenter extends PaginatablePresenter<Setlists.Setlist> {
     ArtistView mView;
     Artists.Artist mArtist;
     GetArtistsSetlistsInteractor mInteractor;
@@ -23,6 +23,7 @@ public class ArtistPresenter extends PaginatablePresenter<Setlists.Setlist> impl
 
     @Inject
     public ArtistPresenter(ArtistView view, AnalyticsInteractor analyticsInteractor, GetArtistsSetlistsInteractor interactor) {
+        super(view, interactor);
         mView = view;
         mInteractor = interactor;
         mAnalyticsInteractor = analyticsInteractor;
@@ -30,27 +31,8 @@ public class ArtistPresenter extends PaginatablePresenter<Setlists.Setlist> impl
 
     public void onCreate(Artists.Artist artist) {
         mArtist = artist;
-        mPageNo = 1;
-        mInteractor.execute(artist.getMbid(), mPageNo, this);
-    }
-
-    public void onLoadMore() {
-        mPageNo++;
-        mInteractor.execute(mArtist.getMbid(), mPageNo, this);
-    }
-
-    @Override
-    public void onRefresh() {
-        super.onRefresh();
-        mView.clearItems();
-        mInteractor.execute(mArtist.getMbid(), mPageNo, this);
-    }
-
-    @Override
-    public void onSuccess(Setlists searchResponse) {
-        mLoadCount += searchResponse.getSetlist().size();
-        mView.addItems(searchResponse.getSetlist(), Integer.parseInt(searchResponse.getTotal()) == mLoadCount ? false : true);
-        mView.hideLoading();
+        mInteractor.setArtistMbid(artist.getMbid());
+        firstLoad();
     }
 
     @Override
