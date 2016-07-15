@@ -37,7 +37,7 @@
                 android:layout_height="wrap_content"
                 android:text='@{artist.disambiguation}'
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Caption"
-                android:visibility="@{artist.disambiguation == null ? View.GONE : View.VISIBLE}" />
+                android:visibility="@{artist.disambiguation == null || artist.disambiguation.empty ? View.GONE : View.VISIBLE}" />
 
         </LinearLayout>
 

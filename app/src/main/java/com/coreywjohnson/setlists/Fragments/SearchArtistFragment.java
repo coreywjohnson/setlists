@@ -105,26 +105,6 @@ public class SearchArtistFragment extends BaseFragment implements SearchArtistVi
     }
 
     @Override
-    public void addItems(List<Artists.Artist> artists) {
-        mAdapter.addItems(artists);
-    }
-
-    @Override
-    public void removeAllItems() {
-        mAdapter.removeAllItems();
-    }
-
-    @Override
-    public void notifyNoMoreItems() {
-        mAdapter.notifyNoMoreItems();
-    }
-
-    @Override
-    public void hideRefresh() {
-        mBinding.refreshView.setRefreshing(false);
-    }
-
-    @Override
     public void onError(String error) {
         makeTextSnackbar(error);
     }
@@ -144,17 +124,48 @@ public class SearchArtistFragment extends BaseFragment implements SearchArtistVi
     }
 
     @Override
+    public void onArtistClick(Artists.Artist artist) {
+        mPresenter.onArtistClick(artist);
+    }
+
+    @Override
+    public void addItems(List<Artists.Artist> items, boolean hasMore) {
+        if (mAdapter != null) {
+            mAdapter.addItems(items);
+            if (!hasMore) {
+                mAdapter.notifyNoMoreItems();
+            }
+        }
+    }
+
+    @Override
+    public void clearItems() {
+        if (mAdapter != null) {
+            mAdapter.removeAllItems();
+        }
+    }
+
+    @Override
+    public void showLoading() {
+        if (mBinding != null) {
+            mBinding.refreshView.setRefreshing(true);
+        }
+    }
+
+    @Override
+    public void hideLoading() {
+        if (mBinding != null) {
+            mBinding.refreshView.setRefreshing(false);
+        }
+    }
+
+    @Override
     public void onRefresh() {
-        mPresenter.refresh();
+        mPresenter.onRefresh();
     }
 
     @Override
     public void onLoadMore() {
-        mPresenter.loadMore();
-    }
-
-    @Override
-    public void onArtistClick(Artists.Artist artist) {
-        mPresenter.onArtistClick(artist);
+        mPresenter.onLoadMore();
     }
 }

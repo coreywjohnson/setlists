@@ -1,7 +1,5 @@
 package com.coreywjohnson.setlists.presenters;
 
-import android.util.Log;
-
 import com.coreywjohnson.setlists.interactors.AnalyticsInteractor;
 import com.coreywjohnson.setlists.interactors.SearchArtistInteractor;
 import com.coreywjohnson.setlists.models.Artists;
@@ -16,53 +14,25 @@ import javax.inject.Inject;
 /**
  * Created by corey on 12-Jun-16.
  */
-public class SearchArtistPresenter extends Presenter implements SearchArtistInteractor.SearchArtistListener {
+public class SearchArtistPresenter extends PaginatablePresenter<Artists.Artist> {
     private AnalyticsInteractor mAnalyticsInteractor;
     private SearchArtistInteractor mSearchArtistInteractor;
     private SearchArtistView mView;
-    private String mQuery;
-    private int mPageNo = -1;
-    private int mLoadCount = -1;
 
     @Inject
     public SearchArtistPresenter(SearchArtistInteractor interactor, SearchArtistView view, AnalyticsInteractor analyticsInteractor) {
+        super(view, interactor);
         mSearchArtistInteractor = interactor;
         mView = view;
         mAnalyticsInteractor = analyticsInteractor;
     }
 
     public void onSearch(String query) {
-        mView.removeAllItems();
-        mQuery = query;
-        mLoadCount = 0;
-        mPageNo = 1;
-        mSearchArtistInteractor.execute(mQuery, mPageNo, this);
+        mSearchArtistInteractor.setQuery(query);
+        firstLoad();
         Map<String, String> properties = new HashMap<>();
         properties.put(FirebaseAnalytics.Param.SEARCH_TERM, query);
         mAnalyticsInteractor.sendEvent(FirebaseAnalytics.Event.SEARCH, properties);
-    }
-
-    public void loadMore() {
-        mPageNo++;
-        mSearchArtistInteractor.execute(mQuery, mPageNo, this);
-    }
-
-    public void refresh() {
-        mLoadCount = 0;
-        mPageNo = 1;
-        onSearch(mQuery);
-    }
-
-    @Override
-    public void onSuccess(Artists artists) {
-        mView.hideRefresh();
-        mView.addItems(artists.getArtist());
-        mLoadCount += artists.getArtist().size();
-        Log.i("Loading", "Load count is " + mLoadCount);
-        // Minus 1 because the api returns an incorrent total count
-        if (mLoadCount == (Integer.parseInt(artists.getTotal()) - 1)) {
-            mView.notifyNoMoreItems();
-        }
     }
 
     @Override
