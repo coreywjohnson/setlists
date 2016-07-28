@@ -20,6 +20,7 @@ import com.coreywjohnson.setlists.models.Setlists;
 import com.coreywjohnson.setlists.modules.MainModule;
 import com.coreywjohnson.setlists.presenters.MainPresenter;
 import com.coreywjohnson.setlists.views.MainView;
+import com.coreywjohnson.setlists.widgets.HeaderWidget;
 
 import javax.inject.Inject;
 
@@ -84,6 +85,8 @@ public class MainActivity extends BaseActivity implements MainView, SearchSetlis
                 }
             }
         });
+        mBinding.navigationView.setCheckedItem(R.id.action_setlists);
+        mBinding.navigationView.addHeaderView(new HeaderWidget(this));
     }
 
     @Override
