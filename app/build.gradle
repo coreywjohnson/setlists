@@ -13,8 +13,8 @@ android {
         applicationId "com.coreywjohnson.setlists"
         minSdkVersion 17
         targetSdkVersion 23
-        versionCode 3
-        versionName "0.2 Alpha"
+        versionCode 4
+        versionName "0.3 Alpha"
     }
     buildTypes {
         release {
