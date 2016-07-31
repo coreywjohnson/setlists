@@ -1,4 +1,4 @@
-package com.coreywjohnson.setlists.views;
+package com.coreywjohnson.setlists.views.common;
 
 import java.util.List;
 

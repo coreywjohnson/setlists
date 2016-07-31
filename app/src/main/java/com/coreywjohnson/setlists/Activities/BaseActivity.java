@@ -5,7 +5,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 
-import com.coreywjohnson.setlists.views.BaseView;
+import com.coreywjohnson.setlists.views.common.BaseView;
 
 /**
  * Created by corey on 24-Apr-16.

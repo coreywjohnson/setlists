@@ -3,7 +3,7 @@ package com.coreywjohnson.setlists.modules;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
-import com.coreywjohnson.setlists.App;
+import com.coreywjohnson.setlists.SetlistsApp;
 import com.google.firebase.analytics.FirebaseAnalytics;
 
 import javax.inject.Singleton;
@@ -17,21 +17,21 @@ import dagger.Provides;
 
 @Module
 public class AppModule {
-    private App mApp;
+    private SetlistsApp mSetlistsApp;
 
-    public AppModule(App app) {
-        mApp = app;
+    public AppModule(SetlistsApp setlistsApp) {
+        mSetlistsApp = setlistsApp;
     }
 
     @Provides
     @Singleton
     public SharedPreferences provideSharedPreferences() {
-        return PreferenceManager.getDefaultSharedPreferences(mApp);
+        return PreferenceManager.getDefaultSharedPreferences(mSetlistsApp);
     }
 
     @Provides
     @Singleton
     public FirebaseAnalytics provideFirebaseAnalytics() {
-        return FirebaseAnalytics.getInstance(mApp);
+        return FirebaseAnalytics.getInstance(mSetlistsApp);
     }
 }

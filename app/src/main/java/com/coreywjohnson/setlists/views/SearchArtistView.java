@@ -1,6 +1,7 @@
 package com.coreywjohnson.setlists.views;
 
 import com.coreywjohnson.setlists.models.Artists;
+import com.coreywjohnson.setlists.views.common.PaginatableView;
 
 /**
  * Created by corey on 12-Jun-16.

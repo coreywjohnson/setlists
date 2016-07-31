@@ -1,4 +1,4 @@
-package com.coreywjohnson.setlists.adapter;
+package com.coreywjohnson.setlists.adapter.common;
 
 import android.support.v7.widget.RecyclerView;
 
@@ -31,6 +31,11 @@ public abstract class PaginatableAdapter<T> extends BaseAdapter<T> {
         } else {
             return mAdapterData.size();
         }
+    }
+
+    public void addItems(List<T> data, boolean hasMore) {
+        mHasMoreItems = hasMore;
+        addItems(data);
     }
 
     @Override

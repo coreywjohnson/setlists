@@ -7,7 +7,7 @@ import android.support.v4.app.Fragment;
 import android.view.Menu;
 import android.view.MenuInflater;
 
-import com.coreywjohnson.setlists.views.BaseView;
+import com.coreywjohnson.setlists.views.common.BaseView;
 
 /**
  * Created by corey on 02-May-16.
@@ -40,6 +40,8 @@ public abstract class BaseFragment extends Fragment implements BaseView {
 
     @Override
     public void makeTextSnackbar(String text) {
-        Snackbar.make(getView(), text, Snackbar.LENGTH_SHORT).show();
+        if (getView() != null) {
+            Snackbar.make(getView(), text, Snackbar.LENGTH_SHORT).show();
+        }
     }
 }

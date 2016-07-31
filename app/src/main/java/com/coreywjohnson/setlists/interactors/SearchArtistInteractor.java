@@ -3,6 +3,7 @@ package com.coreywjohnson.setlists.interactors;
 import android.util.Log;
 
 import com.coreywjohnson.setlists.data.SetlistService;
+import com.coreywjohnson.setlists.interfaces.PaginatableRequest;
 import com.coreywjohnson.setlists.interfaces.PaginatableRequestListener;
 import com.coreywjohnson.setlists.models.Artists;
 

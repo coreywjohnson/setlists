@@ -1,6 +1,7 @@
 package com.coreywjohnson.setlists.presenters;
 
 import com.coreywjohnson.setlists.models.Setlists;
+import com.coreywjohnson.setlists.presenters.common.Presenter;
 import com.coreywjohnson.setlists.views.SetlistView;
 
 import javax.inject.Inject;

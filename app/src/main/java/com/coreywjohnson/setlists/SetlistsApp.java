@@ -11,18 +11,18 @@ import com.coreywjohnson.setlists.modules.InteractorsModule;
 /**
  * Created by coreyjohnson on 4/05/16.
  */
-public class App extends Application {
+public class SetlistsApp extends Application {
     private AppComponent mAppComponent;
 
     public static AppComponent getAppComponent(Context context) {
-        App app = (App) context.getApplicationContext();
-        if (app.mAppComponent == null) {
-            app.mAppComponent = DaggerAppComponent.builder()
-                    .appModule(new AppModule(app))
+        SetlistsApp setlistsApp = (SetlistsApp) context.getApplicationContext();
+        if (setlistsApp.mAppComponent == null) {
+            setlistsApp.mAppComponent = DaggerAppComponent.builder()
+                    .appModule(new AppModule(setlistsApp))
                     .interactorsModule(new InteractorsModule())
                     .build();
         }
-        return app.mAppComponent;
+        return setlistsApp.mAppComponent;
     }
 
     protected AppModule getAppModule() {

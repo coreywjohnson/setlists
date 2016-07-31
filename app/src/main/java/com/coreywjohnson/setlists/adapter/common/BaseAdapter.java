@@ -1,4 +1,4 @@
-package com.coreywjohnson.setlists.adapter;
+package com.coreywjohnson.setlists.adapter.common;
 
 import android.support.v7.widget.RecyclerView;
 

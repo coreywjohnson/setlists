@@ -1,6 +1,7 @@
 package com.coreywjohnson.setlists.views;
 
 import com.coreywjohnson.setlists.models.Setlists;
+import com.coreywjohnson.setlists.views.common.BaseView;
 
 import java.util.List;
 

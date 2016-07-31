@@ -1,4 +1,4 @@
-package com.coreywjohnson.setlists.views;
+package com.coreywjohnson.setlists.views.common;
 
 /**
  * Created by corey on 02-May-16.

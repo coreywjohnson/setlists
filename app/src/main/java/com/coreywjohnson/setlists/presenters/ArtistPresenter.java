@@ -4,6 +4,7 @@ import com.coreywjohnson.setlists.interactors.AnalyticsInteractor;
 import com.coreywjohnson.setlists.interactors.GetArtistsSetlistsInteractor;
 import com.coreywjohnson.setlists.models.Artists;
 import com.coreywjohnson.setlists.models.Setlists;
+import com.coreywjohnson.setlists.presenters.common.PaginatablePresenter;
 import com.coreywjohnson.setlists.views.ArtistView;
 import com.google.firebase.analytics.FirebaseAnalytics;
 
@@ -32,7 +33,7 @@ public class ArtistPresenter extends PaginatablePresenter<Setlists.Setlist> {
     public void onCreate(Artists.Artist artist) {
         mArtist = artist;
         mInteractor.setArtistMbid(artist.getMbid());
-        firstLoad();
+        onRefresh();
     }
 
     @Override

@@ -4,10 +4,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
+import com.coreywjohnson.setlists.adapter.common.BaseAdapter;
 import com.coreywjohnson.setlists.models.Setlists;
 import com.coreywjohnson.setlists.widgets.SongWidget;
-
-import java.util.ArrayList;
 
 import javax.inject.Inject;
 

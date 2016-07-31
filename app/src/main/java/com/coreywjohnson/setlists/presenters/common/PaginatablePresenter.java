@@ -1,8 +1,8 @@
-package com.coreywjohnson.setlists.presenters;
+package com.coreywjohnson.setlists.presenters.common;
 
-import com.coreywjohnson.setlists.interactors.PaginatableRequest;
+import com.coreywjohnson.setlists.interfaces.PaginatableRequest;
 import com.coreywjohnson.setlists.interfaces.PaginatableRequestListener;
-import com.coreywjohnson.setlists.views.PaginatableView;
+import com.coreywjohnson.setlists.views.common.PaginatableView;
 
 import java.util.List;
 
@@ -21,19 +21,15 @@ public abstract class PaginatablePresenter<Type> extends Presenter implements Pa
         mRequest.setListener(this);
     }
 
-    public void firstLoad() {
-        mPaginatableView.clearItems();
-        mPageNo = 1;
-        mLoadCount = 0;
-        mRequest.loadPage(mPageNo);
-    }
-
     public void onLoadMore() {
         mRequest.loadPage(mPageNo++);
     }
 
     public void onRefresh() {
-        firstLoad();
+        mPaginatableView.clearItems();
+        mPageNo = 1;
+        mLoadCount = 0;
+        mRequest.loadPage(mPageNo);
     }
 
     @Override

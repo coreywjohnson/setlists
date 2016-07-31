@@ -4,6 +4,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
+import com.coreywjohnson.setlists.adapter.common.PaginatableAdapter;
 import com.coreywjohnson.setlists.models.Artists;
 import com.coreywjohnson.setlists.widgets.ArtistWidget;
 import com.coreywjohnson.setlists.widgets.LoadingWidget;

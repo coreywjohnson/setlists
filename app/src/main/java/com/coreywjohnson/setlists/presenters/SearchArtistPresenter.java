@@ -3,6 +3,7 @@ package com.coreywjohnson.setlists.presenters;
 import com.coreywjohnson.setlists.interactors.AnalyticsInteractor;
 import com.coreywjohnson.setlists.interactors.SearchArtistInteractor;
 import com.coreywjohnson.setlists.models.Artists;
+import com.coreywjohnson.setlists.presenters.common.PaginatablePresenter;
 import com.coreywjohnson.setlists.views.SearchArtistView;
 import com.google.firebase.analytics.FirebaseAnalytics;
 
@@ -29,7 +30,7 @@ public class SearchArtistPresenter extends PaginatablePresenter<Artists.Artist> 
 
     public void onSearch(String query) {
         mSearchArtistInteractor.setQuery(query);
-        firstLoad();
+        onRefresh();
         Map<String, String> properties = new HashMap<>();
         properties.put(FirebaseAnalytics.Param.SEARCH_TERM, query);
         mAnalyticsInteractor.sendEvent(FirebaseAnalytics.Event.SEARCH, properties);

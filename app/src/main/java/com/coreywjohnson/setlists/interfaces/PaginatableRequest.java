@@ -1,6 +1,4 @@
-package com.coreywjohnson.setlists.interactors;
-
-import com.coreywjohnson.setlists.interfaces.PaginatableRequestListener;
+package com.coreywjohnson.setlists.interfaces;
 
 /**
  * Created by coreyjohnson on 12/07/16.
