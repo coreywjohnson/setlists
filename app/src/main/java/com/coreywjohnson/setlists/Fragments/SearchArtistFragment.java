@@ -18,6 +18,7 @@ import com.coreywjohnson.setlists.adapter.ArtistAdapter;
 import com.coreywjohnson.setlists.components.DaggerSearchArtistComponent;
 import com.coreywjohnson.setlists.components.SearchArtistComponent;
 import com.coreywjohnson.setlists.databinding.FragmentSearchBinding;
+import com.coreywjohnson.setlists.helpers.ViewHelper;
 import com.coreywjohnson.setlists.models.Artists;
 import com.coreywjohnson.setlists.modules.SearchArtistModule;
 import com.coreywjohnson.setlists.presenters.SearchArtistPresenter;
@@ -121,6 +122,11 @@ public class SearchArtistFragment extends BaseFragment implements SearchArtistVi
                 .replace(R.id.fragment_container, ArtistFragment.newInstance(artist))
                 .addToBackStack("artist")
                 .commit();
+    }
+
+    @Override
+    public void hideKeyboard() {
+        ViewHelper.hideKeyboard(mBinding.getRoot(), getContext());
     }
 
     @Override

@@ -12,4 +12,6 @@ public interface SearchArtistView extends PaginatableView<Artists.Artist> {
     MainView getParentView();
 
     void showArtist(Artists.Artist artist);
+
+    void hideKeyboard();
 }

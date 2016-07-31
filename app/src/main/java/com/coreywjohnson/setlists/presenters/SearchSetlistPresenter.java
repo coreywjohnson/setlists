@@ -31,6 +31,7 @@ public class SearchSetlistPresenter extends PaginatablePresenter<Setlists.Setlis
     public void onSearch(String query) {
         mInteractor.setQuery(query);
         onRefresh();
+        mSearchSetlistView.hideKeyboard();
         Map<String, String> properties = new HashMap<>();
         properties.put(FirebaseAnalytics.Param.SEARCH_TERM, query);
         mAnalyticsInteractor.sendEvent(FirebaseAnalytics.Event.SEARCH, properties);

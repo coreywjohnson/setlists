@@ -19,6 +19,7 @@ import com.coreywjohnson.setlists.adapter.SetlistAdapter;
 import com.coreywjohnson.setlists.components.DaggerSearchSetlistComponent;
 import com.coreywjohnson.setlists.components.SearchSetlistComponent;
 import com.coreywjohnson.setlists.databinding.FragmentSearchBinding;
+import com.coreywjohnson.setlists.helpers.ViewHelper;
 import com.coreywjohnson.setlists.models.Setlists;
 import com.coreywjohnson.setlists.modules.SearchSetlistModule;
 import com.coreywjohnson.setlists.presenters.SearchSetlistPresenter;
@@ -129,6 +130,11 @@ public class SearchSetlistFragment extends BaseFragment implements SearchSetlist
         if (mListener != null) {
             mListener.onSetlistClick(setlist);
         }
+    }
+
+    @Override
+    public void hideKeyboard() {
+        ViewHelper.hideKeyboard(mBinding.getRoot(), getContext());
     }
 
     @Override

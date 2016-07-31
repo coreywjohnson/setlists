@@ -31,6 +31,7 @@ public class SearchArtistPresenter extends PaginatablePresenter<Artists.Artist> 
     public void onSearch(String query) {
         mSearchArtistInteractor.setQuery(query);
         onRefresh();
+        mView.hideKeyboard();
         Map<String, String> properties = new HashMap<>();
         properties.put(FirebaseAnalytics.Param.SEARCH_TERM, query);
         mAnalyticsInteractor.sendEvent(FirebaseAnalytics.Event.SEARCH, properties);
