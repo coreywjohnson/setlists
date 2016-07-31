@@ -8,8 +8,8 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
-import com.coreywjohnson.setlists.App;
 import com.coreywjohnson.setlists.R;
+import com.coreywjohnson.setlists.SetlistsApp;
 import com.coreywjohnson.setlists.components.DaggerMainComponent;
 import com.coreywjohnson.setlists.components.MainComponent;
 import com.coreywjohnson.setlists.databinding.ActivityMainBinding;
@@ -36,7 +36,7 @@ public class MainActivity extends BaseActivity implements MainView, SearchSetlis
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         MainComponent mainComponent = DaggerMainComponent.builder()
-                .appComponent(App.getAppComponent(getApplicationContext()))
+                .appComponent(SetlistsApp.getAppComponent(getApplicationContext()))
                 .mainModule(new MainModule(this))
                 .build();
         mainComponent.inject(this);
@@ -122,5 +122,22 @@ public class MainActivity extends BaseActivity implements MainView, SearchSetlis
         if (title != null) {
             getSupportActionBar().setTitle(title);
         }
+    }
+
+    @Override
+    public void setToolbar(Toolbar toolbar, boolean showDrawerIndicator, int resId) {
+        setToolbar(toolbar, showDrawerIndicator, getString(resId));
+    }
+
+    @Override
+    public void setToolbarText(String title) {
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle(title);
+        }
+    }
+
+    @Override
+    public void setToolbarText(int resId) {
+        setToolbarText(getString(resId));
     }
 }

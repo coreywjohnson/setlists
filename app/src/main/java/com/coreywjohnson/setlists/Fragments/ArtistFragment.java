@@ -10,8 +10,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.coreywjohnson.setlists.App;
 import com.coreywjohnson.setlists.R;
+import com.coreywjohnson.setlists.SetlistsApp;
 import com.coreywjohnson.setlists.adapter.SetlistAdapter;
 import com.coreywjohnson.setlists.components.ArtistComponent;
 import com.coreywjohnson.setlists.components.DaggerArtistComponent;
@@ -52,7 +52,7 @@ public class ArtistFragment extends BaseFragment implements ArtistView, SetlistA
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ArtistComponent artistComponent = DaggerArtistComponent.builder()
-                .appComponent(App.getAppComponent(getContext()))
+                .appComponent(SetlistsApp.getAppComponent(getContext()))
                 .artistModule(new ArtistModule(this, this))
                 .build();
         artistComponent.inject(this);
@@ -118,25 +118,30 @@ public class ArtistFragment extends BaseFragment implements ArtistView, SetlistA
 
     @Override
     public void addItems(List<Setlists.Setlist> items, boolean hasMore) {
-        mAdapter.addItems(items);
-        if (!hasMore) {
-            mAdapter.notifyNoMoreItems();
+        if (mAdapter != null) {
+            mAdapter.addItems(items, hasMore);
         }
     }
 
     @Override
     public void clearItems() {
-        mAdapter.removeAllItems();
+        if (mAdapter != null) {
+            mAdapter.removeAllItems();
+        }
     }
 
     @Override
     public void showLoading() {
-        mBinding.refreshView.setRefreshing(true);
+        if (mBinding != null) {
+            mBinding.refreshView.setRefreshing(true);
+        }
     }
 
     @Override
     public void hideLoading() {
-        mBinding.refreshView.setRefreshing(false);
+        if (mBinding != null) {
+            mBinding.refreshView.setRefreshing(false);
+        }
     }
 
     @Override

@@ -12,8 +12,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.coreywjohnson.setlists.App;
 import com.coreywjohnson.setlists.R;
+import com.coreywjohnson.setlists.SetlistsApp;
 import com.coreywjohnson.setlists.adapter.ArtistAdapter;
 import com.coreywjohnson.setlists.components.DaggerSearchArtistComponent;
 import com.coreywjohnson.setlists.components.SearchArtistComponent;
@@ -52,7 +52,7 @@ public class SearchArtistFragment extends BaseFragment implements SearchArtistVi
         super.onCreate(savedInstanceState);
         SearchArtistComponent searchArtistComponent =
                 DaggerSearchArtistComponent.builder()
-                        .appComponent(App.getAppComponent(getContext()))
+                        .appComponent(SetlistsApp.getAppComponent(getContext()))
                         .searchArtistModule(new SearchArtistModule(this, this))
                         .build();
         searchArtistComponent.inject(this);
@@ -62,7 +62,7 @@ public class SearchArtistFragment extends BaseFragment implements SearchArtistVi
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mBinding = DataBindingUtil.inflate(inflater, getLayout(), container, false);
-        getParentView().setToolbar(mBinding.toolbar, true, null);
+        getParentView().setToolbar(mBinding.toolbar, true, R.string.title_artists);
         mBinding.recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mBinding.recyclerView.setAdapter(mAdapter);
         mBinding.refreshView.setOnRefreshListener(this);
@@ -131,10 +131,7 @@ public class SearchArtistFragment extends BaseFragment implements SearchArtistVi
     @Override
     public void addItems(List<Artists.Artist> items, boolean hasMore) {
         if (mAdapter != null) {
-            mAdapter.addItems(items);
-            if (!hasMore) {
-                mAdapter.notifyNoMoreItems();
-            }
+            mAdapter.addItems(items, hasMore);
         }
     }
 

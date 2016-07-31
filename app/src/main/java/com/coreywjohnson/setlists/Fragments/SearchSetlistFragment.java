@@ -13,8 +13,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.coreywjohnson.setlists.App;
 import com.coreywjohnson.setlists.R;
+import com.coreywjohnson.setlists.SetlistsApp;
 import com.coreywjohnson.setlists.adapter.SetlistAdapter;
 import com.coreywjohnson.setlists.components.DaggerSearchSetlistComponent;
 import com.coreywjohnson.setlists.components.SearchSetlistComponent;
@@ -49,7 +49,7 @@ public class SearchSetlistFragment extends BaseFragment implements SearchSetlist
         super.onCreate(savedInstanceState);
         SearchSetlistComponent searchSetlistComponent =
                 DaggerSearchSetlistComponent.builder()
-                        .appComponent(App.getAppComponent(getContext()))
+                        .appComponent(SetlistsApp.getAppComponent(getContext()))
                         .searchSetlistModule(new SearchSetlistModule(this, this))
                         .build();
         searchSetlistComponent.inject(this);
@@ -61,7 +61,7 @@ public class SearchSetlistFragment extends BaseFragment implements SearchSetlist
         mBinding = DataBindingUtil.inflate(inflater, getLayout(), container, false);
         mBinding.recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mBinding.recyclerView.setAdapter(mAdapter);
-        getParentView().setToolbar(mBinding.toolbar, true, null);
+        getParentView().setToolbar(mBinding.toolbar, true, R.string.title_setlists);
 
         mBinding.refreshView.setOnRefreshListener(this);
 
@@ -148,15 +148,16 @@ public class SearchSetlistFragment extends BaseFragment implements SearchSetlist
 
     @Override
     public void addItems(List<Setlists.Setlist> items, boolean hasMore) {
-        mAdapter.addItems(items);
-        if (!hasMore) {
-            mAdapter.notifyNoMoreItems();
+        if (mAdapter != null) {
+            mAdapter.addItems(items, hasMore);
         }
     }
 
     @Override
     public void clearItems() {
-        mAdapter.removeAllItems();
+        if (mAdapter != null) {
+            mAdapter.removeAllItems();
+        }
     }
 
     @Override

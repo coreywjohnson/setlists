@@ -6,7 +6,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.AppBarLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -14,8 +13,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 
-import com.coreywjohnson.setlists.App;
 import com.coreywjohnson.setlists.R;
+import com.coreywjohnson.setlists.SetlistsApp;
 import com.coreywjohnson.setlists.adapter.SongAdapter;
 import com.coreywjohnson.setlists.components.DaggerSetlistComponent;
 import com.coreywjohnson.setlists.components.SetlistComponent;
@@ -56,7 +55,7 @@ public class SetlistFragment extends BaseFragment implements SetlistView {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         SetlistComponent setlistComponent = DaggerSetlistComponent.builder()
-                .appComponent(App.getAppComponent(getContext()))
+                .appComponent(SetlistsApp.getAppComponent(getContext()))
                 .setlistModule(new SetlistModule(this))
                 .build();
         setlistComponent.inject(this);
@@ -118,6 +117,8 @@ public class SetlistFragment extends BaseFragment implements SetlistView {
 
     @Override
     public void addItems(List<Setlists.Song> setlistList) {
-        mAdapter.addItems(setlistList);
+        if (mAdapter != null) {
+            mAdapter.addItems(setlistList);
+        }
     }
 }
