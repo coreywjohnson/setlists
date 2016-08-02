@@ -10,8 +10,8 @@ import java.util.List;
  * Created by corey on 11-Jul-16.
  */
 public abstract class PaginatablePresenter<Type> extends Presenter implements PaginatableRequestListener<Type> {
-    protected int mPageNo = -1;
-    protected int mLoadCount = -1;
+    protected int mPageNo = 0;
+    protected int mLoadCount = 0;
     private PaginatableRequest<Type> mRequest;
     private PaginatableView<Type> mPaginatableView;
 
