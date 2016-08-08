@@ -38,7 +38,7 @@ public class SetlistWidget extends RecyclerView.ViewHolder {
         try {
             Date date = simpleDateFormat.parse(setlist.getEventDate());
             mBinding.dateDay.setText(new SimpleDateFormat("d").format(date));
-            mBinding.dateMonth.setText(new SimpleDateFormat("MMM").format(date));
+            mBinding.dateMonth.setText(new SimpleDateFormat("MMM ''yy").format(date));
         } catch (ParseException e) {
             e.printStackTrace();
         }
