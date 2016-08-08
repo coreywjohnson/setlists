@@ -62,6 +62,7 @@ public class SearchSetlistFragment extends BaseFragment implements SearchSetlist
         mBinding = DataBindingUtil.inflate(inflater, getLayout(), container, false);
         mBinding.recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mBinding.recyclerView.setAdapter(mAdapter);
+        mBinding.dataWidget.showData();
         getParentView().setToolbar(mBinding.toolbar, true, R.string.title_setlists);
 
         mBinding.refreshView.setOnRefreshListener(this);
@@ -135,6 +136,20 @@ public class SearchSetlistFragment extends BaseFragment implements SearchSetlist
     @Override
     public void hideKeyboard() {
         ViewHelper.hideKeyboard(mBinding.getRoot(), getContext());
+    }
+
+    @Override
+    public void showDataState() {
+        if (mBinding != null) {
+            mBinding.dataWidget.showData();
+        }
+    }
+
+    @Override
+    public void showEmptyState() {
+        if (mBinding != null) {
+            mBinding.dataWidget.showEmpty();
+        }
     }
 
     @Override

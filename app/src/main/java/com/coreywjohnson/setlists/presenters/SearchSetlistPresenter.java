@@ -39,8 +39,11 @@ public class SearchSetlistPresenter extends PaginatablePresenter<Setlists.Setlis
 
     @Override
     public void onError(String error) {
-        mSearchSetlistView.makeTextSnackbar(error);
-        mSearchSetlistView.onError();
+        super.onError(error);
+        if (!error.equals("Not Found")) {
+            mSearchSetlistView.makeTextSnackbar(error);
+            mSearchSetlistView.onError();
+        }
     }
 
     public void onSetlistClick(Setlists.Setlist setlist) {

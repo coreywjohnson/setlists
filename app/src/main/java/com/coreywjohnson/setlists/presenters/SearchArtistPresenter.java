@@ -39,7 +39,10 @@ public class SearchArtistPresenter extends PaginatablePresenter<Artists.Artist> 
 
     @Override
     public void onError(String error) {
-        mView.onError(error);
+        super.onError(error);
+        if(!error.equals("Not Found")) {
+            mView.onError(error);
+        }
     }
 
     public void onArtistClick(Artists.Artist artist) {

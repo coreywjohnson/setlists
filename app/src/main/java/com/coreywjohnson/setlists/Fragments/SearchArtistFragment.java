@@ -67,6 +67,7 @@ public class SearchArtistFragment extends BaseFragment implements SearchArtistVi
         mBinding.recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mBinding.recyclerView.setAdapter(mAdapter);
         mBinding.refreshView.setOnRefreshListener(this);
+        mBinding.dataWidget.showData();
 
         return mBinding.getRoot();
     }
@@ -159,6 +160,20 @@ public class SearchArtistFragment extends BaseFragment implements SearchArtistVi
     public void hideLoading() {
         if (mBinding != null) {
             mBinding.refreshView.setRefreshing(false);
+        }
+    }
+
+    @Override
+    public void showDataState() {
+        if (mBinding != null) {
+            mBinding.dataWidget.showData();
+        }
+    }
+
+    @Override
+    public void showEmptyState() {
+        if (mBinding != null) {
+            mBinding.dataWidget.showEmpty();
         }
     }
 

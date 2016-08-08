@@ -34,8 +34,19 @@ public abstract class PaginatablePresenter<Type> extends Presenter implements Pa
 
     @Override
     public void onSuccess(List<Type> items, int totalCount) {
+        if (mLoadCount == 0) {
+            mPaginatableView.showDataState();
+        }
         mLoadCount += items.size();
         mPaginatableView.hideLoading();
         mPaginatableView.addItems(items, mLoadCount < totalCount);
+    }
+
+    @Override
+    public void onError(String error) {
+        if (error.equals("Not Found")) {
+            mPaginatableView.showEmptyState();
+        }
+        mPaginatableView.hideLoading();
     }
 }
