@@ -1,5 +1,6 @@
 package com.coreywjohnson.setlists.presenters.common;
 
+import com.coreywjohnson.setlists.data.SetlistService;
 import com.coreywjohnson.setlists.interfaces.PaginatableRequest;
 import com.coreywjohnson.setlists.interfaces.PaginatableRequestListener;
 import com.coreywjohnson.setlists.views.common.PaginatableView;
@@ -44,7 +45,7 @@ public abstract class PaginatablePresenter<Type> extends Presenter implements Pa
 
     @Override
     public void onError(String error) {
-        if (error.equals("Not Found")) {
+        if (error.equals(SetlistService.NOT_FOUND_MESSAGE)) {
             mPaginatableView.showEmptyState();
         }
         mPaginatableView.hideLoading();
