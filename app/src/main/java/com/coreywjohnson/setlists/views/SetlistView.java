@@ -10,4 +10,8 @@ import java.util.List;
  */
 public interface SetlistView extends BaseView {
     void addItems(List<Setlists.Song> setlistList);
+
+    void displayEmptyState();
+
+    void displayDataState();
 }

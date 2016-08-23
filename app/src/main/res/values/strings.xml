@@ -6,8 +6,9 @@
     <string name="txt_drawer_closed">Close Drawer</string>
     <string name="title_setlists">Setlists</string>
     <string name="title_artists">Artists</string>
-    <string name="txt_no_results_found">No Results Found</string>
-    <string name="txt_no_setlists_found">No Setlists Found</string>
+    <string name="txt_no_results_found">No results found</string>
+    <string name="txt_no_setlists_found">No setlists found</string>
     <string name="txt_yesterdays_setlists">Yesterday\'s Setlists</string>
     <string name="txt_results_for">Results for \"%1$s\"</string>
+    <string name="no_songs_recorded">No songs recorded</string>
 </resources>
