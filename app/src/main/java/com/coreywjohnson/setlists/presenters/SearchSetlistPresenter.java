@@ -7,6 +7,8 @@ import com.coreywjohnson.setlists.presenters.common.PaginatablePresenter;
 import com.coreywjohnson.setlists.views.SearchSetlistView;
 import com.google.firebase.analytics.FirebaseAnalytics;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -26,11 +28,18 @@ public class SearchSetlistPresenter extends PaginatablePresenter<Setlists.Setlis
         mInteractor = interactor;
         mSearchSetlistView = searchSetlistView;
         mAnalyticsInteractor = analyticsInteractor;
+        Date date = new Date();
+        date.setDate(date.getDate() - 1);
+        mInteractor.setDate(new SimpleDateFormat("dd-MM-yyyy").format(date));
+        mSearchSetlistView.setAdapterHeaderYesterdaysSetlists();
+        onRefresh();
     }
 
     public void onSearch(String query) {
+        mInteractor.clearParameters();
         mInteractor.setName(query);
         onRefresh();
+        mSearchSetlistView.setAdapterHeaderSearchResults(query);
         mSearchSetlistView.hideKeyboard();
         Map<String, String> properties = new HashMap<>();
         properties.put(FirebaseAnalytics.Param.SEARCH_TERM, query);

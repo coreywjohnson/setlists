@@ -131,6 +131,11 @@ public class SearchArtistFragment extends BaseFragment implements SearchArtistVi
     }
 
     @Override
+    public void setAdapterHeaderSearchResult(String query) {
+        mAdapter.addHeader(0, getString(R.string.txt_results_for, query));
+    }
+
+    @Override
     public void onArtistClick(Artists.Artist artist) {
         mPresenter.onArtistClick(artist);
     }

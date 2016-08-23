@@ -30,6 +30,7 @@ public class SearchArtistPresenter extends PaginatablePresenter<Artists.Artist> 
 
     public void onSearch(String query) {
         mSearchArtistInteractor.setQuery(query);
+        mView.setAdapterHeaderSearchResult(query);
         onRefresh();
         mView.hideKeyboard();
         Map<String, String> properties = new HashMap<>();

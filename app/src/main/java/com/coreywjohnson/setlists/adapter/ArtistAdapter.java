@@ -35,7 +35,7 @@ public class ArtistAdapter extends PaginatableAdapter<Artists.Artist> {
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         super.onBindViewHolder(holder, position);
         if (holder instanceof ArtistWidget) {
-            ((ArtistWidget) holder).setArtist(mAdapterData.get(position));
+            ((ArtistWidget) holder).setArtist(getItemAtPosition(position));
             ((ArtistWidget) holder).setListener(mListener);
         }
     }

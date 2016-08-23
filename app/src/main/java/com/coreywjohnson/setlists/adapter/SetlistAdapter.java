@@ -35,7 +35,7 @@ public class SetlistAdapter extends PaginatableAdapter<Setlists.Setlist> {
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         super.onBindViewHolder(holder, position);
         if (holder instanceof SetlistWidget) {
-            ((SetlistWidget) holder).setSetlist(mAdapterData.get(position));
+            ((SetlistWidget) holder).setSetlist(getItemAtPosition(position));
             ((SetlistWidget) holder).setListener(mListener);
         }
     }

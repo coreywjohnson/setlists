@@ -139,6 +139,16 @@ public class SearchSetlistFragment extends BaseFragment implements SearchSetlist
     }
 
     @Override
+    public void setAdapterHeaderYesterdaysSetlists() {
+        mAdapter.addHeader(0, getString(R.string.txt_yesterdays_setlists));
+    }
+
+    @Override
+    public void setAdapterHeaderSearchResults(String query) {
+        mAdapter.addHeader(0, getString(R.string.txt_results_for, query));
+    }
+
+    @Override
     public void showDataState() {
         if (mBinding != null) {
             mBinding.dataWidget.showData();

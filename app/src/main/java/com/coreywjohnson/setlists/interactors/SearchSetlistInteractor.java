@@ -56,6 +56,15 @@ public class SearchSetlistInteractor implements PaginatableRequest<Setlists.Setl
         mTour = tour;
     }
 
+    public void clearParameters() {
+        mName = null;
+        mCity = null;
+        mVenue = null;
+        mDate = null;
+        mYear = null;
+        mTour = null;
+    }
+
     @Override
     public void cancel() {
         if (mRequest != null) {
