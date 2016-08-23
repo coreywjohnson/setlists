@@ -1,7 +1,7 @@
 package com.coreywjohnson.setlists.presenters;
 
 import com.coreywjohnson.setlists.interactors.AnalyticsInteractor;
-import com.coreywjohnson.setlists.interactors.SearchSetlistByArtistInteractor;
+import com.coreywjohnson.setlists.interactors.SearchSetlistInteractor;
 import com.coreywjohnson.setlists.models.Setlists;
 import com.coreywjohnson.setlists.presenters.common.PaginatablePresenter;
 import com.coreywjohnson.setlists.views.SearchSetlistView;
@@ -16,12 +16,12 @@ import javax.inject.Inject;
  * Created by corey on 02-May-16.
  */
 public class SearchSetlistPresenter extends PaginatablePresenter<Setlists.Setlist> {
-    private SearchSetlistByArtistInteractor mInteractor;
+    private SearchSetlistInteractor mInteractor;
     private SearchSetlistView mSearchSetlistView;
     private AnalyticsInteractor mAnalyticsInteractor;
 
     @Inject
-    public SearchSetlistPresenter(SearchSetlistByArtistInteractor interactor, SearchSetlistView searchSetlistView, AnalyticsInteractor analyticsInteractor) {
+    public SearchSetlistPresenter(SearchSetlistInteractor interactor, SearchSetlistView searchSetlistView, AnalyticsInteractor analyticsInteractor) {
         super(searchSetlistView, interactor);
         mInteractor = interactor;
         mSearchSetlistView = searchSetlistView;
@@ -29,7 +29,7 @@ public class SearchSetlistPresenter extends PaginatablePresenter<Setlists.Setlis
     }
 
     public void onSearch(String query) {
-        mInteractor.setQuery(query);
+        mInteractor.setName(query);
         onRefresh();
         mSearchSetlistView.hideKeyboard();
         Map<String, String> properties = new HashMap<>();

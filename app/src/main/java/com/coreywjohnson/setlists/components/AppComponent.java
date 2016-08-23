@@ -3,7 +3,7 @@ package com.coreywjohnson.setlists.components;
 import com.coreywjohnson.setlists.interactors.AnalyticsInteractor;
 import com.coreywjohnson.setlists.interactors.GetArtistsSetlistsInteractor;
 import com.coreywjohnson.setlists.interactors.SearchArtistInteractor;
-import com.coreywjohnson.setlists.interactors.SearchSetlistByArtistInteractor;
+import com.coreywjohnson.setlists.interactors.SearchSetlistInteractor;
 import com.coreywjohnson.setlists.modules.AppModule;
 import com.coreywjohnson.setlists.modules.InteractorsModule;
 
@@ -22,7 +22,8 @@ import dagger.Component;
 public interface AppComponent {
     SearchArtistInteractor provideSearchArtistInteractor();
     AnalyticsInteractor provideAnalyticsInteractor();
-    SearchSetlistByArtistInteractor provideSearchSetlistByArtistInteractor();
+
+    SearchSetlistInteractor provideSearchSetlistByArtistInteractor();
 
     GetArtistsSetlistsInteractor provide();
 }

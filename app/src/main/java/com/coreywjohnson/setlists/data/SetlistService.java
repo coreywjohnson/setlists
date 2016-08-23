@@ -16,7 +16,13 @@ public interface SetlistService {
     public static final String NOT_FOUND_MESSAGE = "Not Found";
 
     @GET("search/setlists")
-    Call<Setlists> searchSetlistsByArtist(@Query("artistName") String artist, @Query("p") int pageNo);
+    Call<Setlists> searchSetlists(@Query("artistName") String artist,
+                                  @Query("cityName") String city,
+                                  @Query("venueName") String venue,
+                                  @Query("date") String date,
+                                  @Query("year") String year,
+                                  @Query("tour") String tour,
+                                  @Query("p") int pageNo);
 
     @GET("search/artists")
     Call<Artists> searchArtist(@Query("artistName") String artist, @Query("p") int pageNo);
