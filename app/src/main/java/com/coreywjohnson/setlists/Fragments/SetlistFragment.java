@@ -59,8 +59,6 @@ public class SetlistFragment extends BaseFragment implements SetlistView {
                 .setlistModule(new SetlistModule(this))
                 .build();
         setlistComponent.inject(this);
-
-        mPresenter.displaySetlist((Setlists.Setlist)getArguments().getSerializable(SETLIST));
     }
 
     @Nullable
@@ -71,6 +69,8 @@ public class SetlistFragment extends BaseFragment implements SetlistView {
         mBinding.recyclerView.setAdapter(mAdapter);
         mBinding.setSetlist((Setlists.Setlist) getArguments().getSerializable(SETLIST));
         ((MainView) getActivity()).setToolbar(mBinding.toolbar, false, null);
+
+        mPresenter.displaySetlist((Setlists.Setlist) getArguments().getSerializable(SETLIST));
 
         return mBinding.getRoot();
     }
@@ -120,5 +120,15 @@ public class SetlistFragment extends BaseFragment implements SetlistView {
         if (mAdapter != null) {
             mAdapter.addItems(setlistList);
         }
+    }
+
+    @Override
+    public void displayEmptyState() {
+        mBinding.dataWidget.showEmpty();
+    }
+
+    @Override
+    public void displayDataState() {
+        mBinding.dataWidget.showData();
     }
 }

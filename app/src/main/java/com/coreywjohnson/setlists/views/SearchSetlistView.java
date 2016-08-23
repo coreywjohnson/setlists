@@ -14,4 +14,8 @@ public interface SearchSetlistView extends PaginatableView<Setlists.Setlist> {
     void openSetlist(Setlists.Setlist setlist);
 
     void hideKeyboard();
+
+    void setAdapterHeaderYesterdaysSetlists();
+
+    void setAdapterHeaderSearchResults(String query);
 }

@@ -6,7 +6,6 @@ import android.view.ViewGroup;
 
 import com.coreywjohnson.setlists.adapter.common.PaginatableAdapter;
 import com.coreywjohnson.setlists.models.Setlists;
-import com.coreywjohnson.setlists.widgets.LoadingWidget;
 import com.coreywjohnson.setlists.widgets.SetlistWidget;
 
 import javax.inject.Inject;
@@ -15,8 +14,6 @@ import javax.inject.Inject;
  * Created by coreyjohnson on 5/05/16.
  */
 public class SetlistAdapter extends PaginatableAdapter<Setlists.Setlist> {
-    public static final int ITEM_SETLIST = 1;
-    public static final int ITEM_LOADING = 2;
     private AdapterListener mListener;
 
     @Inject
@@ -26,20 +23,11 @@ public class SetlistAdapter extends PaginatableAdapter<Setlists.Setlist> {
     }
 
     @Override
-    public int getItemViewType(int position) {
-        if (position == mAdapterData.size()) {
-            return ITEM_LOADING;
-        } else {
-            return ITEM_SETLIST;
-        }
-    }
-
-    @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        if (viewType == ITEM_SETLIST) {
+        if (viewType == TYPE_CONTENT) {
             return SetlistWidget.create(LayoutInflater.from(parent.getContext()), parent);
         } else {
-            return LoadingWidget.create(LayoutInflater.from(parent.getContext()), parent);
+            return super.onCreateViewHolder(parent, viewType);
         }
     }
 
@@ -47,7 +35,7 @@ public class SetlistAdapter extends PaginatableAdapter<Setlists.Setlist> {
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         super.onBindViewHolder(holder, position);
         if (holder instanceof SetlistWidget) {
-            ((SetlistWidget) holder).setSetlist(mAdapterData.get(position));
+            ((SetlistWidget) holder).setSetlist(getItemAtPosition(position));
             ((SetlistWidget) holder).setListener(mListener);
         }
     }

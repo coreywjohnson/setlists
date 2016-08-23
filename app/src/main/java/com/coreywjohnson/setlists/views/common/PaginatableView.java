@@ -13,4 +13,8 @@ public interface PaginatableView<Type> extends BaseView {
     void showLoading();
 
     void hideLoading();
+
+    void showDataState();
+
+    void showEmptyState();
 }

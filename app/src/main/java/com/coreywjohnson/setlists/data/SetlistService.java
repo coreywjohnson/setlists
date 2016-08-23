@@ -13,9 +13,16 @@ import retrofit2.http.Url;
  */
 public interface SetlistService {
     String BASE_API_URL = "http://api.setlist.fm/rest/0.1/";
+    public static final String NOT_FOUND_MESSAGE = "Not Found";
 
     @GET("search/setlists")
-    Call<Setlists> searchSetlistsByArtist(@Query("artistName") String artist, @Query("p") int pageNo);
+    Call<Setlists> searchSetlists(@Query("artistName") String artist,
+                                  @Query("cityName") String city,
+                                  @Query("venueName") String venue,
+                                  @Query("date") String date,
+                                  @Query("year") String year,
+                                  @Query("tour") String tour,
+                                  @Query("p") int pageNo);
 
     @GET("search/artists")
     Call<Artists> searchArtist(@Query("artistName") String artist, @Query("p") int pageNo);

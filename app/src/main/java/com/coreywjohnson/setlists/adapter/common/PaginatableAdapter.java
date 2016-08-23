@@ -1,6 +1,11 @@
 package com.coreywjohnson.setlists.adapter.common;
 
+import android.support.annotation.CallSuper;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.ViewGroup;
+
+import com.coreywjohnson.setlists.widgets.LoadingWidget;
 
 import java.util.List;
 
@@ -8,8 +13,10 @@ import java.util.List;
  * Created by corey on 14-May-16.
  */
 public abstract class PaginatableAdapter<T> extends BaseAdapter<T> {
+    public static final int TYPE_LOADING = 3;
     public static final int LOAD_OFFSET = 10;
-    protected PaginatableAdapterListener mPaginatableAdapterListener;
+
+    private PaginatableAdapterListener mPaginatableAdapterListener;
     private boolean mHasMoreItems = true;
 
     public PaginatableAdapter(PaginatableAdapterListener adapterListener) {
@@ -17,8 +24,30 @@ public abstract class PaginatableAdapter<T> extends BaseAdapter<T> {
     }
 
     @Override
+    @CallSuper
+    public int getItemViewType(int position) {
+        if (position == super.getItemCount()) {
+            return TYPE_LOADING;
+        } else {
+            return super.getItemViewType(position);
+        }
+    }
+
+    @Override
+    @CallSuper
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        if (viewType == TYPE_LOADING) {
+            return LoadingWidget.create(LayoutInflater.from(parent.getContext()), parent);
+        } else {
+            return super.onCreateViewHolder(parent, viewType);
+        }
+    }
+
+    @Override
+    @CallSuper
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        if (position > mAdapterData.size() - LOAD_OFFSET && !mIsLoading && mHasMoreItems) {
+        super.onBindViewHolder(holder, position);
+        if (position > super.getItemCount() - LOAD_OFFSET && !mIsLoading && mHasMoreItems) {
             mPaginatableAdapterListener.onLoadMore();
             mIsLoading = true;
         }
@@ -27,9 +56,9 @@ public abstract class PaginatableAdapter<T> extends BaseAdapter<T> {
     @Override
     public int getItemCount() {
         if (mIsLoading) {
-            return mAdapterData.size() + 1;
+            return super.getItemCount() + 1;
         } else {
-            return mAdapterData.size();
+            return super.getItemCount();
         }
     }
 
@@ -42,14 +71,14 @@ public abstract class PaginatableAdapter<T> extends BaseAdapter<T> {
     public void addItems(List<T> data) {
         // Remove Loader
         if (mAdapterData.size() > 0) {
-            notifyItemRemoved(mAdapterData.size());
+            notifyItemRemoved(super.getItemCount());
         }
         super.addItems(data);
     }
 
     @Override
     public void removeAllItems() {
-        int rangeEnd = mAdapterData.size();
+        int rangeEnd = super.getItemCount();
         mAdapterData.clear();
         if (mIsLoading) {
             notifyItemRangeRemoved(0, rangeEnd + 1);
@@ -57,14 +86,6 @@ public abstract class PaginatableAdapter<T> extends BaseAdapter<T> {
             notifyItemRangeRemoved(0, rangeEnd);
         }
         mHasMoreItems = true;
-    }
-
-    public void notifyNoMoreItems() {
-        if (mIsLoading) {
-            notifyItemRemoved(mAdapterData.size());
-            mIsLoading = false;
-        }
-        mHasMoreItems = false;
     }
 
     public interface PaginatableAdapterListener extends AdapterListener {

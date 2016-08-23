@@ -1,12 +1,14 @@
 package com.coreywjohnson.setlists.presenters;
 
 import com.coreywjohnson.setlists.interactors.AnalyticsInteractor;
-import com.coreywjohnson.setlists.interactors.SearchSetlistByArtistInteractor;
+import com.coreywjohnson.setlists.interactors.SearchSetlistInteractor;
 import com.coreywjohnson.setlists.models.Setlists;
 import com.coreywjohnson.setlists.presenters.common.PaginatablePresenter;
 import com.coreywjohnson.setlists.views.SearchSetlistView;
 import com.google.firebase.analytics.FirebaseAnalytics;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -16,21 +18,28 @@ import javax.inject.Inject;
  * Created by corey on 02-May-16.
  */
 public class SearchSetlistPresenter extends PaginatablePresenter<Setlists.Setlist> {
-    private SearchSetlistByArtistInteractor mInteractor;
+    private SearchSetlistInteractor mInteractor;
     private SearchSetlistView mSearchSetlistView;
     private AnalyticsInteractor mAnalyticsInteractor;
 
     @Inject
-    public SearchSetlistPresenter(SearchSetlistByArtistInteractor interactor, SearchSetlistView searchSetlistView, AnalyticsInteractor analyticsInteractor) {
+    public SearchSetlistPresenter(SearchSetlistInteractor interactor, SearchSetlistView searchSetlistView, AnalyticsInteractor analyticsInteractor) {
         super(searchSetlistView, interactor);
         mInteractor = interactor;
         mSearchSetlistView = searchSetlistView;
         mAnalyticsInteractor = analyticsInteractor;
+        Date date = new Date();
+        date.setDate(date.getDate() - 1);
+        mInteractor.setDate(new SimpleDateFormat("dd-MM-yyyy").format(date));
+        mSearchSetlistView.setAdapterHeaderYesterdaysSetlists();
+        onRefresh();
     }
 
     public void onSearch(String query) {
-        mInteractor.setQuery(query);
+        mInteractor.clearParameters();
+        mInteractor.setName(query);
         onRefresh();
+        mSearchSetlistView.setAdapterHeaderSearchResults(query);
         mSearchSetlistView.hideKeyboard();
         Map<String, String> properties = new HashMap<>();
         properties.put(FirebaseAnalytics.Param.SEARCH_TERM, query);
@@ -39,8 +48,11 @@ public class SearchSetlistPresenter extends PaginatablePresenter<Setlists.Setlis
 
     @Override
     public void onError(String error) {
-        mSearchSetlistView.makeTextSnackbar(error);
-        mSearchSetlistView.onError();
+        super.onError(error);
+        if (!error.equals("Not Found")) {
+            mSearchSetlistView.makeTextSnackbar(error);
+            mSearchSetlistView.onError();
+        }
     }
 
     public void onSetlistClick(Setlists.Setlist setlist) {

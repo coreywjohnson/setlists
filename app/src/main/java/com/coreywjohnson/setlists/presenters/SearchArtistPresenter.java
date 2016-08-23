@@ -30,6 +30,7 @@ public class SearchArtistPresenter extends PaginatablePresenter<Artists.Artist> 
 
     public void onSearch(String query) {
         mSearchArtistInteractor.setQuery(query);
+        mView.setAdapterHeaderSearchResult(query);
         onRefresh();
         mView.hideKeyboard();
         Map<String, String> properties = new HashMap<>();
@@ -39,7 +40,10 @@ public class SearchArtistPresenter extends PaginatablePresenter<Artists.Artist> 
 
     @Override
     public void onError(String error) {
-        mView.onError(error);
+        super.onError(error);
+        if(!error.equals("Not Found")) {
+            mView.onError(error);
+        }
     }
 
     public void onArtistClick(Artists.Artist artist) {

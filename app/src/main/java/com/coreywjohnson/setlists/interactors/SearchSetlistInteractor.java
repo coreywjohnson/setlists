@@ -16,19 +16,53 @@ import retrofit2.Response;
 /**
  * Created by corey on 25-Apr-16.
  */
-public class SearchSetlistByArtistInteractor implements PaginatableRequest<Setlists.Setlist> {
+public class SearchSetlistInteractor implements PaginatableRequest<Setlists.Setlist> {
     private SetlistService mSetlistService;
     private Call<Setlists> mRequest;
-    private String mQuery;
+    private String mName = null;
+    private String mCity = null;
+    private String mVenue = null;
+    private String mDate = null;
+    private String mYear = null;
+    private String mTour = null;
     private PaginatableRequestListener<Setlists.Setlist> mListener;
 
     @Inject
-    public SearchSetlistByArtistInteractor(SetlistService setlistService) {
+    public SearchSetlistInteractor(SetlistService setlistService) {
         mSetlistService = setlistService;
     }
 
-    public void setQuery(String query) {
-        mQuery = query;
+    public void setName(String query) {
+        mName = query;
+    }
+
+    public void setCity(String city) {
+        mCity = city;
+    }
+
+    public void setVenue(String venue) {
+        mVenue = venue;
+    }
+
+    public void setDate(String date) {
+        mDate = date;
+    }
+
+    public void setYear(String year) {
+        mYear = year;
+    }
+
+    public void setTour(String tour) {
+        mTour = tour;
+    }
+
+    public void clearParameters() {
+        mName = null;
+        mCity = null;
+        mVenue = null;
+        mDate = null;
+        mYear = null;
+        mTour = null;
     }
 
     @Override
@@ -42,7 +76,7 @@ public class SearchSetlistByArtistInteractor implements PaginatableRequest<Setli
     @Override
     public void loadPage(int pageNo) {
         cancel();
-        mRequest = mSetlistService.searchSetlistsByArtist(mQuery, pageNo);
+        mRequest = mSetlistService.searchSetlists(mName, mCity, mVenue, mDate, mYear, mTour, pageNo);
         mRequest.enqueue(new Callback<Setlists>() {
             @Override
             public void onResponse(Call<Setlists> call, Response<Setlists> response) {

@@ -38,7 +38,10 @@ public class ArtistPresenter extends PaginatablePresenter<Setlists.Setlist> {
 
     @Override
     public void onError(String error) {
-        mView.makeTextSnackbar(error);
+        super.onError(error);
+        if (!error.equals("Not Found")) {
+            mView.makeTextSnackbar(error);
+        }
     }
 
     public void onSetlistClick(Setlists.Setlist setlist) {
