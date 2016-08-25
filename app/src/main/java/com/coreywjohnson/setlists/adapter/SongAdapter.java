@@ -22,12 +22,19 @@ public class SongAdapter extends BaseAdapter<Setlists.Song> {
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return SongWidget.create(LayoutInflater.from(parent.getContext()), parent);
+        if (viewType == TYPE_CONTENT) {
+            return SongWidget.create(LayoutInflater.from(parent.getContext()), parent);
+        } else {
+            return super.onCreateViewHolder(parent, viewType);
+        }
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        ((SongWidget) holder).setSong(mAdapterData.get(position));
-        ((SongWidget) holder).setSongNumber(position+1);
+        super.onBindViewHolder(holder, position);
+        if (holder instanceof SongWidget) {
+            ((SongWidget) holder).setSong(getItemAtPosition(position));
+            ((SongWidget) holder).setSongNumber(position + 1);
+        }
     }
 }

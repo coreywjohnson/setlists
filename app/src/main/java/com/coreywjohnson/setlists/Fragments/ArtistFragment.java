@@ -69,6 +69,7 @@ public class ArtistFragment extends BaseFragment implements ArtistView, SetlistA
 
         mBinding.recyclerView.setAdapter(mAdapter);
         mBinding.recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        mBinding.dataWidget.showData();
 
         mBinding.refreshView.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -141,6 +142,20 @@ public class ArtistFragment extends BaseFragment implements ArtistView, SetlistA
     public void hideLoading() {
         if (mBinding != null) {
             mBinding.refreshView.setRefreshing(false);
+        }
+    }
+
+    @Override
+    public void showDataState() {
+        if (mBinding != null) {
+            mBinding.dataWidget.showData();
+        }
+    }
+
+    @Override
+    public void showEmptyState() {
+        if (mBinding != null) {
+            mBinding.dataWidget.showEmpty();
         }
     }
 
