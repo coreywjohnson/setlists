@@ -1,5 +1,6 @@
 package com.coreywjohnson.setlists.views;
 
+import com.coreywjohnson.setlists.interfaces.SharedViewWidget;
 import com.coreywjohnson.setlists.models.Setlists;
 import com.coreywjohnson.setlists.views.common.PaginatableView;
 
@@ -11,7 +12,7 @@ public interface SearchSetlistView extends PaginatableView<Setlists.Setlist> {
 
     MainView getParentView();
 
-    void openSetlist(Setlists.Setlist setlist);
+    void openSetlist(Setlists.Setlist setlist, SharedViewWidget sharedViewWidget);
 
     void hideKeyboard();
 

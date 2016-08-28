@@ -26,6 +26,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:fitsSystemWindows="true"
+                android:transitionName="setlistTransition"
                 app:contentScrim="?attr/colorPrimary"
                 app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
                 app:titleEnabled="false">
@@ -117,7 +118,9 @@
             android:id="@+id/data_widget"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="@android:color/background_light"
             android:isScrollContainer="true"
+
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
             <android.support.v7.widget.RecyclerView

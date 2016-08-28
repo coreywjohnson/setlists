@@ -16,6 +16,7 @@ import com.coreywjohnson.setlists.adapter.SetlistAdapter;
 import com.coreywjohnson.setlists.components.ArtistComponent;
 import com.coreywjohnson.setlists.components.DaggerArtistComponent;
 import com.coreywjohnson.setlists.databinding.FragmentArtistBinding;
+import com.coreywjohnson.setlists.interfaces.SharedViewWidget;
 import com.coreywjohnson.setlists.models.Artists;
 import com.coreywjohnson.setlists.models.Setlists;
 import com.coreywjohnson.setlists.modules.ArtistModule;
@@ -108,7 +109,7 @@ public class ArtistFragment extends BaseFragment implements ArtistView, SetlistA
     }
 
     @Override
-    public void onSetlistClick(Setlists.Setlist setlist) {
+    public void onSetlistClick(Setlists.Setlist setlist, SharedViewWidget sharedViewWidget) {
         mPresenter.onSetlistClick(setlist);
     }
 

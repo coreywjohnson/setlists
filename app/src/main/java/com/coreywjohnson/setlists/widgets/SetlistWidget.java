@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import com.coreywjohnson.setlists.R;
 import com.coreywjohnson.setlists.adapter.SetlistAdapter;
 import com.coreywjohnson.setlists.databinding.WidgetSetlistBinding;
+import com.coreywjohnson.setlists.interfaces.SharedViewWidget;
 import com.coreywjohnson.setlists.models.Setlists;
 
 import java.text.ParseException;
@@ -18,7 +19,9 @@ import java.util.Date;
 /**
  * Created by coreyjohnson on 5/05/16.
  */
-public class SetlistWidget extends RecyclerView.ViewHolder {
+public class SetlistWidget extends RecyclerView.ViewHolder implements SharedViewWidget {
+    public static final String TRANSITION_NAME = "setlistTransition";
+
     private WidgetSetlistBinding mBinding;
     private SetlistAdapter.AdapterListener mListener;
 
@@ -47,7 +50,7 @@ public class SetlistWidget extends RecyclerView.ViewHolder {
             @Override
             public void onClick(View v) {
                 if (mListener != null) {
-                    mListener.onSetlistClick(setlist);
+                    mListener.onSetlistClick(setlist, SetlistWidget.this);
                 }
             }
         });
@@ -55,5 +58,15 @@ public class SetlistWidget extends RecyclerView.ViewHolder {
 
     public void setListener(SetlistAdapter.AdapterListener adapterListener) {
         mListener = adapterListener;
+    }
+
+    @Override
+    public View getSharedView() {
+        return mBinding.dateCircle;
+    }
+
+    @Override
+    public String getSharedViewName() {
+        return TRANSITION_NAME;
     }
 }
