@@ -20,6 +20,7 @@ import com.coreywjohnson.setlists.components.DaggerSearchSetlistComponent;
 import com.coreywjohnson.setlists.components.SearchSetlistComponent;
 import com.coreywjohnson.setlists.databinding.FragmentSearchBinding;
 import com.coreywjohnson.setlists.helpers.ViewHelper;
+import com.coreywjohnson.setlists.interfaces.SharedViewWidget;
 import com.coreywjohnson.setlists.models.Setlists;
 import com.coreywjohnson.setlists.modules.SearchSetlistModule;
 import com.coreywjohnson.setlists.presenters.SearchSetlistPresenter;
@@ -127,9 +128,9 @@ public class SearchSetlistFragment extends BaseFragment implements SearchSetlist
     }
 
     @Override
-    public void openSetlist(Setlists.Setlist setlist) {
+    public void openSetlist(Setlists.Setlist setlist, SharedViewWidget sharedViewWidget) {
         if (mListener != null) {
-            mListener.onSetlistClick(setlist);
+            mListener.onSetlistClick(setlist, sharedViewWidget);
         }
     }
 
@@ -168,8 +169,8 @@ public class SearchSetlistFragment extends BaseFragment implements SearchSetlist
     }
 
     @Override
-    public void onSetlistClick(Setlists.Setlist setlist) {
-        mPresenter.onSetlistClick(setlist);
+    public void onSetlistClick(Setlists.Setlist setlist, SharedViewWidget sharedViewWidget) {
+        mPresenter.onSetlistClick(setlist, sharedViewWidget);
     }
 
     @Override
@@ -206,6 +207,6 @@ public class SearchSetlistFragment extends BaseFragment implements SearchSetlist
     }
 
     public interface SearchFragmentListener {
-        void onSetlistClick(Setlists.Setlist setlist);
+        void onSetlistClick(Setlists.Setlist setlist, SharedViewWidget sharedViewWidget);
     }
 }
