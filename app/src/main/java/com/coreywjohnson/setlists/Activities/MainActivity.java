@@ -6,6 +6,8 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
+import android.transition.Transition;
+import android.transition.TransitionInflater;
 import android.view.MenuItem;
 
 import com.coreywjohnson.setlists.R;
@@ -16,6 +18,7 @@ import com.coreywjohnson.setlists.databinding.ActivityMainBinding;
 import com.coreywjohnson.setlists.fragments.SearchArtistFragment;
 import com.coreywjohnson.setlists.fragments.SearchSetlistFragment;
 import com.coreywjohnson.setlists.fragments.SetlistFragment;
+import com.coreywjohnson.setlists.interfaces.SharedViewWidget;
 import com.coreywjohnson.setlists.models.Setlists;
 import com.coreywjohnson.setlists.modules.MainModule;
 import com.coreywjohnson.setlists.presenters.MainPresenter;
@@ -46,14 +49,67 @@ public class MainActivity extends BaseActivity implements MainView, SearchSetlis
         mainPresenter.onCreate();
     }
 
-    public void showSetlist(Setlists.Setlist setlist) {
-        SetlistFragment setlistFragment = SetlistFragment.newInstance(setlist);
+    public void showSetlist(Setlists.Setlist setlist, SharedViewWidget sharedViewWidget) {
+        final SetlistFragment setlistFragment = SetlistFragment.newInstance(setlist);
 
-        getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.fragment_container, setlistFragment)
-                .addToBackStack("Setlist")
-                .commit();
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
+            Transition returnTransition = TransitionInflater.from(this)
+                    .inflateTransition(android.R.transition.explode);
+
+            Transition enterTransition = TransitionInflater.from(this)
+                    .inflateTransition(R.transition.setlist_enter_transition);
+
+            Transition sharedTransition = TransitionInflater.from(this)
+                    .inflateTransition(R.transition.setlist_shared_transition);
+
+            setlistFragment.setSharedElementEnterTransition(sharedTransition);
+            setlistFragment.setSharedElementReturnTransition(null);
+
+            setlistFragment.setEnterTransition(enterTransition);
+            setlistFragment.setReturnTransition(returnTransition);
+
+            enterTransition.setStartDelay(sharedTransition.getDuration());
+
+            enterTransition.addListener(new Transition.TransitionListener() {
+                @Override
+                public void onTransitionStart(Transition transition) {
+
+                }
+
+                @Override
+                public void onTransitionEnd(Transition transition) {
+                    setlistFragment.revealToolbar();
+                }
+
+                @Override
+                public void onTransitionCancel(Transition transition) {
+
+                }
+
+                @Override
+                public void onTransitionPause(Transition transition) {
+
+                }
+
+                @Override
+                public void onTransitionResume(Transition transition) {
+
+                }
+            });
+
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.fragment_container, setlistFragment)
+                    .addToBackStack("Setlist")
+                    .addSharedElement(sharedViewWidget.getSharedView(), sharedViewWidget.getSharedViewName())
+                    .commit();
+        } else {
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.fragment_container, setlistFragment)
+                    .addToBackStack("Setlist")
+                    .commit();
+        }
     }
 
     @Override
@@ -62,8 +118,8 @@ public class MainActivity extends BaseActivity implements MainView, SearchSetlis
     }
 
     @Override
-    public void onSetlistClick(Setlists.Setlist setlist) {
-        showSetlist(setlist);
+    public void onSetlistClick(Setlists.Setlist setlist, SharedViewWidget sharedViewWidget) {
+        showSetlist(setlist, sharedViewWidget);
     }
 
     @Override

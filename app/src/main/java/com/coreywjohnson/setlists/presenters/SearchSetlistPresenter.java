@@ -2,6 +2,7 @@ package com.coreywjohnson.setlists.presenters;
 
 import com.coreywjohnson.setlists.interactors.AnalyticsInteractor;
 import com.coreywjohnson.setlists.interactors.SearchSetlistInteractor;
+import com.coreywjohnson.setlists.interfaces.SharedViewWidget;
 import com.coreywjohnson.setlists.models.Setlists;
 import com.coreywjohnson.setlists.presenters.common.PaginatablePresenter;
 import com.coreywjohnson.setlists.views.SearchSetlistView;
@@ -55,11 +56,11 @@ public class SearchSetlistPresenter extends PaginatablePresenter<Setlists.Setlis
         }
     }
 
-    public void onSetlistClick(Setlists.Setlist setlist) {
+    public void onSetlistClick(Setlists.Setlist setlist, SharedViewWidget sharedViewWidget) {
         Map<String, String> properties = new HashMap<>();
         properties.put(FirebaseAnalytics.Param.CONTENT_TYPE, AnalyticsInteractor.CONTENT_TYPE_SETLIST);
         properties.put(FirebaseAnalytics.Param.ITEM_ID, setlist.getId());
         mAnalyticsInteractor.sendEvent(FirebaseAnalytics.Event.SELECT_CONTENT, properties);
-        mSearchSetlistView.openSetlist(setlist);
+        mSearchSetlistView.openSetlist(setlist, sharedViewWidget);
     }
 }

@@ -30,10 +30,23 @@
                 app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
                 app:titleEnabled="false">
 
+                <LinearLayout
+                    android:id="@+id/date_circle"
+                    android:layout_width="10dp"
+                    android:layout_height="10dp"
+                    android:layout_gravity="center"
+                    android:alpha=".87"
+                    android:background="@drawable/date_circle"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:transitionName="setlistTransition" />
+
                 <FrameLayout
+                    android:id="@+id/toolbar_content"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fitsSystemWindows="true"
+                    android:visibility="invisible"
                     app:layout_collapseMode="parallax"
                     app:layout_scrollFlags="enterAlways">
 
@@ -117,7 +130,9 @@
             android:id="@+id/data_widget"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="@android:color/background_light"
             android:isScrollContainer="true"
+
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
             <android.support.v7.widget.RecyclerView

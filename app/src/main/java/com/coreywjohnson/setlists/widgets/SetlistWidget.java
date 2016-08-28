@@ -1,6 +1,7 @@
 package com.coreywjohnson.setlists.widgets;
 
 import android.databinding.DataBindingUtil;
+import android.os.Build;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.view.ViewGroup;
 import com.coreywjohnson.setlists.R;
 import com.coreywjohnson.setlists.adapter.SetlistAdapter;
 import com.coreywjohnson.setlists.databinding.WidgetSetlistBinding;
+import com.coreywjohnson.setlists.interfaces.SharedViewWidget;
 import com.coreywjohnson.setlists.models.Setlists;
 
 import java.text.ParseException;
@@ -18,7 +20,9 @@ import java.util.Date;
 /**
  * Created by coreyjohnson on 5/05/16.
  */
-public class SetlistWidget extends RecyclerView.ViewHolder {
+public class SetlistWidget extends RecyclerView.ViewHolder implements SharedViewWidget {
+    public static final String TRANSITION_NAME = "setlistTransition";
+
     private WidgetSetlistBinding mBinding;
     private SetlistAdapter.AdapterListener mListener;
 
@@ -47,7 +51,10 @@ public class SetlistWidget extends RecyclerView.ViewHolder {
             @Override
             public void onClick(View v) {
                 if (mListener != null) {
-                    mListener.onSetlistClick(setlist);
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                        mBinding.dateCircle.setTransitionName(TRANSITION_NAME);
+                    }
+                    mListener.onSetlistClick(setlist, SetlistWidget.this);
                 }
             }
         });
@@ -55,5 +62,15 @@ public class SetlistWidget extends RecyclerView.ViewHolder {
 
     public void setListener(SetlistAdapter.AdapterListener adapterListener) {
         mListener = adapterListener;
+    }
+
+    @Override
+    public View getSharedView() {
+        return mBinding.dateCircle;
+    }
+
+    @Override
+    public String getSharedViewName() {
+        return TRANSITION_NAME;
     }
 }
