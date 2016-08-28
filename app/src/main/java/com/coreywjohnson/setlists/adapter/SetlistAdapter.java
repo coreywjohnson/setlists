@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import com.coreywjohnson.setlists.adapter.common.PaginatableAdapter;
+import com.coreywjohnson.setlists.interfaces.SharedViewWidget;
 import com.coreywjohnson.setlists.models.Setlists;
 import com.coreywjohnson.setlists.widgets.SetlistWidget;
 
@@ -41,6 +42,6 @@ public class SetlistAdapter extends PaginatableAdapter<Setlists.Setlist> {
     }
 
     public interface AdapterListener extends PaginatableAdapterListener {
-        void onSetlistClick(Setlists.Setlist setlist);
+        void onSetlistClick(Setlists.Setlist setlist, SharedViewWidget sharedViewWidget);
     }
 }

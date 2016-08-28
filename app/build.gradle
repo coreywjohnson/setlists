@@ -1,13 +1,18 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.neenbedankt.android-apt'
+apply plugin: 'com.github.triplet.play'
 
 def keystorePropertiesFile = rootProject.file("C:\\android/keystore.properties")
 def keystoreProperties = new Properties()
 keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 
+def playPropertiesFile = rootProject.file("C:\\android/play.properties")
+def playProperties = new Properties()
+playProperties.load(new FileInputStream(playPropertiesFile))
+
 android {
     compileSdkVersion 24
-    buildToolsVersion "24.0.1"
+    buildToolsVersion "24.0.2"
 
     dataBinding {
         enabled = true
@@ -40,26 +45,40 @@ android {
     }
 }
 
+play {
+    serviceAccountEmail = playProperties['playEmail']
+    pk12File = file(playProperties['playKey'])
+    track = playProperties['playTrack']
+}
+
+ext {
+    supportLibraryVersion = '24.2.0'
+    firebaseVersion = '9.2.0'
+    daggerVersion = '2.2'
+    retrofitVersion = '2.0.2'
+}
+
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile 'com.android.support:appcompat-v7:24.1.1'
-    compile 'com.android.support:design:24.1.1'
-    compile 'com.android.support:cardview-v7:24.1.1'
-    compile 'com.android.support:recyclerview-v7:24.1.1'
-    compile 'com.squareup.retrofit2:retrofit:2.0.2'
-    compile('com.squareup.retrofit2:converter-simplexml:2.0.2') {
+    compile "com.android.support:appcompat-v7:${supportLibraryVersion}"
+    compile "com.android.support:design:${supportLibraryVersion}"
+    compile "com.android.support:cardview-v7:${supportLibraryVersion}"
+    compile "com.android.support:recyclerview-v7:${supportLibraryVersion}"
+    compile "com.squareup.retrofit2:retrofit:${retrofitVersion}"
+    compile("com.squareup.retrofit2:converter-simplexml:${retrofitVersion}") {
         exclude group: 'xpp3', module: 'xpp3'
         exclude group: 'stax', module: 'stax-api'
         exclude group: 'stax', module: 'stax'
     }
-    compile 'com.google.code.gson:gson:2.6.2'
-    compile 'org.glassfish:javax.annotation:10.0-b28'
-    compile 'com.google.dagger:dagger:2.2'
-    apt 'com.google.dagger:dagger-compiler:2.2'
-    compile 'com.google.firebase:firebase-core:9.2.0'
-    compile 'com.google.firebase:firebase-crash:9.2.0'
-    testCompile 'junit:junit:4.12'
-    testCompile 'org.mockito:mockito-core:1.10.19'
+    compile "com.google.code.gson:gson:2.6.2"
+    compile "org.glassfish:javax.annotation:10.0-b28"
+    compile "com.google.dagger:dagger:${daggerVersion}"
+    apt "com.google.dagger:dagger-compiler:${daggerVersion}"
+    compile "com.google.firebase:firebase-core:${firebaseVersion}"
+    compile "com.google.firebase:firebase-crash:${firebaseVersion}"
+    compile 'com.squareup.picasso:picasso:2.5.2'
+    testCompile "junit:junit:4.12"
+    testCompile "org.mockito:mockito-core:1.10.19"
 }
 
 apply plugin: 'com.google.gms.google-services'

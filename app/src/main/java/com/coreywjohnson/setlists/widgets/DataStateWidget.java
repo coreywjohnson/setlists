@@ -156,4 +156,9 @@ public class DataStateWidget extends FrameLayout {
                 })
                 .start();
     }
+
+    @Override
+    public boolean isTransitionGroup() {
+        return true;
+    }
 }
