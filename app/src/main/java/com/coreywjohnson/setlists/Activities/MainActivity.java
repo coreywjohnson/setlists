@@ -50,19 +50,58 @@ public class MainActivity extends BaseActivity implements MainView, SearchSetlis
     }
 
     public void showSetlist(Setlists.Setlist setlist, SharedViewWidget sharedViewWidget) {
-        SetlistFragment setlistFragment = SetlistFragment.newInstance(setlist);
+        final SetlistFragment setlistFragment = SetlistFragment.newInstance(setlist);
 
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
-            Transition transition = TransitionInflater.from(this)
+            Transition returnTransition = TransitionInflater.from(this)
                     .inflateTransition(android.R.transition.explode);
 
-            setlistFragment.setEnterTransition(transition);
-            setlistFragment.setReturnTransition(transition);
+            Transition enterTransition = TransitionInflater.from(this)
+                    .inflateTransition(R.transition.setlist_enter_transition);
+
+            Transition sharedTransition = TransitionInflater.from(this)
+                    .inflateTransition(R.transition.setlist_shared_transition);
+
+            setlistFragment.setSharedElementEnterTransition(sharedTransition);
+            setlistFragment.setSharedElementReturnTransition(null);
+
+            setlistFragment.setEnterTransition(enterTransition);
+            setlistFragment.setReturnTransition(returnTransition);
+
+            enterTransition.setStartDelay(sharedTransition.getDuration());
+
+            enterTransition.addListener(new Transition.TransitionListener() {
+                @Override
+                public void onTransitionStart(Transition transition) {
+
+                }
+
+                @Override
+                public void onTransitionEnd(Transition transition) {
+                    setlistFragment.revealToolbar();
+                }
+
+                @Override
+                public void onTransitionCancel(Transition transition) {
+
+                }
+
+                @Override
+                public void onTransitionPause(Transition transition) {
+
+                }
+
+                @Override
+                public void onTransitionResume(Transition transition) {
+
+                }
+            });
 
             getSupportFragmentManager()
                     .beginTransaction()
                     .replace(R.id.fragment_container, setlistFragment)
                     .addToBackStack("Setlist")
+                    .addSharedElement(sharedViewWidget.getSharedView(), sharedViewWidget.getSharedViewName())
                     .commit();
         } else {
             getSupportFragmentManager()

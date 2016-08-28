@@ -1,5 +1,6 @@
 package com.coreywjohnson.setlists.fragments;
 
+import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -38,6 +39,7 @@ public class ArtistFragment extends BaseFragment implements ArtistView, SetlistA
     ArtistPresenter mPresenter;
     @Inject
     SetlistAdapter mAdapter;
+    private SearchSetlistFragment.SearchFragmentListener mListener;
 
     public static ArtistFragment newInstance(Artists.Artist artist) {
 
@@ -110,7 +112,7 @@ public class ArtistFragment extends BaseFragment implements ArtistView, SetlistA
 
     @Override
     public void onSetlistClick(Setlists.Setlist setlist, SharedViewWidget sharedViewWidget) {
-        mPresenter.onSetlistClick(setlist);
+        mPresenter.onSetlistClick(setlist, sharedViewWidget);
     }
 
     @Override
@@ -161,13 +163,19 @@ public class ArtistFragment extends BaseFragment implements ArtistView, SetlistA
     }
 
     @Override
-    public void openSetlist(Setlists.Setlist setlist) {
-        SetlistFragment setlistFragment = SetlistFragment.newInstance(setlist);
+    public void openSetlist(Setlists.Setlist setlist, SharedViewWidget sharedViewWidget) {
+        mListener.onSetlistClick(setlist, sharedViewWidget);
+    }
 
-        getFragmentManager()
-                .beginTransaction()
-                .replace(R.id.fragment_container, setlistFragment)
-                .addToBackStack("Setlist")
-                .commit();
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        mListener = (SearchSetlistFragment.SearchFragmentListener) context;
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mListener = null;
     }
 }

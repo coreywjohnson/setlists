@@ -18,7 +18,7 @@
 
 
         <LinearLayout
-            android:id="@+id/dateCircle"
+            android:id="@+id/date_circle"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_gravity="center_vertical"
@@ -27,8 +27,7 @@
             android:background="@drawable/date_circle"
             android:gravity="center_vertical"
             android:orientation="vertical"
-            android:padding="4dp"
-            android:transitionName="setlistTransition">
+            android:padding="4dp">
 
             <TextView
                 android:id="@+id/date_day"

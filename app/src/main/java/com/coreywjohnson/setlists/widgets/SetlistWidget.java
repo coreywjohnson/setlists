@@ -1,6 +1,7 @@
 package com.coreywjohnson.setlists.widgets;
 
 import android.databinding.DataBindingUtil;
+import android.os.Build;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -50,6 +51,9 @@ public class SetlistWidget extends RecyclerView.ViewHolder implements SharedView
             @Override
             public void onClick(View v) {
                 if (mListener != null) {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                        mBinding.dateCircle.setTransitionName(TRANSITION_NAME);
+                    }
                     mListener.onSetlistClick(setlist, SetlistWidget.this);
                 }
             }

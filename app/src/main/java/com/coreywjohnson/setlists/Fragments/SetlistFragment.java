@@ -22,6 +22,7 @@ import com.coreywjohnson.setlists.databinding.FragmentSetlistBinding;
 import com.coreywjohnson.setlists.models.Setlists;
 import com.coreywjohnson.setlists.modules.SetlistModule;
 import com.coreywjohnson.setlists.presenters.SetlistPresenter;
+import com.coreywjohnson.setlists.utils.ViewUtils;
 import com.coreywjohnson.setlists.views.MainView;
 import com.coreywjohnson.setlists.views.SetlistView;
 
@@ -81,6 +82,11 @@ public class SetlistFragment extends BaseFragment implements SetlistView {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         }
+    }
+
+    @Override
+    public void revealToolbar() {
+        ViewUtils.circularReveal(mBinding.toolbarContent, getContext());
     }
 
     @Override
