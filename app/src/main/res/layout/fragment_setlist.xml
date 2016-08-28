@@ -51,10 +51,10 @@
                     app:layout_scrollFlags="enterAlways">
 
                     <ImageView
+                        android:id="@+id/background_image"
                         android:layout_width="match_parent"
                         android:layout_height="180dp"
                         android:scaleType="centerCrop"
-                        android:src="@mipmap/crowd"
                         android:tint="#90151515" />
 
                     <LinearLayout

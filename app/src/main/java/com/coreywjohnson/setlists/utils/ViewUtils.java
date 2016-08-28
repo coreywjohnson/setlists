@@ -12,15 +12,17 @@ import android.view.animation.AccelerateInterpolator;
 public class ViewUtils {
     public static void circularReveal(View viewRoot, Context context) {
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
-            int cx = (viewRoot.getLeft() + viewRoot.getRight()) / 2;
-            int cy = (viewRoot.getTop() + viewRoot.getBottom()) / 2;
-            int finalRadius = Math.max(viewRoot.getWidth(), viewRoot.getHeight());
+            if (viewRoot != null && viewRoot.isAttachedToWindow() && context != null) {
+                int cx = (viewRoot.getLeft() + viewRoot.getRight()) / 2;
+                int cy = (viewRoot.getTop() + viewRoot.getBottom()) / 2;
+                int finalRadius = Math.max(viewRoot.getWidth(), viewRoot.getHeight());
 
-            Animator anim = ViewAnimationUtils.createCircularReveal(viewRoot, cx, cy, 0, finalRadius);
-            viewRoot.setVisibility(View.VISIBLE);
-            anim.setDuration(context.getResources().getInteger(android.R.integer.config_mediumAnimTime));
-            anim.setInterpolator(new AccelerateInterpolator());
-            anim.start();
+                Animator anim = ViewAnimationUtils.createCircularReveal(viewRoot, cx, cy, 0, finalRadius);
+                viewRoot.setVisibility(View.VISIBLE);
+                anim.setDuration(context.getResources().getInteger(android.R.integer.config_mediumAnimTime));
+                anim.setInterpolator(new AccelerateInterpolator());
+                anim.start();
+            }
         }
     }
 }

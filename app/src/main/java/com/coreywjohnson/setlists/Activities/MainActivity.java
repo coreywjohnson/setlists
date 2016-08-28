@@ -1,6 +1,7 @@
 package com.coreywjohnson.setlists.activities;
 
 import android.databinding.DataBindingUtil;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
@@ -52,7 +53,7 @@ public class MainActivity extends BaseActivity implements MainView, SearchSetlis
     public void showSetlist(Setlists.Setlist setlist, SharedViewWidget sharedViewWidget) {
         final SetlistFragment setlistFragment = SetlistFragment.newInstance(setlist);
 
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Transition returnTransition = TransitionInflater.from(this)
                     .inflateTransition(android.R.transition.explode);
 
@@ -173,7 +174,9 @@ public class MainActivity extends BaseActivity implements MainView, SearchSetlis
             mBinding.drawerLayout.addDrawerListener(mToggle);
             mToggle.syncState();
         } else {
-            mToggle.setDrawerIndicatorEnabled(false);
+            if (mToggle != null) {
+                mToggle.setDrawerIndicatorEnabled(false);
+            }
         }
         if (title != null) {
             getSupportActionBar().setTitle(title);
