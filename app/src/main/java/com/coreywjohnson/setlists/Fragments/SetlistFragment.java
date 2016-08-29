@@ -11,7 +11,6 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 
 import com.coreywjohnson.setlists.R;
 import com.coreywjohnson.setlists.SetlistsApp;
@@ -22,8 +21,10 @@ import com.coreywjohnson.setlists.databinding.FragmentSetlistBinding;
 import com.coreywjohnson.setlists.models.Setlists;
 import com.coreywjohnson.setlists.modules.SetlistModule;
 import com.coreywjohnson.setlists.presenters.SetlistPresenter;
+import com.coreywjohnson.setlists.utils.ViewUtils;
 import com.coreywjohnson.setlists.views.MainView;
 import com.coreywjohnson.setlists.views.SetlistView;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -70,6 +71,17 @@ public class SetlistFragment extends BaseFragment implements SetlistView {
         mBinding.setSetlist((Setlists.Setlist) getArguments().getSerializable(SETLIST));
         ((MainView) getActivity()).setToolbar(mBinding.toolbar, false, null);
 
+        // If we are not transitioning
+        if (android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+            mBinding.toolbarContent.setVisibility(View.VISIBLE);
+            mBinding.dateCircle.setVisibility(View.GONE);
+        }
+
+        Picasso.with(getContext())
+                .load(R.mipmap.crowd)
+                .fit()
+                .into(mBinding.backgroundImage);
+
         mPresenter.displaySetlist((Setlists.Setlist) getArguments().getSerializable(SETLIST));
 
         return mBinding.getRoot();
@@ -78,9 +90,17 @@ public class SetlistFragment extends BaseFragment implements SetlistView {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-        }
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        mBinding.backgroundImage.setImageDrawable(null);
+    }
+
+    @Override
+    public void revealToolbar() {
+        ViewUtils.circularReveal(mBinding.toolbarContent, getContext());
     }
 
     @Override

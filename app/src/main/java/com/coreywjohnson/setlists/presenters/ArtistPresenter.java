@@ -2,6 +2,7 @@ package com.coreywjohnson.setlists.presenters;
 
 import com.coreywjohnson.setlists.interactors.AnalyticsInteractor;
 import com.coreywjohnson.setlists.interactors.GetArtistsSetlistsInteractor;
+import com.coreywjohnson.setlists.interfaces.SharedViewWidget;
 import com.coreywjohnson.setlists.models.Artists;
 import com.coreywjohnson.setlists.models.Setlists;
 import com.coreywjohnson.setlists.presenters.common.PaginatablePresenter;
@@ -44,11 +45,11 @@ public class ArtistPresenter extends PaginatablePresenter<Setlists.Setlist> {
         }
     }
 
-    public void onSetlistClick(Setlists.Setlist setlist) {
+    public void onSetlistClick(Setlists.Setlist setlist, SharedViewWidget sharedViewWidget) {
         Map<String, String> properties = new HashMap<>();
         properties.put(FirebaseAnalytics.Param.CONTENT_TYPE, AnalyticsInteractor.CONTENT_TYPE_SETLIST);
         properties.put(FirebaseAnalytics.Param.ITEM_ID, setlist.getId());
         mAnalyticsInteractor.sendEvent(FirebaseAnalytics.Event.SELECT_CONTENT, properties);
-        mView.openSetlist(setlist);
+        mView.openSetlist(setlist, sharedViewWidget);
     }
 }
