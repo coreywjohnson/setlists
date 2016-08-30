@@ -62,6 +62,21 @@ public class SetlistFragment extends BaseFragment implements SetlistView {
         setlistComponent.inject(this);
     }
 
+    @Override
+    protected boolean hasMenu() {
+        return true;
+    }
+
+    @Override
+    protected int getMenu() {
+        return R.menu.menu_setlist;
+    }
+
+    @Override
+    protected int getLayout() {
+        return R.layout.fragment_setlist;
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -88,34 +103,17 @@ public class SetlistFragment extends BaseFragment implements SetlistView {
     }
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
-    }
-
-    @Override
     public void onDestroyView() {
         super.onDestroyView();
-        mBinding.backgroundImage.setImageDrawable(null);
+        // if we are not transitioning
+        if (android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+            mBinding.backgroundImage.setImageDrawable(null);
+        }
     }
 
     @Override
-    public void revealToolbar() {
-        ViewUtils.circularReveal(mBinding.toolbarContent, getContext());
-    }
-
-    @Override
-    protected int getLayout() {
-        return R.layout.fragment_setlist;
-    }
-
-    @Override
-    protected int getMenu() {
-        return R.menu.menu_setlist;
-    }
-
-    @Override
-    protected boolean hasMenu() {
-        return true;
+    public void onDestroy() {
+        super.onDestroy();
     }
 
     @Override
@@ -133,6 +131,11 @@ public class SetlistFragment extends BaseFragment implements SetlistView {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    @Override
+    public void revealToolbar() {
+        ViewUtils.circularReveal(mBinding.toolbarContent, getContext());
     }
 
     @Override
