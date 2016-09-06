@@ -1,5 +1,7 @@
 package com.coreywjohnson.setlists.presenters;
 
+import android.util.Log;
+
 import com.coreywjohnson.setlists.presenters.common.Presenter;
 import com.coreywjohnson.setlists.views.MainView;
 
@@ -16,8 +18,11 @@ public class MainPresenter extends Presenter {
         mMainView = mainView;
     }
 
-    public void onCreate() {
-        mMainView.showSetlistsSearch();
+    public void onCreate(boolean isRestoringState) {
+        if (!isRestoringState) {
+            Log.i("Main Presenter", "Creating a new fragment");
+            mMainView.showSetlistsSearch();
+        }
         mMainView.setupView();
     }
 }

@@ -22,6 +22,8 @@ public class SearchSetlistPresenter extends PaginatablePresenter<Setlists.Setlis
     private SearchSetlistInteractor mInteractor;
     private SearchSetlistView mSearchSetlistView;
     private AnalyticsInteractor mAnalyticsInteractor;
+    private String mQuery;
+    private String mDate;
 
     @Inject
     public SearchSetlistPresenter(SearchSetlistInteractor interactor, SearchSetlistView searchSetlistView, AnalyticsInteractor analyticsInteractor) {
@@ -29,14 +31,11 @@ public class SearchSetlistPresenter extends PaginatablePresenter<Setlists.Setlis
         mInteractor = interactor;
         mSearchSetlistView = searchSetlistView;
         mAnalyticsInteractor = analyticsInteractor;
-        Date date = new Date();
-        date.setDate(date.getDate() - 1);
-        mInteractor.setDate(new SimpleDateFormat("dd-MM-yyyy").format(date));
-        mSearchSetlistView.setAdapterHeaderYesterdaysSetlists();
-        onRefresh();
     }
 
     public void onSearch(String query) {
+        mDate = null;
+        mQuery = query;
         mInteractor.clearParameters();
         mInteractor.setName(query);
         onRefresh();
@@ -56,11 +55,54 @@ public class SearchSetlistPresenter extends PaginatablePresenter<Setlists.Setlis
         }
     }
 
+    @Override
+    public PresenterState getPresenterState() {
+        SearchSetlistPresenterState state = new SearchSetlistPresenterState();
+        state.writeState(this);
+        return state;
+    }
+
+    @Override
+    public void restorePresenterState(PresenterState state) {
+        super.restorePresenterState(state);
+        mQuery = ((SearchSetlistPresenterState) state).query;
+        mDate = ((SearchSetlistPresenterState) state).date;
+        if (mQuery != null && !mQuery.isEmpty()) {
+            mInteractor.setName(mQuery);
+        }
+        if (mDate != null && !mDate.isEmpty()) {
+            mInteractor.setDate(mDate);
+        }
+    }
+
     public void onSetlistClick(Setlists.Setlist setlist, SharedViewWidget sharedViewWidget) {
         Map<String, String> properties = new HashMap<>();
         properties.put(FirebaseAnalytics.Param.CONTENT_TYPE, AnalyticsInteractor.CONTENT_TYPE_SETLIST);
         properties.put(FirebaseAnalytics.Param.ITEM_ID, setlist.getId());
         mAnalyticsInteractor.sendEvent(FirebaseAnalytics.Event.SELECT_CONTENT, properties);
         mSearchSetlistView.openSetlist(setlist, sharedViewWidget);
+    }
+
+    public void onCreate(boolean isRestoring) {
+        if (!isRestoring) {
+            // Show initial Search
+            Date date = new Date();
+            date.setDate(date.getDate() - 1);
+            mDate = new SimpleDateFormat("dd-MM-yyyy").format(date);
+            mInteractor.setDate(mDate);
+            mSearchSetlistView.setAdapterHeaderYesterdaysSetlists();
+            onRefresh();
+        }
+    }
+
+    public static class SearchSetlistPresenterState extends PaginatablePresenterState {
+        public String query;
+        public String date;
+
+        public void writeState(SearchSetlistPresenter presenter) {
+            super.writeState(presenter);
+            query = presenter.mQuery;
+            date = presenter.mDate;
+        }
     }
 }

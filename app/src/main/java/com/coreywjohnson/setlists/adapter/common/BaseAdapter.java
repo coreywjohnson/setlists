@@ -5,8 +5,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
+import com.coreywjohnson.setlists.models.HeaderObject;
 import com.coreywjohnson.setlists.widgets.TextHeaderWidget;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -31,16 +33,6 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<RecyclerView.V
 
     @Override
     @CallSuper
-    public int getItemViewType(int position) {
-        if(mHeaders.containsKey(position)) {
-            return TYPE_HEADER;
-        } else {
-            return TYPE_CONTENT;
-        }
-    }
-
-    @Override
-    @CallSuper
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         switch (viewType) {
             case TYPE_HEADER:
@@ -55,6 +47,16 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<RecyclerView.V
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         if (holder instanceof TextHeaderWidget) {
             ((TextHeaderWidget) holder).setText(mHeaders.get(position));
+        }
+    }
+
+    @Override
+    @CallSuper
+    public int getItemViewType(int position) {
+        if (mHeaders.containsKey(position)) {
+            return TYPE_HEADER;
+        } else {
+            return TYPE_CONTENT;
         }
     }
 
@@ -105,7 +107,38 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<RecyclerView.V
         mHeaders.remove(position);
     }
 
+    public AdapterState getAdapterState() {
+        AdapterState adapterState = new AdapterState();
+        adapterState.writeState(this);
+        return adapterState;
+    }
+
+    public void restoreAdapterState(AdapterState adapterState) {
+        for (Object object : adapterState.stateList) {
+            try {
+                HeaderObject headerObject = (HeaderObject) object;
+                mHeaders.put(headerObject.position, headerObject.text);
+            } catch (ClassCastException e) {
+                mAdapterData.add((T) object);
+            }
+        }
+    }
+
     public interface AdapterListener {
 
+    }
+
+    public static class AdapterState implements Serializable {
+        public ArrayList<Object> stateList;
+
+        public void writeState(BaseAdapter adapter) {
+            ArrayList<Object> stateList = new ArrayList<>();
+            stateList.addAll(adapter.mAdapterData);
+            for (Object entry : adapter.mHeaders.entrySet()) {
+                Map.Entry<Integer, String> headerEntry = ((Map.Entry<Integer, String>) entry);
+                stateList.add(new HeaderObject(headerEntry.getKey(), headerEntry.getValue()));
+            }
+            this.stateList = stateList;
+        }
     }
 }

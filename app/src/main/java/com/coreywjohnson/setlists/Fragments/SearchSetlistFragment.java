@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import com.coreywjohnson.setlists.R;
 import com.coreywjohnson.setlists.SetlistsApp;
 import com.coreywjohnson.setlists.adapter.SetlistAdapter;
+import com.coreywjohnson.setlists.adapter.common.BaseAdapter;
 import com.coreywjohnson.setlists.components.DaggerSearchSetlistComponent;
 import com.coreywjohnson.setlists.components.SearchSetlistComponent;
 import com.coreywjohnson.setlists.databinding.FragmentSearchBinding;
@@ -24,6 +25,7 @@ import com.coreywjohnson.setlists.interfaces.SharedViewWidget;
 import com.coreywjohnson.setlists.models.Setlists;
 import com.coreywjohnson.setlists.modules.SearchSetlistModule;
 import com.coreywjohnson.setlists.presenters.SearchSetlistPresenter;
+import com.coreywjohnson.setlists.presenters.common.Presenter;
 import com.coreywjohnson.setlists.views.MainView;
 import com.coreywjohnson.setlists.views.SearchSetlistView;
 
@@ -35,6 +37,9 @@ import javax.inject.Inject;
  * Created by corey on 24-Apr-16.
  */
 public class SearchSetlistFragment extends BaseFragment implements SearchSetlistView, SetlistAdapter.AdapterListener, SwipeRefreshLayout.OnRefreshListener {
+    public static final String PRESENTER_STATE = "presenter_state";
+    public static final String ADAPTER_STATE = "adapter_state";
+
     @Inject
     SetlistAdapter mAdapter;
     @Inject
@@ -55,35 +60,11 @@ public class SearchSetlistFragment extends BaseFragment implements SearchSetlist
                         .searchSetlistModule(new SearchSetlistModule(this, this))
                         .build();
         searchSetlistComponent.inject(this);
-    }
-
-    @Nullable
-    @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        mBinding = DataBindingUtil.inflate(inflater, getLayout(), container, false);
-        mBinding.recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        mBinding.recyclerView.setAdapter(mAdapter);
-        mBinding.dataWidget.showData();
-        getParentView().setToolbar(mBinding.toolbar, true, R.string.title_setlists);
-
-        mBinding.refreshView.setOnRefreshListener(this);
-
-        return mBinding.getRoot();
-    }
-
-    @Override
-    protected boolean hasMenu() {
-        return true;
-    }
-
-    @Override
-    protected int getMenu() {
-        return R.menu.menu_search;
-    }
-
-    @Override
-    protected int getLayout() {
-        return R.layout.fragment_search;
+        mPresenter.onCreate(savedInstanceState != null);
+        if(savedInstanceState != null) {
+            mPresenter.restorePresenterState((Presenter.PresenterState) savedInstanceState.getSerializable(PRESENTER_STATE));
+            mAdapter.restoreAdapterState((BaseAdapter.AdapterState) savedInstanceState.getSerializable(ADAPTER_STATE));
+        }
     }
 
     @Override
@@ -106,9 +87,51 @@ public class SearchSetlistFragment extends BaseFragment implements SearchSetlist
     }
 
     @Override
+    protected boolean hasMenu() {
+        return true;
+    }
+
+    @Override
+    protected int getMenu() {
+        return R.menu.menu_search;
+    }
+
+    @Override
+    protected int getLayout() {
+        return R.layout.fragment_search;
+    }
+
+    @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         mListener = (SearchFragmentListener) context;
+    }
+
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        mBinding = DataBindingUtil.inflate(inflater, getLayout(), container, false);
+        mBinding.recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        mBinding.recyclerView.setAdapter(mAdapter);
+        mBinding.dataWidget.showData();
+        getParentView().setToolbar(mBinding.toolbar, true, R.string.title_setlists);
+
+        mBinding.refreshView.setOnRefreshListener(this);
+
+        return mBinding.getRoot();
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        outState.putSerializable(PRESENTER_STATE, mPresenter.getPresenterState());
+        outState.putSerializable(ADAPTER_STATE, mAdapter.getAdapterState());
+        mPresenter = null;
+        super.onSaveInstanceState(outState);
     }
 
     @Override
@@ -147,20 +170,6 @@ public class SearchSetlistFragment extends BaseFragment implements SearchSetlist
     @Override
     public void setAdapterHeaderSearchResults(String query) {
         mAdapter.addHeader(0, getString(R.string.txt_results_for, query));
-    }
-
-    @Override
-    public void showDataState() {
-        if (mBinding != null) {
-            mBinding.dataWidget.showData();
-        }
-    }
-
-    @Override
-    public void showEmptyState() {
-        if (mBinding != null) {
-            mBinding.dataWidget.showEmpty();
-        }
     }
 
     @Override
@@ -203,6 +212,20 @@ public class SearchSetlistFragment extends BaseFragment implements SearchSetlist
     public void hideLoading() {
         if (mBinding != null) {
             mBinding.refreshView.setRefreshing(false);
+        }
+    }
+
+    @Override
+    public void showDataState() {
+        if (mBinding != null) {
+            mBinding.dataWidget.showData();
+        }
+    }
+
+    @Override
+    public void showEmptyState() {
+        if (mBinding != null) {
+            mBinding.dataWidget.showEmpty();
         }
     }
 
