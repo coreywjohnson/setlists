@@ -130,7 +130,6 @@ public class SearchSetlistFragment extends BaseFragment implements SearchSetlist
     public void onSaveInstanceState(Bundle outState) {
         outState.putSerializable(PRESENTER_STATE, mPresenter.getPresenterState());
         outState.putSerializable(ADAPTER_STATE, mAdapter.getAdapterState());
-        mPresenter = null;
         super.onSaveInstanceState(outState);
     }
 
