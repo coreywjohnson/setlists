@@ -19,6 +19,7 @@ public class SearchArtistPresenter extends PaginatablePresenter<Artists.Artist> 
     private AnalyticsInteractor mAnalyticsInteractor;
     private SearchArtistInteractor mSearchArtistInteractor;
     private SearchArtistView mView;
+    private String mQuery;
 
     @Inject
     public SearchArtistPresenter(SearchArtistInteractor interactor, SearchArtistView view, AnalyticsInteractor analyticsInteractor) {
@@ -29,6 +30,7 @@ public class SearchArtistPresenter extends PaginatablePresenter<Artists.Artist> 
     }
 
     public void onSearch(String query) {
+        mQuery = query;
         mSearchArtistInteractor.setQuery(query);
         mView.setAdapterHeaderSearchResult(query);
         onRefresh();
@@ -52,5 +54,30 @@ public class SearchArtistPresenter extends PaginatablePresenter<Artists.Artist> 
         properties.put(FirebaseAnalytics.Param.ITEM_ID, artist.getMbid());
         mAnalyticsInteractor.sendEvent(FirebaseAnalytics.Event.SELECT_CONTENT, properties);
         mView.showArtist(artist);
+    }
+
+    @Override
+    public PresenterState getPresenterState() {
+        SearchArtistPresenterState presenterState = new SearchArtistPresenterState();
+        presenterState.writeState(this);
+        return presenterState;
+    }
+
+    @Override
+    public void restorePresenterState(PresenterState state) {
+        super.restorePresenterState(state);
+        mQuery = ((SearchArtistPresenterState) state).query;
+        if (mQuery != null && !mQuery.isEmpty()) {
+            mSearchArtistInteractor.setQuery(mQuery);
+        }
+    }
+
+    public static class SearchArtistPresenterState extends PaginatablePresenterState {
+        String query;
+
+        public void writeState(SearchArtistPresenter presenter) {
+            super.writeState(presenter);
+            query = presenter.mQuery;
+        }
     }
 }

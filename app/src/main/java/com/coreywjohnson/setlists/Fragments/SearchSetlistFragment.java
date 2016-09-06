@@ -37,8 +37,6 @@ import javax.inject.Inject;
  * Created by corey on 24-Apr-16.
  */
 public class SearchSetlistFragment extends BaseFragment implements SearchSetlistView, SetlistAdapter.AdapterListener, SwipeRefreshLayout.OnRefreshListener {
-    public static final String PRESENTER_STATE = "presenter_state";
-    public static final String ADAPTER_STATE = "adapter_state";
 
     @Inject
     SetlistAdapter mAdapter;
