@@ -22,8 +22,8 @@ android {
         applicationId "com.coreywjohnson.setlists"
         minSdkVersion 17
         targetSdkVersion 24
-        versionCode 9
-        versionName "0.4.2 Alpha"
+        versionCode 10
+        versionName "0.4.3 Alpha"
     }
     signingConfigs {
         config {
