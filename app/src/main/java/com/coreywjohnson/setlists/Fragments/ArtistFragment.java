@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import com.coreywjohnson.setlists.R;
 import com.coreywjohnson.setlists.SetlistsApp;
 import com.coreywjohnson.setlists.adapter.SetlistAdapter;
+import com.coreywjohnson.setlists.adapter.common.BaseAdapter;
 import com.coreywjohnson.setlists.components.ArtistComponent;
 import com.coreywjohnson.setlists.components.DaggerArtistComponent;
 import com.coreywjohnson.setlists.databinding.FragmentArtistBinding;
@@ -22,6 +23,7 @@ import com.coreywjohnson.setlists.models.Artists;
 import com.coreywjohnson.setlists.models.Setlists;
 import com.coreywjohnson.setlists.modules.ArtistModule;
 import com.coreywjohnson.setlists.presenters.ArtistPresenter;
+import com.coreywjohnson.setlists.presenters.common.Presenter;
 import com.coreywjohnson.setlists.views.ArtistView;
 import com.coreywjohnson.setlists.views.MainView;
 
@@ -60,8 +62,12 @@ public class ArtistFragment extends BaseFragment implements ArtistView, SetlistA
                 .build();
         artistComponent.inject(this);
         setHasOptionsMenu(true);
-
-        mPresenter.onCreate((Artists.Artist) getArguments().getSerializable(ARTIST));
+        mPresenter.setArtist((Artists.Artist) getArguments().getSerializable(ARTIST));
+        mPresenter.onCreate(savedInstanceState != null);
+        if (savedInstanceState != null) {
+            mPresenter.restorePresenterState((Presenter.PresenterState) savedInstanceState.getSerializable(PRESENTER_STATE));
+            mAdapter.restoreAdapterState((BaseAdapter.AdapterState) savedInstanceState.getSerializable(ADAPTER_STATE));
+        }
     }
 
     @Nullable
@@ -93,6 +99,13 @@ public class ArtistFragment extends BaseFragment implements ArtistView, SetlistA
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        outState.putSerializable(PRESENTER_STATE, mPresenter.getPresenterState());
+        outState.putSerializable(ADAPTER_STATE, mAdapter.getAdapterState());
+        super.onSaveInstanceState(outState);
     }
 
     @Override

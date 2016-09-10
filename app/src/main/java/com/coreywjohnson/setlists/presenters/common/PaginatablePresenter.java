@@ -1,5 +1,7 @@
 package com.coreywjohnson.setlists.presenters.common;
 
+import android.support.annotation.CallSuper;
+
 import com.coreywjohnson.setlists.data.SetlistService;
 import com.coreywjohnson.setlists.interfaces.PaginatableRequest;
 import com.coreywjohnson.setlists.interfaces.PaginatableRequestListener;
@@ -49,5 +51,27 @@ public abstract class PaginatablePresenter<Type> extends Presenter implements Pa
             mPaginatableView.showEmptyState();
         }
         mPaginatableView.hideLoading();
+    }
+
+    public PresenterState getPresenterState() {
+        PaginatablePresenterState state = new PaginatablePresenterState();
+        state.writeState(this);
+        return state;
+    }
+
+    @CallSuper
+    public void restorePresenterState(PresenterState state) {
+        mLoadCount = ((PaginatablePresenterState) state).loadCount;
+        mPageNo = ((PaginatablePresenterState) state).pageNo;
+    }
+
+    public static class PaginatablePresenterState extends PresenterState {
+        public int pageNo;
+        public int loadCount;
+
+        public void writeState(PaginatablePresenter paginatablePresenter) {
+            pageNo = paginatablePresenter.mPageNo;
+            loadCount = paginatablePresenter.mLoadCount;
+        }
     }
 }

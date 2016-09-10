@@ -3,6 +3,7 @@ package com.coreywjohnson.setlists.activities;
 import android.databinding.DataBindingUtil;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -47,7 +48,16 @@ public class MainActivity extends BaseActivity implements MainView, SearchSetlis
 
         mBinding = DataBindingUtil.setContentView(this, getLayout());
 
-        mainPresenter.onCreate();
+        boolean restoringState = false;
+        if (savedInstanceState != null) {
+            restoringState = true;
+        }
+        mainPresenter.onCreate(restoringState);
+    }
+
+    @Override
+    public int getLayout() {
+        return R.layout.activity_main;
     }
 
     public void showSetlist(Setlists.Setlist setlist, SharedViewWidget sharedViewWidget) {
@@ -111,11 +121,6 @@ public class MainActivity extends BaseActivity implements MainView, SearchSetlis
                     .addToBackStack("Setlist")
                     .commit();
         }
-    }
-
-    @Override
-    public int getLayout() {
-        return R.layout.activity_main;
     }
 
     @Override
@@ -198,5 +203,10 @@ public class MainActivity extends BaseActivity implements MainView, SearchSetlis
     @Override
     public void setToolbarText(int resId) {
         setToolbarText(getString(resId));
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
+        super.onSaveInstanceState(outState, outPersistentState);
     }
 }

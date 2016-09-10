@@ -31,10 +31,11 @@ public class ArtistPresenter extends PaginatablePresenter<Setlists.Setlist> {
         mAnalyticsInteractor = analyticsInteractor;
     }
 
-    public void onCreate(Artists.Artist artist) {
-        mArtist = artist;
-        mInteractor.setArtistMbid(artist.getMbid());
-        onRefresh();
+    @Override
+    public void onCreate(boolean isRestoring) {
+        if (!isRestoring) {
+            onRefresh();
+        }
     }
 
     @Override
@@ -51,5 +52,10 @@ public class ArtistPresenter extends PaginatablePresenter<Setlists.Setlist> {
         properties.put(FirebaseAnalytics.Param.ITEM_ID, setlist.getId());
         mAnalyticsInteractor.sendEvent(FirebaseAnalytics.Event.SELECT_CONTENT, properties);
         mView.openSetlist(setlist, sharedViewWidget);
+    }
+
+    public void setArtist(Artists.Artist artist) {
+        mArtist = artist;
+        mInteractor.setArtistMbid(artist.getMbid());
     }
 }

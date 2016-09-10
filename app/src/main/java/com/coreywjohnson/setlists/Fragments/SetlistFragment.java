@@ -60,6 +60,7 @@ public class SetlistFragment extends BaseFragment implements SetlistView {
                 .setlistModule(new SetlistModule(this))
                 .build();
         setlistComponent.inject(this);
+        mPresenter.setSetlist((Setlists.Setlist) getArguments().getSerializable(SETLIST));
     }
 
     @Override
@@ -81,25 +82,23 @@ public class SetlistFragment extends BaseFragment implements SetlistView {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mBinding = DataBindingUtil.inflate(inflater, getLayout(), container, false);
-        mBinding.recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        mBinding.recyclerView.setAdapter(mAdapter);
-        mBinding.setSetlist((Setlists.Setlist) getArguments().getSerializable(SETLIST));
+        mPresenter.onCreateView(savedInstanceState != null, android.os.Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP);
         ((MainView) getActivity()).setToolbar(mBinding.toolbar, false, null);
-
-        // If we are not transitioning
-        if (android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-            mBinding.toolbarContent.setVisibility(View.VISIBLE);
-            mBinding.dateCircle.setVisibility(View.GONE);
-        }
 
         Picasso.with(getContext())
                 .load(R.mipmap.crowd)
                 .fit()
+                .centerCrop()
                 .into(mBinding.backgroundImage);
 
-        mPresenter.displaySetlist((Setlists.Setlist) getArguments().getSerializable(SETLIST));
-
         return mBinding.getRoot();
+    }
+
+    @Override
+    public void setupRecyclerView(Setlists.Setlist setlist) {
+        mBinding.recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        mBinding.recyclerView.setAdapter(mAdapter);
+        mBinding.setSetlist((Setlists.Setlist) getArguments().getSerializable(SETLIST));
     }
 
     @Override
@@ -123,10 +122,7 @@ public class SetlistFragment extends BaseFragment implements SetlistView {
                 getActivity().onBackPressed();
                 return true;
             case R.id.action_web:
-                Setlists.Setlist setlist = (Setlists.Setlist) getArguments().getSerializable(SETLIST);
-                String webUrl = setlist.getUrl();
-                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(webUrl));
-                startActivity(browserIntent);
+                mPresenter.onViewWebPressed();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -153,5 +149,18 @@ public class SetlistFragment extends BaseFragment implements SetlistView {
     @Override
     public void displayDataState() {
         mBinding.dataWidget.showData();
+    }
+
+    @Override
+    public void showHeader() {
+        mBinding.toolbarContent.setVisibility(View.VISIBLE);
+        mBinding.dateCircle.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void launchWebView(Setlists.Setlist setlist) {
+        String webUrl = setlist.getUrl();
+        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(webUrl));
+        startActivity(browserIntent);
     }
 }
