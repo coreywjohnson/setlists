@@ -9,6 +9,8 @@ import java.util.List;
  * Created by coreyjohnson on 12/05/16.
  */
 public interface SetlistView extends BaseView {
+    void setupRecyclerView(Setlists.Setlist setlist);
+
     void revealToolbar();
 
     void addItems(List<Setlists.Song> setlistList);
@@ -16,4 +18,8 @@ public interface SetlistView extends BaseView {
     void displayEmptyState();
 
     void displayDataState();
+
+    void showHeader();
+
+    void launchWebView(Setlists.Setlist setlist);
 }
