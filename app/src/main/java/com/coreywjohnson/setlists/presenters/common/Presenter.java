@@ -5,7 +5,9 @@ import java.io.Serializable;
 /**
  * Created by corey on 24-Apr-16.
  */
-public class Presenter {
+public abstract class Presenter {
+
+    public abstract void onCreate(boolean isRestoring);
 
     public static class PresenterState implements Serializable {
 

@@ -29,6 +29,11 @@ public class SearchArtistPresenter extends PaginatablePresenter<Artists.Artist> 
         mAnalyticsInteractor = analyticsInteractor;
     }
 
+    @Override
+    public void onCreate(boolean isRestoring) {
+
+    }
+
     public void onSearch(String query) {
         mQuery = query;
         mSearchArtistInteractor.setQuery(query);

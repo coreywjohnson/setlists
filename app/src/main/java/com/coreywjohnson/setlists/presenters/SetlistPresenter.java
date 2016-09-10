@@ -30,8 +30,9 @@ public class SetlistPresenter extends Presenter {
         }
     }
 
-    public void onCreate(boolean hasSavedState) {
-        if (hasSavedState) {
+    @Override
+    public void onCreate(boolean isRestoring) {
+        if (isRestoring) {
             mSetlistView.showHeader();
         }
     }

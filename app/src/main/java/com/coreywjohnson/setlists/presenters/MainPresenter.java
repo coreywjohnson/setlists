@@ -18,6 +18,7 @@ public class MainPresenter extends Presenter {
         mMainView = mainView;
     }
 
+    @Override
     public void onCreate(boolean isRestoringState) {
         if (!isRestoringState) {
             Log.i("Main Presenter", "Creating a new fragment");

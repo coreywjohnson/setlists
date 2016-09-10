@@ -120,11 +120,6 @@ public class SearchSetlistFragment extends BaseFragment implements SearchSetlist
     }
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-    }
-
-    @Override
     public void onSaveInstanceState(Bundle outState) {
         outState.putSerializable(PRESENTER_STATE, mPresenter.getPresenterState());
         outState.putSerializable(ADAPTER_STATE, mAdapter.getAdapterState());

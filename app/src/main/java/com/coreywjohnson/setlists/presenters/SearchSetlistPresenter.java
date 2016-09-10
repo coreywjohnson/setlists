@@ -83,6 +83,7 @@ public class SearchSetlistPresenter extends PaginatablePresenter<Setlists.Setlis
         mSearchSetlistView.openSetlist(setlist, sharedViewWidget);
     }
 
+    @Override
     public void onCreate(boolean isRestoring) {
         if (!isRestoring) {
             // Show initial Search
