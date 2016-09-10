@@ -9,6 +9,10 @@ public abstract class Presenter {
 
     public abstract void onCreate(boolean isRestoring);
 
+    public abstract PresenterState getPresenterState();
+
+    public abstract void restorePresenterState(PresenterState state);
+
     public static class PresenterState implements Serializable {
 
     }

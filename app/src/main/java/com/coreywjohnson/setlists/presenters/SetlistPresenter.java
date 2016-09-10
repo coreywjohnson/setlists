@@ -37,6 +37,16 @@ public class SetlistPresenter extends Presenter {
         }
     }
 
+    @Override
+    public PresenterState getPresenterState() {
+        return null;
+    }
+
+    @Override
+    public void restorePresenterState(PresenterState state) {
+        // do nothing
+    }
+
     public void onCreateView(boolean hasSavedState, boolean isTransitioning) {
         if (hasSavedState || !isTransitioning) {
             mSetlistView.showHeader();

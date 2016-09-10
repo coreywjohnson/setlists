@@ -21,9 +21,18 @@ public class MainPresenter extends Presenter {
     @Override
     public void onCreate(boolean isRestoringState) {
         if (!isRestoringState) {
-            Log.i("Main Presenter", "Creating a new fragment");
             mMainView.showSetlistsSearch();
         }
         mMainView.setupView();
+    }
+
+    @Override
+    public PresenterState getPresenterState() {
+        return null;
+    }
+
+    @Override
+    public void restorePresenterState(PresenterState state) {
+
     }
 }

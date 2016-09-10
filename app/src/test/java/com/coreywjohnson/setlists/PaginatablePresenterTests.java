@@ -4,6 +4,7 @@ import com.coreywjohnson.setlists.data.SetlistService;
 import com.coreywjohnson.setlists.interfaces.PaginatableRequest;
 import com.coreywjohnson.setlists.models.Setlists;
 import com.coreywjohnson.setlists.presenters.common.PaginatablePresenter;
+import com.coreywjohnson.setlists.presenters.common.Presenter;
 import com.coreywjohnson.setlists.views.common.PaginatableView;
 
 import org.junit.Before;
@@ -13,6 +14,7 @@ import org.mockito.MockitoAnnotations;
 
 import java.util.ArrayList;
 
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.anyInt;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
@@ -32,6 +34,10 @@ public class PaginatablePresenterTests {
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
         mPresenter = new PaginatablePresenter<Setlists.Setlist>(mView, mRequest) {
+            @Override
+            public void onCreate(boolean isRestoring) {
+
+            }
         };
     }
 
@@ -113,5 +119,51 @@ public class PaginatablePresenterTests {
     public void testOnError_hideLoading() {
         mPresenter.onError("some error");
         verify(mView).hideLoading();
+    }
+
+    @Test
+    public void testRestoreState_restoresPageNoProperly() {
+        int pageNo = 3;
+        PaginatablePresenter.PaginatablePresenterState state = new PaginatablePresenter.PaginatablePresenterState();
+        state.pageNo = pageNo;
+        state.loadCount = 5000;
+
+        mPresenter.restorePresenterState(state);
+        mPresenter.onLoadMore();
+        verify(mRequest).loadPage(pageNo + 1);
+    }
+
+    @Test
+    public void testRestoreState_restoresLoadCountProperly() {
+        int totalLoadCount = 50;
+        int requestItemCount = 5;
+
+        PaginatablePresenter.PaginatablePresenterState state = new PaginatablePresenter.PaginatablePresenterState();
+        state.pageNo = 3;
+        state.loadCount = totalLoadCount - requestItemCount;
+
+        ArrayList<Setlists.Setlist> setlists = new ArrayList<>();
+        for (int i = 0; i < requestItemCount; i++) {
+            setlists.add(new Setlists.Setlist());
+        }
+
+        mPresenter.restorePresenterState(state);
+        mPresenter.onSuccess(setlists, totalLoadCount);
+        verify(mView).addItems(setlists, false);
+    }
+
+    @Test
+    public void testGetState_getsCorrectState() {
+        int itemCount = 5;
+        ArrayList<Setlists.Setlist> setlists = new ArrayList<>();
+        for (int i = 0; i < itemCount; i++) {
+            setlists.add(new Setlists.Setlist());
+        }
+
+        mPresenter.onLoadMore();
+        mPresenter.onSuccess(setlists, 10);
+        Presenter.PresenterState presenterState = mPresenter.getPresenterState();
+        assertEquals(5, ((PaginatablePresenter.PaginatablePresenterState) presenterState).loadCount);
+        assertEquals(2, ((PaginatablePresenter.PaginatablePresenterState) presenterState).pageNo);
     }
 }
