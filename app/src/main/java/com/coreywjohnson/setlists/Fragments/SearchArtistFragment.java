@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import com.coreywjohnson.setlists.R;
 import com.coreywjohnson.setlists.SetlistsApp;
 import com.coreywjohnson.setlists.adapter.ArtistAdapter;
+import com.coreywjohnson.setlists.adapter.common.BaseAdapter;
 import com.coreywjohnson.setlists.components.DaggerSearchArtistComponent;
 import com.coreywjohnson.setlists.components.SearchArtistComponent;
 import com.coreywjohnson.setlists.databinding.FragmentSearchBinding;
@@ -22,6 +23,7 @@ import com.coreywjohnson.setlists.helpers.ViewHelper;
 import com.coreywjohnson.setlists.models.Artists;
 import com.coreywjohnson.setlists.modules.SearchArtistModule;
 import com.coreywjohnson.setlists.presenters.SearchArtistPresenter;
+import com.coreywjohnson.setlists.presenters.common.Presenter;
 import com.coreywjohnson.setlists.views.MainView;
 import com.coreywjohnson.setlists.views.SearchArtistView;
 
@@ -57,6 +59,10 @@ public class SearchArtistFragment extends BaseFragment implements SearchArtistVi
                         .searchArtistModule(new SearchArtistModule(this, this))
                         .build();
         searchArtistComponent.inject(this);
+        if (savedInstanceState != null) {
+            mPresenter.restorePresenterState((Presenter.PresenterState) savedInstanceState.getSerializable(PRESENTER_STATE));
+            mAdapter.restoreAdapterState((BaseAdapter.AdapterState) savedInstanceState.getSerializable(ADAPTER_STATE));
+        }
     }
 
     @Nullable
@@ -89,6 +95,13 @@ public class SearchArtistFragment extends BaseFragment implements SearchArtistVi
                 return false;
             }
         });
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        outState.putSerializable(PRESENTER_STATE, mPresenter.getPresenterState());
+        outState.putSerializable(ADAPTER_STATE, mAdapter.getAdapterState());
+        super.onSaveInstanceState(outState);
     }
 
     @Override

@@ -15,22 +15,11 @@ import java.util.List;
 public abstract class PaginatableAdapter<T> extends BaseAdapter<T> {
     public static final int TYPE_LOADING = 3;
     public static final int LOAD_OFFSET = 10;
-
+    protected boolean mHasMoreItems = true;
     private PaginatableAdapterListener mPaginatableAdapterListener;
-    private boolean mHasMoreItems = true;
 
     public PaginatableAdapter(PaginatableAdapterListener adapterListener) {
         mPaginatableAdapterListener = adapterListener;
-    }
-
-    @Override
-    @CallSuper
-    public int getItemViewType(int position) {
-        if (position == super.getItemCount()) {
-            return TYPE_LOADING;
-        } else {
-            return super.getItemViewType(position);
-        }
     }
 
     @Override
@@ -54,17 +43,22 @@ public abstract class PaginatableAdapter<T> extends BaseAdapter<T> {
     }
 
     @Override
+    @CallSuper
+    public int getItemViewType(int position) {
+        if (position == super.getItemCount()) {
+            return TYPE_LOADING;
+        } else {
+            return super.getItemViewType(position);
+        }
+    }
+
+    @Override
     public int getItemCount() {
         if (mIsLoading) {
             return super.getItemCount() + 1;
         } else {
             return super.getItemCount();
         }
-    }
-
-    public void addItems(List<T> data, boolean hasMore) {
-        mHasMoreItems = hasMore;
-        addItems(data);
     }
 
     @Override
@@ -88,7 +82,34 @@ public abstract class PaginatableAdapter<T> extends BaseAdapter<T> {
         mHasMoreItems = true;
     }
 
+    @Override
+    public AdapterState getAdapterState() {
+        PaginatableAdapterState adapterState = new PaginatableAdapterState();
+        adapterState.writeState(this);
+        return adapterState;
+    }
+
+    @Override
+    public void restoreAdapterState(AdapterState adapterState) {
+        super.restoreAdapterState(adapterState);
+        mHasMoreItems = ((PaginatableAdapterState) adapterState).hasMoreItems;
+    }
+
+    public void addItems(List<T> data, boolean hasMore) {
+        mHasMoreItems = hasMore;
+        addItems(data);
+    }
+
     public interface PaginatableAdapterListener extends AdapterListener {
         void onLoadMore();
+    }
+
+    public static class PaginatableAdapterState extends AdapterState {
+        boolean hasMoreItems;
+
+        public void writeState(PaginatableAdapter adapter) {
+            super.writeState(adapter);
+            hasMoreItems = adapter.mHasMoreItems;
+        }
     }
 }

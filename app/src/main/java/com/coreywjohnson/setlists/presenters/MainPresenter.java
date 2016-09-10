@@ -1,5 +1,7 @@
 package com.coreywjohnson.setlists.presenters;
 
+import android.util.Log;
+
 import com.coreywjohnson.setlists.presenters.common.Presenter;
 import com.coreywjohnson.setlists.views.MainView;
 
@@ -16,8 +18,21 @@ public class MainPresenter extends Presenter {
         mMainView = mainView;
     }
 
-    public void onCreate() {
-        mMainView.showSetlistsSearch();
+    @Override
+    public void onCreate(boolean isRestoringState) {
+        if (!isRestoringState) {
+            mMainView.showSetlistsSearch();
+        }
         mMainView.setupView();
+    }
+
+    @Override
+    public PresenterState getPresenterState() {
+        return null;
+    }
+
+    @Override
+    public void restorePresenterState(PresenterState state) {
+
     }
 }

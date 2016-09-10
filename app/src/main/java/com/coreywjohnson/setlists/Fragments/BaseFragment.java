@@ -13,6 +13,8 @@ import com.coreywjohnson.setlists.views.common.BaseView;
  * Created by corey on 02-May-16.
  */
 public abstract class BaseFragment extends Fragment implements BaseView {
+    public static final String PRESENTER_STATE = "presenter_state";
+    public static final String ADAPTER_STATE = "adapter_state";
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
