@@ -99,8 +99,14 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<RecyclerView.V
     }
 
     public void addHeader(int position, String text) {
-        mHeaders.remove(position);
-        mHeaders.put(position, text);
+        int offset = 0;
+        for (Map.Entry<Integer, String> entry : mHeaders.entrySet()) {
+            if(entry.getKey() < position) {
+                offset++;
+            }
+        }
+        mHeaders.remove(position + offset);
+        mHeaders.put(position + offset, text);
     }
 
     public void removeHeader(int position) {

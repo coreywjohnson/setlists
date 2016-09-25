@@ -487,6 +487,9 @@ public class Setlists implements Serializable {
         @Element(name = "cover", required = false)
         Cover cover;
 
+        @Element(name = "tape", required = false)
+        boolean tape;
+
 
         public String getName() {
             return this.name;
@@ -514,6 +517,14 @@ public class Setlists implements Serializable {
             this.cover = _value;
         }
 
+        public boolean isTape() {
+            return tape;
+        }
+
+        public void setTape(boolean value) {
+            this.tape = value;
+        }
+
 
     }
 
@@ -525,6 +536,9 @@ public class Setlists implements Serializable {
 
         @Attribute(name = "encore", required = false)
         String encore;
+
+        @Attribute(name = "name", required = false)
+        String name;
 
 
         public List<Song> getSong() {
@@ -544,6 +558,9 @@ public class Setlists implements Serializable {
             this.encore = _value;
         }
 
+        public String getName() { return this.name; }
+
+        public void setName(String value) { this.name = value; }
 
     }
 

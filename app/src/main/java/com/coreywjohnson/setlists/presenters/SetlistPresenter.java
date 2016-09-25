@@ -27,6 +27,21 @@ public class SetlistPresenter extends Presenter {
         } else {
             mSetlistView.displayDataState();
             mSetlistView.addItems(mSetlist.getSetlistSongs());
+            int iteratedSongs = 0;
+            for(int i = 0; i < mSetlist.getSets().size(); i++) {
+                if(i != 0) {
+                    if(mSetlist.getSets().size() == 2) {
+                        mSetlistView.addEncoreHeader(iteratedSongs);
+                    } else {
+                        if(mSetlist.getSets().get(i).getName() != null) {
+                            mSetlistView.addEncoreNameHeader(mSetlist.getSets().get(i).getName(), iteratedSongs);
+                        } else {
+                            mSetlistView.addEncoreNumHeader(Integer.parseInt(mSetlist.getSets().get(i).getEncore()), iteratedSongs);
+                        }
+                    }
+                }
+                iteratedSongs += mSetlist.getSets().get(i).getSong().size();
+            }
         }
     }
 
