@@ -479,6 +479,9 @@ public class Setlists implements Serializable {
         @Attribute(name = "name", required = false)
         String name;
 
+        @Attribute(name = "tape", required = false)
+        boolean tape;
+
 
         @Element(name = "info", required = false)
         String info;
@@ -486,9 +489,6 @@ public class Setlists implements Serializable {
 
         @Element(name = "cover", required = false)
         Cover cover;
-
-        @Element(name = "tape", required = false)
-        boolean tape;
 
 
         public String getName() {

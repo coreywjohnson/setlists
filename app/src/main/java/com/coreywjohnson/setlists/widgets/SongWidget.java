@@ -30,16 +30,27 @@ public class SongWidget extends RecyclerView.ViewHolder {
         mBinding.setSong(song);
         String infoText = "";
         if (song.getCover() != null) {
-            infoText += "(" + song.getCover().getName() + " cover) ";
+            if (song.isTape()) {
+                infoText += "(" + song.getCover().getName() + " song) ";
+            } else {
+                infoText += "(" + song.getCover().getName() + " cover) ";
+            }
         }
         if (song.getInfo() != null) {
             infoText += "(" + song.getInfo() + ")";
         }
         if (infoText.equals("")) {
             mBinding.textInfo.setVisibility(View.GONE);
+            mBinding.numSpacer.setVisibility(View.GONE);
         } else {
             mBinding.textInfo.setVisibility(View.VISIBLE);
+            mBinding.numSpacer.setVisibility(View.VISIBLE);
             mBinding.textInfo.setText(infoText);
+        }
+        if (song.isTape()) {
+            mBinding.getRoot().setAlpha(.5F);
+        } else {
+            mBinding.getRoot().setAlpha(1F);
         }
     }
 

@@ -8,8 +8,6 @@ import com.coreywjohnson.setlists.adapter.common.BaseAdapter;
 import com.coreywjohnson.setlists.models.Setlists;
 import com.coreywjohnson.setlists.widgets.SongWidget;
 
-import java.util.Map;
-
 import javax.inject.Inject;
 
 /**
@@ -36,17 +34,20 @@ public class SongAdapter extends BaseAdapter<Setlists.Song> {
         super.onBindViewHolder(holder, position);
         if (holder instanceof SongWidget) {
             ((SongWidget) holder).setSong(getItemAtPosition(position));
-            ((SongWidget) holder).setSongNumber(offsetSongPosition(position+1));
+            ((SongWidget) holder).setSongNumber(getSongPosition(getItemAtPosition(position)) + 1);
         }
     }
 
-    private int offsetSongPosition(int position) {
-        int offset = 0;
-        for (Map.Entry<Integer, String> entry : mHeaders.entrySet()) {
-            if(entry.getKey() < position) {
-                offset++;
+    private int getSongPosition(Setlists.Song item) {
+        int position = 0;
+        for (Setlists.Song song : mAdapterData) {
+            if (item == song) {
+                return position;
+            }
+            if (!song.isTape()) {
+                position++;
             }
         }
-        return position - offset;
+        return -1;
     }
 }
