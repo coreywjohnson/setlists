@@ -163,4 +163,19 @@ public class SetlistFragment extends BaseFragment implements SetlistView {
         Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(webUrl));
         startActivity(browserIntent);
     }
+
+    @Override
+    public void addEncoreHeader(int position) {
+        mAdapter.addHeader(position, getContext().getString(R.string.txt_encore));
+    }
+
+    @Override
+    public void addEncoreNumHeader(int encoreNum, int position) {
+        mAdapter.addHeader(position, getContext().getString(R.string.txt_encore_num, encoreNum));
+    }
+
+    @Override
+    public void addEncoreNameHeader(String name, int position) {
+        mAdapter.addHeader(position, name);
+    }
 }

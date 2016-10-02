@@ -22,4 +22,10 @@ public interface SetlistView extends BaseView {
     void showHeader();
 
     void launchWebView(Setlists.Setlist setlist);
+
+    void addEncoreHeader(int position);
+
+    void addEncoreNumHeader(int encoreNum, int position);
+
+    void addEncoreNameHeader(String name, int position);
 }

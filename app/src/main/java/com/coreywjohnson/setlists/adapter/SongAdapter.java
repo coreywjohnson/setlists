@@ -34,7 +34,20 @@ public class SongAdapter extends BaseAdapter<Setlists.Song> {
         super.onBindViewHolder(holder, position);
         if (holder instanceof SongWidget) {
             ((SongWidget) holder).setSong(getItemAtPosition(position));
-            ((SongWidget) holder).setSongNumber(position + 1);
+            ((SongWidget) holder).setSongNumber(getSongPosition(getItemAtPosition(position)) + 1);
         }
+    }
+
+    private int getSongPosition(Setlists.Song item) {
+        int position = 0;
+        for (Setlists.Song song : mAdapterData) {
+            if (item == song) {
+                return position;
+            }
+            if (!song.isTape()) {
+                position++;
+            }
+        }
+        return -1;
     }
 }
