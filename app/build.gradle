@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.neenbedankt.android-apt'
 apply plugin: 'com.github.triplet.play'
+apply plugin: 'realm-android'
 
 def keystorePropertiesFile = rootProject.file("C:\\android/keystore.properties")
 def keystoreProperties = new Properties()

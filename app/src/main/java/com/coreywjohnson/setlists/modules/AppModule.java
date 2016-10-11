@@ -1,5 +1,6 @@
 package com.coreywjohnson.setlists.modules;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
@@ -21,6 +22,11 @@ public class AppModule {
 
     public AppModule(SetlistsApp setlistsApp) {
         mSetlistsApp = setlistsApp;
+    }
+
+    @Provides
+    public Context providesContext() {
+        return mSetlistsApp.getApplicationContext();
     }
 
     @Provides

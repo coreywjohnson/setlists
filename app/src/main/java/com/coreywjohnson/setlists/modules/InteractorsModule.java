@@ -1,6 +1,10 @@
 package com.coreywjohnson.setlists.modules;
 
+import android.content.Context;
+
 import com.coreywjohnson.setlists.data.SetlistService;
+import com.coreywjohnson.setlists.interactors.ArtistRepoInteractorImpl;
+import com.coreywjohnson.setlists.interfaces.interactors.ArtistRepoInteractor;
 
 import java.io.IOException;
 
@@ -50,5 +54,11 @@ public class InteractorsModule {
     @Provides
     public SetlistService provideSetlistService(Retrofit retrofit) {
         return retrofit.create(SetlistService.class);
+    }
+
+    @Singleton
+    @Provides
+    public ArtistRepoInteractor provideArtistRepoInteractor(Context context) {
+        return new ArtistRepoInteractorImpl(context);
     }
 }

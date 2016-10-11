@@ -2,6 +2,7 @@ package com.coreywjohnson.setlists.presenters;
 
 import com.coreywjohnson.setlists.interactors.AnalyticsInteractor;
 import com.coreywjohnson.setlists.interactors.SearchArtistInteractor;
+import com.coreywjohnson.setlists.interfaces.interactors.ArtistRepoInteractor;
 import com.coreywjohnson.setlists.models.Artists;
 import com.coreywjohnson.setlists.presenters.common.PaginatablePresenter;
 import com.coreywjohnson.setlists.views.SearchArtistView;
@@ -18,15 +19,17 @@ import javax.inject.Inject;
 public class SearchArtistPresenter extends PaginatablePresenter<Artists.Artist> {
     private AnalyticsInteractor mAnalyticsInteractor;
     private SearchArtistInteractor mSearchArtistInteractor;
+    private ArtistRepoInteractor mArtistRepoInteractor;
     private SearchArtistView mView;
     private String mQuery;
 
     @Inject
-    public SearchArtistPresenter(SearchArtistInteractor interactor, SearchArtistView view, AnalyticsInteractor analyticsInteractor) {
+    public SearchArtistPresenter(SearchArtistInteractor interactor, SearchArtistView view, AnalyticsInteractor analyticsInteractor, ArtistRepoInteractor artistRepoInteractor) {
         super(view, interactor);
         mSearchArtistInteractor = interactor;
         mView = view;
         mAnalyticsInteractor = analyticsInteractor;
+        mArtistRepoInteractor = artistRepoInteractor;
     }
 
     @Override
@@ -53,14 +56,6 @@ public class SearchArtistPresenter extends PaginatablePresenter<Artists.Artist> 
         }
     }
 
-    public void onArtistClick(Artists.Artist artist) {
-        Map<String, String> properties = new HashMap<>();
-        properties.put(FirebaseAnalytics.Param.CONTENT_TYPE, AnalyticsInteractor.CONTENT_TYPE_ARTIST);
-        properties.put(FirebaseAnalytics.Param.ITEM_ID, artist.getMbid());
-        mAnalyticsInteractor.sendEvent(FirebaseAnalytics.Event.SELECT_CONTENT, properties);
-        mView.showArtist(artist);
-    }
-
     @Override
     public PresenterState getPresenterState() {
         SearchArtistPresenterState presenterState = new SearchArtistPresenterState();
@@ -75,6 +70,14 @@ public class SearchArtistPresenter extends PaginatablePresenter<Artists.Artist> 
         if (mQuery != null && !mQuery.isEmpty()) {
             mSearchArtistInteractor.setQuery(mQuery);
         }
+    }
+
+    public void onArtistClick(Artists.Artist artist) {
+        Map<String, String> properties = new HashMap<>();
+        properties.put(FirebaseAnalytics.Param.CONTENT_TYPE, AnalyticsInteractor.CONTENT_TYPE_ARTIST);
+        properties.put(FirebaseAnalytics.Param.ITEM_ID, artist.getMbid());
+        mAnalyticsInteractor.sendEvent(FirebaseAnalytics.Event.SELECT_CONTENT, properties);
+        mView.showArtist(artist);
     }
 
     public static class SearchArtistPresenterState extends PaginatablePresenterState {
