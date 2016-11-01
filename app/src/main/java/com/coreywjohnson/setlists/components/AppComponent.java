@@ -4,7 +4,7 @@ import com.coreywjohnson.setlists.interactors.AnalyticsInteractor;
 import com.coreywjohnson.setlists.interactors.GetArtistsSetlistsInteractor;
 import com.coreywjohnson.setlists.interactors.SearchArtistInteractor;
 import com.coreywjohnson.setlists.interactors.SearchSetlistInteractor;
-import com.coreywjohnson.setlists.interfaces.interactors.ArtistRepoInteractor;
+import com.coreywjohnson.setlists.interfaces.interactors.ArtistInteractor;
 import com.coreywjohnson.setlists.modules.AppModule;
 import com.coreywjohnson.setlists.modules.InteractorsModule;
 
@@ -24,7 +24,7 @@ public interface AppComponent {
     SearchArtistInteractor provideSearchArtistInteractor();
     AnalyticsInteractor provideAnalyticsInteractor();
 
-    ArtistRepoInteractor provideArtistRepoInteractor();
+    ArtistInteractor provideArtistRepoInteractor();
 
     SearchSetlistInteractor provideSearchSetlistByArtistInteractor();
 

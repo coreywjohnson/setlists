@@ -3,7 +3,8 @@ package com.coreywjohnson.setlists.presenters;
 import com.coreywjohnson.setlists.interactors.AnalyticsInteractor;
 import com.coreywjohnson.setlists.interactors.GetArtistsSetlistsInteractor;
 import com.coreywjohnson.setlists.interfaces.SharedViewWidget;
-import com.coreywjohnson.setlists.models.Artists;
+import com.coreywjohnson.setlists.interfaces.interactors.ArtistInteractor;
+import com.coreywjohnson.setlists.models.Artist;
 import com.coreywjohnson.setlists.models.Setlists;
 import com.coreywjohnson.setlists.presenters.common.PaginatablePresenter;
 import com.coreywjohnson.setlists.views.ArtistView;
@@ -18,17 +19,19 @@ import javax.inject.Inject;
  * Created by corey on 03-Jul-16.
  */
 public class ArtistPresenter extends PaginatablePresenter<Setlists.Setlist> {
+    private final ArtistInteractor mArtistInteractor;
     ArtistView mView;
-    Artists.Artist mArtist;
+    Artist mArtist;
     GetArtistsSetlistsInteractor mInteractor;
     AnalyticsInteractor mAnalyticsInteractor;
 
     @Inject
-    public ArtistPresenter(ArtistView view, AnalyticsInteractor analyticsInteractor, GetArtistsSetlistsInteractor interactor) {
+    public ArtistPresenter(ArtistView view, AnalyticsInteractor analyticsInteractor, GetArtistsSetlistsInteractor interactor, ArtistInteractor artistInteractor) {
         super(view, interactor);
         mView = view;
         mInteractor = interactor;
         mAnalyticsInteractor = analyticsInteractor;
+        mArtistInteractor = artistInteractor;
     }
 
     @Override
@@ -54,7 +57,7 @@ public class ArtistPresenter extends PaginatablePresenter<Setlists.Setlist> {
         mView.openSetlist(setlist, sharedViewWidget);
     }
 
-    public void setArtist(Artists.Artist artist) {
+    public void setArtist(Artist artist) {
         mArtist = artist;
         mInteractor.setArtistMbid(artist.getMbid());
     }

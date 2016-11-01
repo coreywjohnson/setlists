@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import com.coreywjohnson.setlists.R;
 import com.coreywjohnson.setlists.adapter.ArtistAdapter;
 import com.coreywjohnson.setlists.databinding.WidgetArtistBinding;
-import com.coreywjohnson.setlists.models.Artists;
+import com.coreywjohnson.setlists.models.Artist;
 
 /**
  * Created by corey on 20-Jun-16.
@@ -27,7 +27,7 @@ public class ArtistWidget extends RecyclerView.ViewHolder {
         return new ArtistWidget((WidgetArtistBinding) DataBindingUtil.inflate(inflater, R.layout.widget_artist, parent, false));
     }
 
-    public void setArtist(Artists.Artist artist) {
+    public void setArtist(Artist artist) {
         mBinding.setArtist(artist);
         mBinding.getRoot().setOnClickListener(new View.OnClickListener() {
             @Override

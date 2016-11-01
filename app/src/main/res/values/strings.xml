@@ -13,4 +13,5 @@
     <string name="no_songs_recorded">No songs recorded</string>
     <string name="txt_encore">Encore</string>
     <string name="txt_encore_num">Encore %1$s</string>
+    <string name="txt_favorite_artists">Favorite Artists</string>
 </resources>

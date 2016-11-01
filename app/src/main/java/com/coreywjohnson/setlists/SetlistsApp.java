@@ -8,6 +8,8 @@ import com.coreywjohnson.setlists.components.DaggerAppComponent;
 import com.coreywjohnson.setlists.modules.AppModule;
 import com.coreywjohnson.setlists.modules.InteractorsModule;
 
+import io.realm.Realm;
+
 /**
  * Created by coreyjohnson on 4/05/16.
  */
@@ -32,5 +34,6 @@ public class SetlistsApp extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        Realm.init(this);
     }
 }

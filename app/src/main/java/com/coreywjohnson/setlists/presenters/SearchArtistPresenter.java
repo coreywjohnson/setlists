@@ -2,8 +2,8 @@ package com.coreywjohnson.setlists.presenters;
 
 import com.coreywjohnson.setlists.interactors.AnalyticsInteractor;
 import com.coreywjohnson.setlists.interactors.SearchArtistInteractor;
-import com.coreywjohnson.setlists.interfaces.interactors.ArtistRepoInteractor;
-import com.coreywjohnson.setlists.models.Artists;
+import com.coreywjohnson.setlists.interfaces.interactors.ArtistInteractor;
+import com.coreywjohnson.setlists.models.Artist;
 import com.coreywjohnson.setlists.presenters.common.PaginatablePresenter;
 import com.coreywjohnson.setlists.views.SearchArtistView;
 import com.google.firebase.analytics.FirebaseAnalytics;
@@ -16,25 +16,28 @@ import javax.inject.Inject;
 /**
  * Created by corey on 12-Jun-16.
  */
-public class SearchArtistPresenter extends PaginatablePresenter<Artists.Artist> {
+public class SearchArtistPresenter extends PaginatablePresenter<Artist> {
     private AnalyticsInteractor mAnalyticsInteractor;
     private SearchArtistInteractor mSearchArtistInteractor;
-    private ArtistRepoInteractor mArtistRepoInteractor;
+    private ArtistInteractor mArtistInteractor;
     private SearchArtistView mView;
     private String mQuery;
 
     @Inject
-    public SearchArtistPresenter(SearchArtistInteractor interactor, SearchArtistView view, AnalyticsInteractor analyticsInteractor, ArtistRepoInteractor artistRepoInteractor) {
+    public SearchArtistPresenter(SearchArtistInteractor interactor, SearchArtistView view, AnalyticsInteractor analyticsInteractor, ArtistInteractor artistRepoInteractor) {
         super(view, interactor);
         mSearchArtistInteractor = interactor;
         mView = view;
         mAnalyticsInteractor = analyticsInteractor;
-        mArtistRepoInteractor = artistRepoInteractor;
+        mArtistInteractor = artistRepoInteractor;
     }
 
     @Override
     public void onCreate(boolean isRestoring) {
-
+        if (!isRestoring) {
+            mView.showAdapterFavoritesHeader();
+            mView.addItems(mArtistInteractor.getFavoriteArtists(), false);
+        }
     }
 
     public void onSearch(String query) {
@@ -72,7 +75,7 @@ public class SearchArtistPresenter extends PaginatablePresenter<Artists.Artist> 
         }
     }
 
-    public void onArtistClick(Artists.Artist artist) {
+    public void onArtistClick(Artist artist) {
         Map<String, String> properties = new HashMap<>();
         properties.put(FirebaseAnalytics.Param.CONTENT_TYPE, AnalyticsInteractor.CONTENT_TYPE_ARTIST);
         properties.put(FirebaseAnalytics.Param.ITEM_ID, artist.getMbid());

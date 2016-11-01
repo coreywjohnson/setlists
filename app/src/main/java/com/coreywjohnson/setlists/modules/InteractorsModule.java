@@ -3,8 +3,8 @@ package com.coreywjohnson.setlists.modules;
 import android.content.Context;
 
 import com.coreywjohnson.setlists.data.SetlistService;
-import com.coreywjohnson.setlists.interactors.ArtistRepoInteractorImpl;
-import com.coreywjohnson.setlists.interfaces.interactors.ArtistRepoInteractor;
+import com.coreywjohnson.setlists.interactors.ArtistInteractorImpl;
+import com.coreywjohnson.setlists.interfaces.interactors.ArtistInteractor;
 
 import java.io.IOException;
 
@@ -58,7 +58,7 @@ public class InteractorsModule {
 
     @Singleton
     @Provides
-    public ArtistRepoInteractor provideArtistRepoInteractor(Context context) {
-        return new ArtistRepoInteractorImpl(context);
+    public ArtistInteractor provideArtistRepoInteractor(Context context) {
+        return new ArtistInteractorImpl(context);
     }
 }

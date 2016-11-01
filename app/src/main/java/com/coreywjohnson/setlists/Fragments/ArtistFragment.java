@@ -19,7 +19,7 @@ import com.coreywjohnson.setlists.components.ArtistComponent;
 import com.coreywjohnson.setlists.components.DaggerArtistComponent;
 import com.coreywjohnson.setlists.databinding.FragmentArtistBinding;
 import com.coreywjohnson.setlists.interfaces.SharedViewWidget;
-import com.coreywjohnson.setlists.models.Artists;
+import com.coreywjohnson.setlists.models.Artist;
 import com.coreywjohnson.setlists.models.Setlists;
 import com.coreywjohnson.setlists.modules.ArtistModule;
 import com.coreywjohnson.setlists.presenters.ArtistPresenter;
@@ -43,7 +43,7 @@ public class ArtistFragment extends BaseFragment implements ArtistView, SetlistA
     SetlistAdapter mAdapter;
     private SearchSetlistFragment.SearchFragmentListener mListener;
 
-    public static ArtistFragment newInstance(Artists.Artist artist) {
+    public static ArtistFragment newInstance(Artist artist) {
 
         Bundle args = new Bundle();
         args.putSerializable(ARTIST, artist);
@@ -62,7 +62,7 @@ public class ArtistFragment extends BaseFragment implements ArtistView, SetlistA
                 .build();
         artistComponent.inject(this);
         setHasOptionsMenu(true);
-        mPresenter.setArtist((Artists.Artist) getArguments().getSerializable(ARTIST));
+        mPresenter.setArtist((Artist) getArguments().getSerializable(ARTIST));
         mPresenter.onCreate(savedInstanceState != null);
         if (savedInstanceState != null) {
             mPresenter.restorePresenterState((Presenter.PresenterState) savedInstanceState.getSerializable(PRESENTER_STATE));
@@ -74,7 +74,7 @@ public class ArtistFragment extends BaseFragment implements ArtistView, SetlistA
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_artist, container, false);
-        ((MainView) getActivity()).setToolbar(mBinding.toolbar, false, ((Artists.Artist) getArguments().getSerializable(ARTIST)).getName());
+        ((MainView) getActivity()).setToolbar(mBinding.toolbar, false, ((Artist) getArguments().getSerializable(ARTIST)).getName());
 
         mBinding.recyclerView.setAdapter(mAdapter);
         mBinding.recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
