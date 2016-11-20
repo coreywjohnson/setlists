@@ -80,9 +80,17 @@ public class ArtistPresenter extends PaginatablePresenter<Setlists.Setlist> {
         if (checked) {
             mView.showUnfavorited();
             mArtistInteractor.removeArtistFromFavorites(mArtist);
+            Map<String, String> properties = new HashMap<>();
+            properties.put(FirebaseAnalytics.Param.ITEM_ID, mArtist.getMbid());
+            properties.put(FirebaseAnalytics.Param.CONTENT_TYPE, AnalyticsInteractor.CONTENT_TYPE_ARTIST);
+            mAnalyticsInteractor.sendEvent(AnalyticsInteractor.EVENT_ITEM_UNFAVORITED, properties);
         } else {
             mView.showFavorited();
             mArtistInteractor.addArtistToFavorites(mArtist);
+            Map<String, String> properties = new HashMap<>();
+            properties.put(FirebaseAnalytics.Param.ITEM_ID, mArtist.getMbid());
+            properties.put(FirebaseAnalytics.Param.CONTENT_TYPE, AnalyticsInteractor.CONTENT_TYPE_ARTIST);
+            mAnalyticsInteractor.sendEvent(AnalyticsInteractor.EVENT_ITEM_FAVORITED, properties);
         }
     }
 }

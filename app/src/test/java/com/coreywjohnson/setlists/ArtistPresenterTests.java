@@ -21,7 +21,6 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import java.util.HashMap;
 
-import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.doReturn;
@@ -79,9 +78,13 @@ public class ArtistPresenterTests {
     @Test
     public void testOnSetlistClick_sendAnalytics() {
         Setlists.Setlist setlist = new Setlists.Setlist();
+        setlist.setId("1234");
         SharedViewWidget mock = mock(SharedViewWidget.class);
         mPresenter.onSetlistClick(setlist, mock);
-        mAnalyticsInteractor.sendEvent(eq(FirebaseAnalytics.Event.SELECT_CONTENT), any(HashMap.class));
+        HashMap<String, String> properties = new HashMap<>();
+        properties.put(FirebaseAnalytics.Param.CONTENT_TYPE, AnalyticsInteractor.CONTENT_TYPE_SETLIST);
+        properties.put(FirebaseAnalytics.Param.ITEM_ID, setlist.getId());
+        mAnalyticsInteractor.sendEvent(eq(FirebaseAnalytics.Event.SELECT_CONTENT), eq(properties));
     }
 
     @Test
@@ -127,7 +130,7 @@ public class ArtistPresenterTests {
     }
 
     @Test
-    public void testOnFavoriteItemInit_isChecked_updateViewAndStorageToFavorited() {
+    public void testOnFavoriteItemChecked_isChecked_updateViewAndStorageToFavorited() {
         mPresenter.setArtist(mArtist);
         mPresenter.onFavoriteItemChecked(true);
         verify(mArtistView).showUnfavorited();
@@ -135,10 +138,34 @@ public class ArtistPresenterTests {
     }
 
     @Test
-    public void testOnFavoriteItemInit_notChecked_updateViewAndStorageToUnfavorited() {
+    public void testOnFavoriteItemChecked_notChecked_updateViewAndStorageToUnfavorited() {
         mPresenter.setArtist(mArtist);
         mPresenter.onFavoriteItemChecked(false);
         verify(mArtistView).showFavorited();
         verify(mArtistInteractor).addArtistToFavorites(mArtist);
+    }
+
+    @Test
+    public void testOnFavoriteItemChecked_isUnchecked_sendsAnalytics() {
+        String mbid = "mbid";
+        doReturn(mbid).when(mArtist).getMbid();
+        mPresenter.setArtist(mArtist);
+        mPresenter.onFavoriteItemChecked(false);
+        HashMap<String, String> properties = new HashMap<>();
+        properties.put(FirebaseAnalytics.Param.ITEM_ID, mArtist.getMbid());
+        properties.put(FirebaseAnalytics.Param.CONTENT_TYPE, AnalyticsInteractor.CONTENT_TYPE_ARTIST);
+        verify(mAnalyticsInteractor).sendEvent(eq(AnalyticsInteractor.EVENT_ITEM_FAVORITED), eq(properties));
+    }
+
+    @Test
+    public void testOnFavoriteItemChecked_isChecked_sendsAnalytics() {
+        String mbid = "mbid";
+        doReturn(mbid).when(mArtist).getMbid();
+        mPresenter.setArtist(mArtist);
+        mPresenter.onFavoriteItemChecked(true);
+        HashMap<String, String> properties = new HashMap<>();
+        properties.put(FirebaseAnalytics.Param.ITEM_ID, mArtist.getMbid());
+        properties.put(FirebaseAnalytics.Param.CONTENT_TYPE, AnalyticsInteractor.CONTENT_TYPE_ARTIST);
+        verify(mAnalyticsInteractor).sendEvent(eq(AnalyticsInteractor.EVENT_ITEM_UNFAVORITED), eq(properties));
     }
 }
