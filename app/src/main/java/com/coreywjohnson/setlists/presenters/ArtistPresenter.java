@@ -1,5 +1,6 @@
 package com.coreywjohnson.setlists.presenters;
 
+import com.coreywjohnson.setlists.data.SetlistService;
 import com.coreywjohnson.setlists.interactors.AnalyticsInteractor;
 import com.coreywjohnson.setlists.interactors.GetArtistsSetlistsInteractor;
 import com.coreywjohnson.setlists.interfaces.SharedViewWidget;
@@ -44,7 +45,7 @@ public class ArtistPresenter extends PaginatablePresenter<Setlists.Setlist> {
     @Override
     public void onError(String error) {
         super.onError(error);
-        if (!error.equals("Not Found")) {
+        if (!error.equals(SetlistService.NOT_FOUND_MESSAGE)) {
             mView.makeTextSnackbar(error);
         }
     }
@@ -55,6 +56,10 @@ public class ArtistPresenter extends PaginatablePresenter<Setlists.Setlist> {
         properties.put(FirebaseAnalytics.Param.ITEM_ID, setlist.getId());
         mAnalyticsInteractor.sendEvent(FirebaseAnalytics.Event.SELECT_CONTENT, properties);
         mView.openSetlist(setlist, sharedViewWidget);
+    }
+
+    public Artist getArtist() {
+        return mArtist;
     }
 
     public void setArtist(Artist artist) {
