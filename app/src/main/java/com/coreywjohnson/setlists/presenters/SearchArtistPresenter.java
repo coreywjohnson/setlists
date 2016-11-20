@@ -1,5 +1,6 @@
 package com.coreywjohnson.setlists.presenters;
 
+import com.coreywjohnson.setlists.data.SetlistService;
 import com.coreywjohnson.setlists.interactors.AnalyticsInteractor;
 import com.coreywjohnson.setlists.interactors.SearchArtistInteractor;
 import com.coreywjohnson.setlists.interfaces.interactors.ArtistInteractor;
@@ -54,7 +55,7 @@ public class SearchArtistPresenter extends PaginatablePresenter<Artist> {
     @Override
     public void onError(String error) {
         super.onError(error);
-        if(!error.equals("Not Found")) {
+        if (!error.equals(SetlistService.NOT_FOUND_MESSAGE)) {
             mView.onError(error);
         }
     }
