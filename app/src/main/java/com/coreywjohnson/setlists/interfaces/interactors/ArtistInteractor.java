@@ -12,4 +12,8 @@ public interface ArtistInteractor {
     void addArtistToFavorites(Artist artist);
 
     ArrayList<Artist> getFavoriteArtists();
+
+    void removeArtistFromFavorites(Artist artist);
+
+    boolean isFavorited(Artist artist);
 }

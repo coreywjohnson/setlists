@@ -7,6 +7,8 @@ import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,6 +44,7 @@ public class ArtistFragment extends BaseFragment implements ArtistView, SetlistA
     @Inject
     SetlistAdapter mAdapter;
     private SearchSetlistFragment.SearchFragmentListener mListener;
+    private MenuItem mFavoriteItem;
 
     public static ArtistFragment newInstance(Artist artist) {
 
@@ -88,6 +91,13 @@ public class ArtistFragment extends BaseFragment implements ArtistView, SetlistA
         });
 
         return mBinding.getRoot();
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        mFavoriteItem = menu.findItem(R.id.artist_favorite);
+        mPresenter.onFavoriteItemInit();
     }
 
     @Override
@@ -178,6 +188,29 @@ public class ArtistFragment extends BaseFragment implements ArtistView, SetlistA
     @Override
     public void openSetlist(Setlists.Setlist setlist, SharedViewWidget sharedViewWidget) {
         mListener.onSetlistClick(setlist, sharedViewWidget);
+    }
+
+    @Override
+    public void setupFavoriteCheckListener() {
+        mFavoriteItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+                mPresenter.onFavoriteItemChecked(menuItem.isChecked());
+                return true;
+            }
+        });
+    }
+
+    @Override
+    public void showFavorited() {
+        mFavoriteItem.setChecked(true);
+        mFavoriteItem.setIcon(R.drawable.ic_favorite_filled);
+    }
+
+    @Override
+    public void showUnfavorited() {
+        mFavoriteItem.setChecked(false);
+        mFavoriteItem.setIcon(R.drawable.ic_favourite_unfilled);
     }
 
     @Override

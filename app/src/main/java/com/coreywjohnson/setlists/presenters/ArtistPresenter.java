@@ -20,10 +20,10 @@ import javax.inject.Inject;
  */
 public class ArtistPresenter extends PaginatablePresenter<Setlists.Setlist> {
     private final ArtistInteractor mArtistInteractor;
-    ArtistView mView;
-    Artist mArtist;
-    GetArtistsSetlistsInteractor mInteractor;
-    AnalyticsInteractor mAnalyticsInteractor;
+    private ArtistView mView;
+    private Artist mArtist;
+    private GetArtistsSetlistsInteractor mInteractor;
+    private AnalyticsInteractor mAnalyticsInteractor;
 
     @Inject
     public ArtistPresenter(ArtistView view, AnalyticsInteractor analyticsInteractor, GetArtistsSetlistsInteractor interactor, ArtistInteractor artistInteractor) {
@@ -60,5 +60,24 @@ public class ArtistPresenter extends PaginatablePresenter<Setlists.Setlist> {
     public void setArtist(Artist artist) {
         mArtist = artist;
         mInteractor.setArtistMbid(artist.getMbid());
+    }
+
+    public void onFavoriteItemInit() {
+        mView.setupFavoriteCheckListener();
+        if (mArtistInteractor.isFavorited(mArtist)) {
+            mView.showFavorited();
+        } else {
+            mView.showUnfavorited();
+        }
+    }
+
+    public void onFavoriteItemChecked(boolean checked) {
+        if (checked) {
+            mView.showUnfavorited();
+            mArtistInteractor.removeArtistFromFavorites(mArtist);
+        } else {
+            mView.showFavorited();
+            mArtistInteractor.addArtistToFavorites(mArtist);
+        }
     }
 }

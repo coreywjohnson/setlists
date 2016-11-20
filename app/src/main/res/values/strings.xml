@@ -14,4 +14,5 @@
     <string name="txt_encore">Encore</string>
     <string name="txt_encore_num">Encore %1$s</string>
     <string name="txt_favorite_artists">Favorite Artists</string>
+    <string name="txt_favorite">Favorite</string>
 </resources>

@@ -52,4 +52,18 @@ public class ArtistInteractorImpl implements ArtistInteractor {
         }
         return pureArtists;
     }
+
+    @Override
+    public void removeArtistFromFavorites(Artist artist) {
+        mRealm.beginTransaction();
+        RealmResults<RealmArtist> results = mRealm.where(RealmArtist.class).equalTo("mbid", artist.getMbid()).findAll();
+        results.deleteAllFromRealm();
+        mRealm.commitTransaction();
+    }
+
+    @Override
+    public boolean isFavorited(Artist artist) {
+        RealmResults<RealmArtist> results = mRealm.where(RealmArtist.class).equalTo("mbid", artist.getMbid()).findAll();
+        return !results.isEmpty();
+    }
 }
