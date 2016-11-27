@@ -36,8 +36,23 @@ public class SearchArtistPresenter extends PaginatablePresenter<Artist> {
     @Override
     public void onCreate(boolean isRestoring) {
         if (!isRestoring) {
-            mView.showAdapterFavoritesHeader();
-            mView.addItems(mArtistInteractor.getFavoriteArtists(), false);
+            showFavorites();
+        }
+    }
+
+    public void showFavorites() {
+        mView.clearItems();
+        mView.showAdapterFavoritesHeader();
+        mView.addItems(mArtistInteractor.getFavoriteArtists(), false);
+    }
+
+    @Override
+    public void onRefresh() {
+        if (mQuery != null && !mQuery.isEmpty()) {
+            super.onRefresh();
+        } else {
+            showFavorites();
+            mView.hideLoading();
         }
     }
 

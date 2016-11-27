@@ -22,9 +22,11 @@ import java.util.List;
 
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyBoolean;
+import static org.mockito.Matchers.anyInt;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 /**
@@ -139,5 +141,20 @@ public class SearchArtistPresenterTests {
         properties.put(FirebaseAnalytics.Param.CONTENT_TYPE, AnalyticsInteractor.CONTENT_TYPE_ARTIST);
         properties.put(FirebaseAnalytics.Param.ITEM_ID, artist.getMbid());
         verify(mAnalyticsInteractor).sendEvent(eq(FirebaseAnalytics.Event.SELECT_CONTENT), eq(properties));
+    }
+
+    @Test
+    public void testOnRefresh_withoutSearch_showFavorites() {
+        mPresenter.onRefresh();
+        verify(mArtistInteractor).getFavoriteArtists();
+        verify(mSearchArtistInteractor, never()).loadPage(anyInt());
+    }
+
+    @Test
+    public void testOnRefresh_withSearch_refreshSearch() {
+        mPresenter.onSearch("someQuery");
+        mPresenter.onRefresh();
+        verify(mSearchArtistInteractor, times(2)).loadPage(1);
+        verify(mArtistInteractor, never()).getFavoriteArtists();
     }
 }
