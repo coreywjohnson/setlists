@@ -19,7 +19,7 @@ import com.coreywjohnson.setlists.components.DaggerSetlistComponent;
 import com.coreywjohnson.setlists.components.SetlistComponent;
 import com.coreywjohnson.setlists.databinding.FragmentSetlistBinding;
 import com.coreywjohnson.setlists.models.Set;
-import com.coreywjohnson.setlists.models.Setlists;
+import com.coreywjohnson.setlists.models.Setlist;
 import com.coreywjohnson.setlists.models.Song;
 import com.coreywjohnson.setlists.modules.SetlistModule;
 import com.coreywjohnson.setlists.presenters.SetlistPresenter;
@@ -45,7 +45,7 @@ public class SetlistFragment extends BaseFragment implements SetlistView {
     SongAdapter mAdapter;
     FragmentSetlistBinding mBinding;
 
-    public static SetlistFragment newInstance(Setlists.Setlist setlist) {
+    public static SetlistFragment newInstance(Setlist setlist) {
 
         Bundle args = new Bundle();
         args.putSerializable(SETLIST, setlist);
@@ -62,7 +62,7 @@ public class SetlistFragment extends BaseFragment implements SetlistView {
                 .setlistModule(new SetlistModule(this))
                 .build();
         setlistComponent.inject(this);
-        mPresenter.setSetlist((Setlists.Setlist) getArguments().getSerializable(SETLIST));
+        mPresenter.setSetlist((Setlist) getArguments().getSerializable(SETLIST));
     }
 
     @Override
@@ -97,10 +97,10 @@ public class SetlistFragment extends BaseFragment implements SetlistView {
     }
 
     @Override
-    public void setupRecyclerView(Setlists.Setlist setlist) {
+    public void setupRecyclerView(Setlist setlist) {
         mBinding.recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mBinding.recyclerView.setAdapter(mAdapter);
-        mBinding.setSetlist((Setlists.Setlist) getArguments().getSerializable(SETLIST));
+        mBinding.setSetlist((Setlist) getArguments().getSerializable(SETLIST));
     }
 
     @Override
@@ -160,7 +160,7 @@ public class SetlistFragment extends BaseFragment implements SetlistView {
     }
 
     @Override
-    public void launchWebView(Setlists.Setlist setlist) {
+    public void launchWebView(Setlist setlist) {
         String webUrl = setlist.getUrl();
         Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(webUrl));
         startActivity(browserIntent);

@@ -9,6 +9,7 @@ import android.util.Log;
 import com.coreywjohnson.setlists.data.SetlistService;
 import com.coreywjohnson.setlists.interfaces.PaginatableRequest;
 import com.coreywjohnson.setlists.interfaces.PaginatableRequestListener;
+import com.coreywjohnson.setlists.models.Setlist;
 import com.coreywjohnson.setlists.models.Setlists;
 
 import javax.inject.Inject;
@@ -17,12 +18,12 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class GetArtistsSetlistsInteractor implements PaginatableRequest<Setlists.Setlist> {
+public class GetArtistsSetlistsInteractor implements PaginatableRequest<Setlist> {
     public static final String URL = "artist/%s/setlists";
 
     private SetlistService mSetlistService;
     private Call<Setlists> mRequest;
-    private PaginatableRequestListener<Setlists.Setlist> mListener;
+    private PaginatableRequestListener<Setlist> mListener;
     private String mArtistMbid;
 
     @Inject
@@ -38,7 +39,7 @@ public class GetArtistsSetlistsInteractor implements PaginatableRequest<Setlists
             @Override
             public void onResponse(Call<Setlists> call, Response<Setlists> response) {
                 if (response.isSuccessful()) {
-                    mListener.onSuccess(response.body().getSetlist(), Integer.parseInt(response.body().getTotal()));
+                    mListener.onSuccess(response.body().getSetlist(), response.body().getTotal());
                 } else {
                     Log.i("Error", response.message());
                     mListener.onError(response.message());
@@ -57,7 +58,7 @@ public class GetArtistsSetlistsInteractor implements PaginatableRequest<Setlists
     }
 
     @Override
-    public void setListener(PaginatableRequestListener<Setlists.Setlist> listener) {
+    public void setListener(PaginatableRequestListener<Setlist> listener) {
         mListener = listener;
     }
 

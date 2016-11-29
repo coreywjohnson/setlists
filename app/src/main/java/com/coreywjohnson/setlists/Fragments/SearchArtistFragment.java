@@ -20,7 +20,7 @@ import com.coreywjohnson.setlists.components.DaggerSearchArtistComponent;
 import com.coreywjohnson.setlists.components.SearchArtistComponent;
 import com.coreywjohnson.setlists.databinding.FragmentSearchBinding;
 import com.coreywjohnson.setlists.helpers.ViewHelper;
-import com.coreywjohnson.setlists.models.Artists;
+import com.coreywjohnson.setlists.models.Artist;
 import com.coreywjohnson.setlists.modules.SearchArtistModule;
 import com.coreywjohnson.setlists.presenters.SearchArtistPresenter;
 import com.coreywjohnson.setlists.presenters.common.Presenter;
@@ -130,7 +130,7 @@ public class SearchArtistFragment extends BaseFragment implements SearchArtistVi
     }
 
     @Override
-    public void showArtist(Artists.Artist artist) {
+    public void showArtist(Artist artist) {
         getFragmentManager()
                 .beginTransaction()
                 .replace(R.id.fragment_container, ArtistFragment.newInstance(artist))
@@ -149,12 +149,12 @@ public class SearchArtistFragment extends BaseFragment implements SearchArtistVi
     }
 
     @Override
-    public void onArtistClick(Artists.Artist artist) {
+    public void onArtistClick(Artist artist) {
         mPresenter.onArtistClick(artist);
     }
 
     @Override
-    public void addItems(List<Artists.Artist> items, boolean hasMore) {
+    public void addItems(List<Artist> items, boolean hasMore) {
         if (mAdapter != null) {
             mAdapter.addItems(items, hasMore);
         }

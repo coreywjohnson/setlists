@@ -36,6 +36,9 @@ public class SongWidget extends RecyclerView.ViewHolder {
                 infoText += "(" + song.getCover().getName() + " cover) ";
             }
         }
+        if (song.getWith() != null) {
+            infoText += "(with " + song.getWith().getName() + ") ";
+        }
         if (song.getInfo() != null) {
             infoText += "(" + song.getInfo() + ")";
         }

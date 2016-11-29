@@ -6,7 +6,7 @@ import android.view.ViewGroup;
 
 import com.coreywjohnson.setlists.adapter.common.PaginatableAdapter;
 import com.coreywjohnson.setlists.interfaces.SharedViewWidget;
-import com.coreywjohnson.setlists.models.Setlists;
+import com.coreywjohnson.setlists.models.Setlist;
 import com.coreywjohnson.setlists.widgets.SetlistWidget;
 
 import javax.inject.Inject;
@@ -14,7 +14,7 @@ import javax.inject.Inject;
 /**
  * Created by coreyjohnson on 5/05/16.
  */
-public class SetlistAdapter extends PaginatableAdapter<Setlists.Setlist> {
+public class SetlistAdapter extends PaginatableAdapter<Setlist> {
     private AdapterListener mListener;
 
     @Inject
@@ -42,6 +42,6 @@ public class SetlistAdapter extends PaginatableAdapter<Setlists.Setlist> {
     }
 
     public interface AdapterListener extends PaginatableAdapterListener {
-        void onSetlistClick(Setlists.Setlist setlist, SharedViewWidget sharedViewWidget);
+        void onSetlistClick(Setlist setlist, SharedViewWidget sharedViewWidget);
     }
 }

@@ -5,7 +5,7 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import com.coreywjohnson.setlists.adapter.common.PaginatableAdapter;
-import com.coreywjohnson.setlists.models.Artists;
+import com.coreywjohnson.setlists.models.Artist;
 import com.coreywjohnson.setlists.widgets.ArtistWidget;
 
 import javax.inject.Inject;
@@ -13,7 +13,7 @@ import javax.inject.Inject;
 /**
  * Created by corey on 20-Jun-16.
  */
-public class ArtistAdapter extends PaginatableAdapter<Artists.Artist> {
+public class ArtistAdapter extends PaginatableAdapter<Artist> {
     private AdapterListener mListener;
 
     @Inject
@@ -41,6 +41,6 @@ public class ArtistAdapter extends PaginatableAdapter<Artists.Artist> {
     }
 
     public interface AdapterListener extends PaginatableAdapterListener {
-        void onArtistClick(Artists.Artist artist);
+        void onArtistClick(Artist artist);
     }
 }

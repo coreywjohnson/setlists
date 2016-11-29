@@ -21,7 +21,7 @@ import com.coreywjohnson.setlists.fragments.SearchArtistFragment;
 import com.coreywjohnson.setlists.fragments.SearchSetlistFragment;
 import com.coreywjohnson.setlists.fragments.SetlistFragment;
 import com.coreywjohnson.setlists.interfaces.SharedViewWidget;
-import com.coreywjohnson.setlists.models.Setlists;
+import com.coreywjohnson.setlists.models.Setlist;
 import com.coreywjohnson.setlists.modules.MainModule;
 import com.coreywjohnson.setlists.presenters.MainPresenter;
 import com.coreywjohnson.setlists.views.MainView;
@@ -60,7 +60,7 @@ public class MainActivity extends BaseActivity implements MainView, SearchSetlis
         return R.layout.activity_main;
     }
 
-    public void showSetlist(Setlists.Setlist setlist, SharedViewWidget sharedViewWidget) {
+    public void showSetlist(Setlist setlist, SharedViewWidget sharedViewWidget) {
         final SetlistFragment setlistFragment = SetlistFragment.newInstance(setlist);
 
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -124,7 +124,7 @@ public class MainActivity extends BaseActivity implements MainView, SearchSetlis
     }
 
     @Override
-    public void onSetlistClick(Setlists.Setlist setlist, SharedViewWidget sharedViewWidget) {
+    public void onSetlistClick(Setlist setlist, SharedViewWidget sharedViewWidget) {
         showSetlist(setlist, sharedViewWidget);
     }
 

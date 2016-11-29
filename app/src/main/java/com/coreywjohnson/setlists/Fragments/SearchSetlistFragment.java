@@ -22,7 +22,7 @@ import com.coreywjohnson.setlists.components.SearchSetlistComponent;
 import com.coreywjohnson.setlists.databinding.FragmentSearchBinding;
 import com.coreywjohnson.setlists.helpers.ViewHelper;
 import com.coreywjohnson.setlists.interfaces.SharedViewWidget;
-import com.coreywjohnson.setlists.models.Setlists;
+import com.coreywjohnson.setlists.models.Setlist;
 import com.coreywjohnson.setlists.modules.SearchSetlistModule;
 import com.coreywjohnson.setlists.presenters.SearchSetlistPresenter;
 import com.coreywjohnson.setlists.presenters.common.Presenter;
@@ -143,7 +143,7 @@ public class SearchSetlistFragment extends BaseFragment implements SearchSetlist
     }
 
     @Override
-    public void openSetlist(Setlists.Setlist setlist, SharedViewWidget sharedViewWidget) {
+    public void openSetlist(Setlist setlist, SharedViewWidget sharedViewWidget) {
         if (mListener != null) {
             mListener.onSetlistClick(setlist, sharedViewWidget);
         }
@@ -170,7 +170,7 @@ public class SearchSetlistFragment extends BaseFragment implements SearchSetlist
     }
 
     @Override
-    public void onSetlistClick(Setlists.Setlist setlist, SharedViewWidget sharedViewWidget) {
+    public void onSetlistClick(Setlist setlist, SharedViewWidget sharedViewWidget) {
         mPresenter.onSetlistClick(setlist, sharedViewWidget);
     }
 
@@ -180,7 +180,7 @@ public class SearchSetlistFragment extends BaseFragment implements SearchSetlist
     }
 
     @Override
-    public void addItems(List<Setlists.Setlist> items, boolean hasMore) {
+    public void addItems(List<Setlist> items, boolean hasMore) {
         if (mAdapter != null) {
             mAdapter.addItems(items, hasMore);
         }
@@ -222,6 +222,6 @@ public class SearchSetlistFragment extends BaseFragment implements SearchSetlist
     }
 
     public interface SearchFragmentListener {
-        void onSetlistClick(Setlists.Setlist setlist, SharedViewWidget sharedViewWidget);
+        void onSetlistClick(Setlist setlist, SharedViewWidget sharedViewWidget);
     }
 }

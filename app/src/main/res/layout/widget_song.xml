@@ -9,7 +9,7 @@
 
         <variable
             name="song"
-            type="com.coreywjohnson.setlists.models.Setlists.Song" />
+            type="com.coreywjohnson.setlists.models.Song" />
 
         <import type="android.view.View" />
     </data>
