@@ -158,9 +158,9 @@
                     android:orientation="vertical">
 
                     <ImageView
-                        android:layout_width="96dp"
-                        android:layout_height="96dp"
-                        android:layout_marginTop="100dp"
+                        android:layout_width="@dimen/empty_state_icon_size"
+                        android:layout_height="@dimen/empty_state_icon_size"
+                        android:layout_marginTop="@dimen/empty_state_top_offset"
                         android:alpha=".2"
                         android:src="@drawable/ic_music_note" />
 
@@ -168,10 +168,12 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:alpha=".3"
-                        android:paddingTop="10dp"
+                        android:paddingLeft="@dimen/empty_state_text_horiz_offset"
+                        android:paddingRight="@dimen/empty_state_text_horiz_offset"
+                        android:paddingTop="@dimen/empty_state_text_vert_offset"
                         android:text="@string/no_songs_recorded"
                         android:textColor="#000"
-                        android:textSize="18sp" />
+                        android:textSize="@dimen/empty_state_text_size" />
                 </LinearLayout>
 
             </android.support.v4.widget.NestedScrollView>

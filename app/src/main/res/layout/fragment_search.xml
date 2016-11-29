@@ -49,13 +49,14 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:gravity="center"
+                        android:layout_gravity="center_horizontal"
+                        android:gravity="center_horizontal"
                         android:orientation="vertical">
 
                         <ImageView
-                            android:layout_width="96dp"
-                            android:layout_height="96dp"
+                            android:layout_width="@dimen/empty_state_icon_size"
+                            android:layout_height="@dimen/empty_state_icon_size"
+                            android:layout_marginTop="@dimen/empty_state_top_offset"
                             android:alpha=".2"
                             android:src="@drawable/ic_music_note" />
 
@@ -63,10 +64,13 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:alpha=".3"
-                            android:paddingTop="10dp"
+                            android:gravity="center"
+                            android:paddingLeft="@dimen/empty_state_text_horiz_offset"
+                            android:paddingRight="@dimen/empty_state_text_horiz_offset"
+                            android:paddingTop="@dimen/empty_state_text_vert_offset"
                             android:text="@string/txt_no_results_found"
                             android:textColor="#000"
-                            android:textSize="18sp" />
+                            android:textSize="@dimen/empty_state_text_size" />
                     </LinearLayout>
 
                 </ScrollView>
