@@ -18,4 +18,6 @@ public interface SearchArtistView extends PaginatableView<Artist> {
     void setAdapterHeaderSearchResult(String query);
 
     void showAdapterFavoritesHeader();
+
+    void showNoFavoritesState();
 }

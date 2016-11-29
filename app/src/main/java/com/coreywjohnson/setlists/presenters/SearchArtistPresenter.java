@@ -9,7 +9,9 @@ import com.coreywjohnson.setlists.presenters.common.PaginatablePresenter;
 import com.coreywjohnson.setlists.views.SearchArtistView;
 import com.google.firebase.analytics.FirebaseAnalytics;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
@@ -23,6 +25,7 @@ public class SearchArtistPresenter extends PaginatablePresenter<Artist> {
     private ArtistInteractor mArtistInteractor;
     private SearchArtistView mView;
     private String mQuery;
+    private DisplayState mDisplayState;
 
     @Inject
     public SearchArtistPresenter(SearchArtistInteractor interactor, SearchArtistView view, AnalyticsInteractor analyticsInteractor, ArtistInteractor artistRepoInteractor) {
@@ -40,10 +43,32 @@ public class SearchArtistPresenter extends PaginatablePresenter<Artist> {
         }
     }
 
+    public void onCreateView() {
+        if (mDisplayState != null) {
+            switch (mDisplayState) {
+                case DISPLAYING_DATA:
+                    mView.showDataState();
+                    break;
+                case DISPLAYING_EMPTY_FAVORITES:
+                    mView.showNoFavoritesState();
+                    break;
+                case DISPLAYING_EMPTY_SEARCH:
+                    mView.showEmptyState();
+            }
+        }
+    }
+
     public void showFavorites() {
         mView.clearItems();
         mView.showAdapterFavoritesHeader();
-        mView.addItems(mArtistInteractor.getFavoriteArtists(), false);
+        ArrayList<Artist> favoriteArtists = mArtistInteractor.getFavoriteArtists();
+        if (favoriteArtists.isEmpty()) {
+            mView.showNoFavoritesState();
+            mDisplayState = DisplayState.DISPLAYING_EMPTY_FAVORITES;
+        } else {
+            mView.addItems(favoriteArtists, false);
+            mDisplayState = DisplayState.DISPLAYING_DATA;
+        }
     }
 
     @Override
@@ -68,6 +93,16 @@ public class SearchArtistPresenter extends PaginatablePresenter<Artist> {
     }
 
     @Override
+    public void onSuccess(List<Artist> items, int totalCount) {
+        if (totalCount != 0) {
+            mDisplayState = DisplayState.DISPLAYING_DATA;
+        } else {
+            mDisplayState = DisplayState.DISPLAYING_EMPTY_SEARCH;
+        }
+        super.onSuccess(items, totalCount);
+    }
+
+    @Override
     public void onError(String error) {
         super.onError(error);
         if (!error.equals(SetlistService.NOT_FOUND_MESSAGE)) {
@@ -89,6 +124,7 @@ public class SearchArtistPresenter extends PaginatablePresenter<Artist> {
         if (mQuery != null && !mQuery.isEmpty()) {
             mSearchArtistInteractor.setQuery(mQuery);
         }
+        mDisplayState = ((SearchArtistPresenterState) state).displayState;
     }
 
     public void onArtistClick(Artist artist) {
@@ -99,12 +135,18 @@ public class SearchArtistPresenter extends PaginatablePresenter<Artist> {
         mView.showArtist(artist);
     }
 
+    public enum DisplayState {
+        DISPLAYING_DATA, DISPLAYING_EMPTY_SEARCH, DISPLAYING_EMPTY_FAVORITES
+    }
+
     public static class SearchArtistPresenterState extends PaginatablePresenterState {
         String query;
+        DisplayState displayState;
 
         public void writeState(SearchArtistPresenter presenter) {
             super.writeState(presenter);
             query = presenter.mQuery;
+            displayState = presenter.mDisplayState;
         }
     }
 }
