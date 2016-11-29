@@ -178,4 +178,9 @@ public class SetlistFragment extends BaseFragment implements SetlistView {
     public void addEncoreNameHeader(String name, int position) {
         mAdapter.addHeader(position, name);
     }
+
+    @Override
+    public void addSet(Setlists.Set set) {
+        mAdapter.addSet(set);
+    }
 }

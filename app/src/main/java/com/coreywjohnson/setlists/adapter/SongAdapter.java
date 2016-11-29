@@ -50,4 +50,21 @@ public class SongAdapter extends BaseAdapter<Setlists.Song> {
         }
         return -1;
     }
+
+    public void addSet(Setlists.Set set) {
+        addItems(set.getSong());
+
+        // add header
+        if (set.getName() != null && !set.getName().isEmpty()) {
+            addHeader(getItemCount() - set.getSong().size(), set.getName());
+        } else if (set.getEncore() != null && set.getEncore().isEmpty()) {
+            addHeader(getItemCount() - set.getSong().size(), set.getEncore());
+        } else {
+            if (mHeaders.size() > 0) {
+                addHeader(getItemCount() - set.getSong().size(), String.format("Encore %d", mHeaders.size() + 1));
+            } else if (getItemCount() - set.getSong().size() != 0) {
+                addHeader(getItemCount() - set.getSong().size(), "Encore");
+            }
+        }
+    }
 }

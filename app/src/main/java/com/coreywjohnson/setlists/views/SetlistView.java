@@ -28,4 +28,6 @@ public interface SetlistView extends BaseView {
     void addEncoreNumHeader(int encoreNum, int position);
 
     void addEncoreNameHeader(String name, int position);
+
+    void addSet(Setlists.Set set);
 }
