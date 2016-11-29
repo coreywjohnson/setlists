@@ -16,7 +16,7 @@ public class Set implements Serializable {
 
 
     @Attribute(name = "encore", required = false)
-    String encore;
+    int encore;
 
     @Attribute(name = "name", required = false)
     String name;
@@ -31,11 +31,11 @@ public class Set implements Serializable {
     }
 
 
-    public String getEncore() {
+    public int getEncore() {
         return this.encore;
     }
 
-    public void setEncore(String _value) {
+    public void setEncore(int _value) {
         this.encore = _value;
     }
 

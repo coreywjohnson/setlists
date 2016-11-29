@@ -31,7 +31,7 @@ public class Artist implements Serializable {
 
 
     @Attribute(name = "tmid", required = false)
-    String tmid;
+    int tmid;
 
 
     public String getUrl() {
@@ -79,11 +79,11 @@ public class Artist implements Serializable {
     }
 
 
-    public String getTmid() {
+    public int getTmid() {
         return this.tmid;
     }
 
-    public void setTmid(String _value) {
+    public void setTmid(int _value) {
         this.tmid = _value;
     }
 

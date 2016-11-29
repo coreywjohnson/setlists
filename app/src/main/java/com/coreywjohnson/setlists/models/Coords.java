@@ -10,27 +10,27 @@ import java.io.Serializable;
 public class Coords implements Serializable {
 
     @Attribute(name = "lat", required = false)
-    String lat;
+    double lat;
 
 
     @Attribute(name = "long", required = false)
-    String lon;
+    double lon;
 
 
-    public String getLat() {
+    public double getLat() {
         return this.lat;
     }
 
-    public void setLat(String _value) {
+    public void setLat(double _value) {
         this.lat = _value;
     }
 
 
-    public String getLong() {
+    public double getLong() {
         return this.lon;
     }
 
-    public void setLong(String _value) {
+    public void setLong(double _value) {
         this.lon = _value;
     }
 

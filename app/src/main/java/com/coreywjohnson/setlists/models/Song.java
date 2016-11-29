@@ -24,6 +24,9 @@ public class Song implements Serializable {
     @Element(name = "cover", required = false)
     Cover cover;
 
+    @Element(name = "with", required = false)
+    Artist with;
+
 
     public String getName() {
         return this.name;
@@ -59,5 +62,11 @@ public class Song implements Serializable {
         this.tape = value;
     }
 
+    public Artist getWith() {
+        return with;
+    }
 
+    public void setWith(Artist with) {
+        this.with = with;
+    }
 }

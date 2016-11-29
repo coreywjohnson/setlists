@@ -48,6 +48,12 @@ public class Setlist implements Serializable {
     @Attribute(name = "versionId", required = false)
     String versionId;
 
+    @Attribute(name = "lastFmEventId", required = false)
+    int lastFmEventId;
+
+    @Attribute(name = "info", required = false)
+    String info;
+
     public ArrayList<Song> getSetlistSongs() {
         ArrayList<Song> songs = new ArrayList<>();
         for (int i = 0; i < sets.size(); i++) {
@@ -138,5 +144,19 @@ public class Setlist implements Serializable {
         this.versionId = _value;
     }
 
+    public int getLastFmEventId() {
+        return lastFmEventId;
+    }
 
+    public void setLastFmEventId(int lastFmEventId) {
+        this.lastFmEventId = lastFmEventId;
+    }
+
+    public String getInfo() {
+        return info;
+    }
+
+    public void setInfo(String info) {
+        this.info = info;
+    }
 }

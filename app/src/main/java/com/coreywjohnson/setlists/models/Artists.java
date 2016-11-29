@@ -15,15 +15,15 @@ public class Artists implements Serializable {
 
 
     @Attribute(name = "itemsPerPage", required = false)
-    String itemsPerPage;
+    int itemsPerPage;
 
 
     @Attribute(name = "page", required = false)
-    String page;
+    int page;
 
 
     @Attribute(name = "total", required = false)
-    String total;
+    int total;
 
 
     public List<Artist> getArtist() {
@@ -35,29 +35,29 @@ public class Artists implements Serializable {
     }
 
 
-    public String getItemsPerPage() {
+    public int getItemsPerPage() {
         return this.itemsPerPage;
     }
 
-    public void setItemsPerPage(String _value) {
+    public void setItemsPerPage(int _value) {
         this.itemsPerPage = _value;
     }
 
 
-    public String getPage() {
+    public int getPage() {
         return this.page;
     }
 
-    public void setPage(String _value) {
+    public void setPage(int _value) {
         this.page = _value;
     }
 
 
-    public String getTotal() {
+    public int getTotal() {
         return this.total;
     }
 
-    public void setTotal(String _value) {
+    public void setTotal(int _value) {
         this.total = _value;
     }
 }
