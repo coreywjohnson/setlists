@@ -5,7 +5,8 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import com.coreywjohnson.setlists.adapter.common.BaseAdapter;
-import com.coreywjohnson.setlists.models.Setlists;
+import com.coreywjohnson.setlists.models.Set;
+import com.coreywjohnson.setlists.models.Song;
 import com.coreywjohnson.setlists.widgets.SongWidget;
 
 import javax.inject.Inject;
@@ -13,7 +14,7 @@ import javax.inject.Inject;
 /**
  * Created by corey on 14-May-16.
  */
-public class SongAdapter extends BaseAdapter<Setlists.Song> {
+public class SongAdapter extends BaseAdapter<Song> {
 
     @Inject
     public SongAdapter() {
@@ -38,9 +39,9 @@ public class SongAdapter extends BaseAdapter<Setlists.Song> {
         }
     }
 
-    private int getSongPosition(Setlists.Song item) {
+    private int getSongPosition(Song item) {
         int position = 0;
-        for (Setlists.Song song : mAdapterData) {
+        for (Song song : mAdapterData) {
             if (item == song) {
                 return position;
             }
@@ -51,7 +52,7 @@ public class SongAdapter extends BaseAdapter<Setlists.Song> {
         return -1;
     }
 
-    public void addSet(Setlists.Set set) {
+    public void addSet(Set set) {
         addItems(set.getSong());
 
         // add header

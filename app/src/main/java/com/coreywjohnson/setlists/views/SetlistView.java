@@ -1,5 +1,6 @@
 package com.coreywjohnson.setlists.views;
 
+import com.coreywjohnson.setlists.models.Set;
 import com.coreywjohnson.setlists.models.Setlists;
 import com.coreywjohnson.setlists.views.common.BaseView;
 
@@ -29,5 +30,5 @@ public interface SetlistView extends BaseView {
 
     void addEncoreNameHeader(String name, int position);
 
-    void addSet(Setlists.Set set);
+    void addSet(Set set);
 }

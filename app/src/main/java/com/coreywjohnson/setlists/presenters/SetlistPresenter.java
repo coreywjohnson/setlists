@@ -1,6 +1,8 @@
 package com.coreywjohnson.setlists.presenters;
 
-import com.coreywjohnson.setlists.models.Setlists;
+import com.coreywjohnson.setlists.models.Set;
+import com.coreywjohnson.setlists.models.Setlist;
+import com.coreywjohnson.setlists.models.Song;
 import com.coreywjohnson.setlists.presenters.common.Presenter;
 import com.coreywjohnson.setlists.views.SetlistView;
 
@@ -13,7 +15,7 @@ import javax.inject.Inject;
  */
 public class SetlistPresenter extends Presenter {
     SetlistView mSetlistView;
-    private Setlists.Setlist mSetlist;
+    private Setlist mSetlist;
 
     @Inject
     SetlistPresenter(SetlistView setlistView) {
@@ -21,12 +23,12 @@ public class SetlistPresenter extends Presenter {
     }
 
     public void displaySetlist() {
-        ArrayList<Setlists.Song> songs = mSetlist.getSetlistSongs();
+        ArrayList<Song> songs = mSetlist.getSetlistSongs();
         if (songs != null && songs.isEmpty()) {
             mSetlistView.displayEmptyState();
         } else {
             mSetlistView.displayDataState();
-            for (Setlists.Set set : mSetlist.getSets()) {
+            for (Set set : mSetlist.getSets()) {
                 mSetlistView.addSet(set);
             }
         }
@@ -57,7 +59,7 @@ public class SetlistPresenter extends Presenter {
         displaySetlist();
     }
 
-    public void setSetlist(Setlists.Setlist setlist) {
+    public void setSetlist(Setlist setlist) {
         mSetlist = setlist;
     }
 
