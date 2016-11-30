@@ -29,4 +29,7 @@ public interface SetlistService {
 
     @GET
     Call<Setlists> getSetlistsByArtist(@Url String url, @Query("p") int pageNo);
+
+    @GET
+    Call<Setlists> getSetlistsByUser(@Url String url, @Query("p") int pageNo);
 }
