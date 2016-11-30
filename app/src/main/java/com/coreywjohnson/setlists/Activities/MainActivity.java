@@ -17,9 +17,9 @@ import com.coreywjohnson.setlists.SetlistsApp;
 import com.coreywjohnson.setlists.components.DaggerMainComponent;
 import com.coreywjohnson.setlists.components.MainComponent;
 import com.coreywjohnson.setlists.databinding.ActivityMainBinding;
-import com.coreywjohnson.setlists.fragments.SearchArtistFragment;
 import com.coreywjohnson.setlists.fragments.SearchSetlistFragment;
 import com.coreywjohnson.setlists.fragments.SetlistFragment;
+import com.coreywjohnson.setlists.fragments.UserFragment;
 import com.coreywjohnson.setlists.interfaces.SharedViewWidget;
 import com.coreywjohnson.setlists.models.Setlist;
 import com.coreywjohnson.setlists.modules.MainModule;
@@ -142,6 +142,9 @@ public class MainActivity extends BaseActivity implements MainView, SearchSetlis
                     case R.id.action_setlists:
                         showSetlistsSearch();
                         return true;
+                    case R.id.action_user:
+                        showUserFragment();
+                        return true;
                     default:
                         return false;
                 }
@@ -149,6 +152,16 @@ public class MainActivity extends BaseActivity implements MainView, SearchSetlis
         });
         mBinding.navigationView.setCheckedItem(R.id.action_setlists);
         mBinding.navigationView.addHeaderView(new HeaderWidget(this));
+    }
+
+    public void showUserFragment() {
+        // Show user fragment
+        // TODO dynamic username
+        UserFragment fragment = UserFragment.newInstance("cordogz");
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment_container, fragment)
+                .commit();
     }
 
     @Override
@@ -163,10 +176,10 @@ public class MainActivity extends BaseActivity implements MainView, SearchSetlis
 
     @Override
     public void showArtistsSearch() {
-        SearchArtistFragment fragment = SearchArtistFragment.newInstance();
+        SearchSetlistFragment searchFragment = SearchSetlistFragment.newInstance();
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.fragment_container, fragment)
+                .replace(R.id.fragment_container, searchFragment)
                 .commit();
     }
 

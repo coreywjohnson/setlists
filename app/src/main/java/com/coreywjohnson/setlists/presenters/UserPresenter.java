@@ -15,6 +15,7 @@ public class UserPresenter extends PaginatablePresenter<Setlist> {
 
     private final UserView mView;
     private final GetUserAttendedSetlistsInteractor mInteractor;
+    private String mUsername;
 
     @Inject
     public UserPresenter(UserView view, GetUserAttendedSetlistsInteractor interactor) {
@@ -25,6 +26,13 @@ public class UserPresenter extends PaginatablePresenter<Setlist> {
 
     @Override
     public void onCreate(boolean isRestoring) {
+        if (!isRestoring) {
+            onRefresh();
+        }
+    }
 
+    public void setUsername(String username) {
+        mUsername = username;
+        mInteractor.setUsername(username);
     }
 }
