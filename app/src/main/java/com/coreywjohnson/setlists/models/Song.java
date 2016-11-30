@@ -1,5 +1,9 @@
 package com.coreywjohnson.setlists.models;
 
+import android.content.Context;
+
+import com.coreywjohnson.setlists.R;
+
 import org.simpleframework.xml.Attribute;
 import org.simpleframework.xml.Element;
 
@@ -28,8 +32,12 @@ public class Song implements Serializable {
     Artist with;
 
 
-    public String getName() {
-        return this.name;
+    public String getName(Context context) {
+        if (name != null && !name.isEmpty()) {
+            return this.name;
+        } else {
+            return context.getString(R.string.txt_unknown_song);
+        }
     }
 
     public void setName(String _value) {
