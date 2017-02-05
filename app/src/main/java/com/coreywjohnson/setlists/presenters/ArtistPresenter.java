@@ -6,8 +6,6 @@ import com.coreywjohnson.setlists.interactors.GetArtistsSetlistsInteractor;
 import com.coreywjohnson.setlists.interfaces.SharedViewWidget;
 import com.coreywjohnson.setlists.interfaces.interactors.ArtistInteractor;
 import com.coreywjohnson.setlists.models.Artist;
-import com.coreywjohnson.setlists.models.Setlists;
-import com.coreywjohnson.setlists.models.Artist;
 import com.coreywjohnson.setlists.models.Setlist;
 import com.coreywjohnson.setlists.presenters.common.PaginatablePresenter;
 import com.coreywjohnson.setlists.views.ArtistView;

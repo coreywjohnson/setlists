@@ -13,7 +13,7 @@ public class RealmArtist extends RealmObject {
     String name;
     String sortName;
     String disambiguation;
-    String tmid;
+    int tmid;
 
     public RealmArtist() {
 

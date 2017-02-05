@@ -22,8 +22,6 @@ import com.coreywjohnson.setlists.components.DaggerArtistComponent;
 import com.coreywjohnson.setlists.databinding.FragmentArtistBinding;
 import com.coreywjohnson.setlists.interfaces.SharedViewWidget;
 import com.coreywjohnson.setlists.models.Artist;
-import com.coreywjohnson.setlists.models.Setlists;
-import com.coreywjohnson.setlists.models.Artist;
 import com.coreywjohnson.setlists.models.Setlist;
 import com.coreywjohnson.setlists.modules.ArtistModule;
 import com.coreywjohnson.setlists.presenters.ArtistPresenter;
