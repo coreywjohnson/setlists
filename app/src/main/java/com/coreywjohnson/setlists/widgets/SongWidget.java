@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 
 import com.coreywjohnson.setlists.R;
 import com.coreywjohnson.setlists.databinding.WidgetSongBinding;
-import com.coreywjohnson.setlists.models.Setlists;
+import com.coreywjohnson.setlists.models.Song;
 
 /**
  * Created by corey on 14-May-16.
@@ -26,7 +26,7 @@ public class SongWidget extends RecyclerView.ViewHolder {
         return new SongWidget(binding);
     }
 
-    public void setSong(Setlists.Song song) {
+    public void setSong(Song song) {
         mBinding.setSong(song);
         String infoText = "";
         if (song.getCover() != null) {
@@ -35,6 +35,9 @@ public class SongWidget extends RecyclerView.ViewHolder {
             } else {
                 infoText += "(" + song.getCover().getName() + " cover) ";
             }
+        }
+        if (song.getWith() != null) {
+            infoText += "(with " + song.getWith().getName() + ") ";
         }
         if (song.getInfo() != null) {
             infoText += "(" + song.getInfo() + ")";

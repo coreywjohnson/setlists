@@ -5,6 +5,7 @@ import android.util.Log;
 import com.coreywjohnson.setlists.data.SetlistService;
 import com.coreywjohnson.setlists.interfaces.PaginatableRequest;
 import com.coreywjohnson.setlists.interfaces.PaginatableRequestListener;
+import com.coreywjohnson.setlists.models.Setlist;
 import com.coreywjohnson.setlists.models.Setlists;
 
 import javax.inject.Inject;
@@ -16,7 +17,7 @@ import retrofit2.Response;
 /**
  * Created by corey on 25-Apr-16.
  */
-public class SearchSetlistInteractor implements PaginatableRequest<Setlists.Setlist> {
+public class SearchSetlistInteractor implements PaginatableRequest<Setlist> {
     private SetlistService mSetlistService;
     private Call<Setlists> mRequest;
     private String mName = null;
@@ -25,7 +26,7 @@ public class SearchSetlistInteractor implements PaginatableRequest<Setlists.Setl
     private String mDate = null;
     private String mYear = null;
     private String mTour = null;
-    private PaginatableRequestListener<Setlists.Setlist> mListener;
+    private PaginatableRequestListener<Setlist> mListener;
 
     @Inject
     public SearchSetlistInteractor(SetlistService setlistService) {
@@ -81,7 +82,7 @@ public class SearchSetlistInteractor implements PaginatableRequest<Setlists.Setl
             @Override
             public void onResponse(Call<Setlists> call, Response<Setlists> response) {
                 if (response.isSuccessful()) {
-                    mListener.onSuccess(response.body().getSetlist(), Integer.parseInt(response.body().getTotal()));
+                    mListener.onSuccess(response.body().getSetlist(), response.body().getTotal());
                 } else {
                     Log.i("Error", response.message());
                     mListener.onError(response.message());
@@ -100,7 +101,7 @@ public class SearchSetlistInteractor implements PaginatableRequest<Setlists.Setl
     }
 
     @Override
-    public void setListener(PaginatableRequestListener<Setlists.Setlist> listener) {
+    public void setListener(PaginatableRequestListener<Setlist> listener) {
         mListener = listener;
     }
 }

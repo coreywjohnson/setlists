@@ -5,6 +5,7 @@ import com.coreywjohnson.setlists.interactors.AnalyticsInteractor;
 import com.coreywjohnson.setlists.interactors.SearchArtistInteractor;
 import com.coreywjohnson.setlists.interfaces.interactors.ArtistInteractor;
 import com.coreywjohnson.setlists.models.Artist;
+import com.coreywjohnson.setlists.models.Artist;
 import com.coreywjohnson.setlists.presenters.common.PaginatablePresenter;
 import com.coreywjohnson.setlists.views.SearchArtistView;
 import com.google.firebase.analytics.FirebaseAnalytics;

@@ -16,4 +16,5 @@
     <string name="txt_favorite_artists">Favorite Artists</string>
     <string name="txt_favorite">Favorite</string>
     <string name="txt_no_favorites">Favorite some artists and they\'ll appear here!</string>
+    <string name="txt_unknown_song">(Unknown)</string>
 </resources>

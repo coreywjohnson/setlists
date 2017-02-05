@@ -23,6 +23,8 @@ import com.coreywjohnson.setlists.databinding.FragmentArtistBinding;
 import com.coreywjohnson.setlists.interfaces.SharedViewWidget;
 import com.coreywjohnson.setlists.models.Artist;
 import com.coreywjohnson.setlists.models.Setlists;
+import com.coreywjohnson.setlists.models.Artist;
+import com.coreywjohnson.setlists.models.Setlist;
 import com.coreywjohnson.setlists.modules.ArtistModule;
 import com.coreywjohnson.setlists.presenters.ArtistPresenter;
 import com.coreywjohnson.setlists.presenters.common.Presenter;
@@ -134,7 +136,7 @@ public class ArtistFragment extends BaseFragment implements ArtistView, SetlistA
     }
 
     @Override
-    public void onSetlistClick(Setlists.Setlist setlist, SharedViewWidget sharedViewWidget) {
+    public void onSetlistClick(Setlist setlist, SharedViewWidget sharedViewWidget) {
         mPresenter.onSetlistClick(setlist, sharedViewWidget);
     }
 
@@ -144,7 +146,7 @@ public class ArtistFragment extends BaseFragment implements ArtistView, SetlistA
     }
 
     @Override
-    public void addItems(List<Setlists.Setlist> items, boolean hasMore) {
+    public void addItems(List<Setlist> items, boolean hasMore) {
         if (mAdapter != null) {
             mAdapter.addItems(items, hasMore);
         }
@@ -186,7 +188,7 @@ public class ArtistFragment extends BaseFragment implements ArtistView, SetlistA
     }
 
     @Override
-    public void openSetlist(Setlists.Setlist setlist, SharedViewWidget sharedViewWidget) {
+    public void openSetlist(Setlist setlist, SharedViewWidget sharedViewWidget) {
         mListener.onSetlistClick(setlist, sharedViewWidget);
     }
 

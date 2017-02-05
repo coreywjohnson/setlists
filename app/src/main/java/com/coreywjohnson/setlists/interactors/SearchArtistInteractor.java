@@ -36,7 +36,7 @@ public class SearchArtistInteractor implements PaginatableRequest<Artist> {
             @Override
             public void onResponse(Call<Artists> call, Response<Artists> response) {
                 if (response.isSuccessful()) {
-                    mListener.onSuccess(response.body().getArtist(), Integer.parseInt(response.body().getTotal()));
+                    mListener.onSuccess(response.body().getArtist(), response.body().getTotal());
                 } else {
                     Log.i("Error", response.message());
                     mListener.onError(response.message());

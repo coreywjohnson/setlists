@@ -1,6 +1,8 @@
 package com.coreywjohnson.setlists.views;
 
-import com.coreywjohnson.setlists.models.Setlists;
+import com.coreywjohnson.setlists.models.Set;
+import com.coreywjohnson.setlists.models.Setlist;
+import com.coreywjohnson.setlists.models.Song;
 import com.coreywjohnson.setlists.views.common.BaseView;
 
 import java.util.List;
@@ -9,11 +11,11 @@ import java.util.List;
  * Created by coreyjohnson on 12/05/16.
  */
 public interface SetlistView extends BaseView {
-    void setupRecyclerView(Setlists.Setlist setlist);
+    void setupRecyclerView(Setlist setlist);
 
     void revealToolbar();
 
-    void addItems(List<Setlists.Song> setlistList);
+    void addItems(List<Song> setlistList);
 
     void displayEmptyState();
 
@@ -21,11 +23,13 @@ public interface SetlistView extends BaseView {
 
     void showHeader();
 
-    void launchWebView(Setlists.Setlist setlist);
+    void launchWebView(Setlist setlist);
 
     void addEncoreHeader(int position);
 
     void addEncoreNumHeader(int encoreNum, int position);
 
     void addEncoreNameHeader(String name, int position);
+
+    void addSet(Set set);
 }

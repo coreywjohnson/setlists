@@ -7,6 +7,8 @@ import com.coreywjohnson.setlists.interfaces.SharedViewWidget;
 import com.coreywjohnson.setlists.interfaces.interactors.ArtistInteractor;
 import com.coreywjohnson.setlists.models.Artist;
 import com.coreywjohnson.setlists.models.Setlists;
+import com.coreywjohnson.setlists.models.Artist;
+import com.coreywjohnson.setlists.models.Setlist;
 import com.coreywjohnson.setlists.presenters.common.PaginatablePresenter;
 import com.coreywjohnson.setlists.views.ArtistView;
 import com.google.firebase.analytics.FirebaseAnalytics;
@@ -19,12 +21,12 @@ import javax.inject.Inject;
 /**
  * Created by corey on 03-Jul-16.
  */
-public class ArtistPresenter extends PaginatablePresenter<Setlists.Setlist> {
+public class ArtistPresenter extends PaginatablePresenter<Setlist> {
     private final ArtistInteractor mArtistInteractor;
-    private ArtistView mView;
-    private Artist mArtist;
-    private GetArtistsSetlistsInteractor mInteractor;
-    private AnalyticsInteractor mAnalyticsInteractor;
+    ArtistView mView;
+    Artist mArtist;
+    GetArtistsSetlistsInteractor mInteractor;
+    AnalyticsInteractor mAnalyticsInteractor;
 
     @Inject
     public ArtistPresenter(ArtistView view, AnalyticsInteractor analyticsInteractor, GetArtistsSetlistsInteractor interactor, ArtistInteractor artistInteractor) {
@@ -50,7 +52,7 @@ public class ArtistPresenter extends PaginatablePresenter<Setlists.Setlist> {
         }
     }
 
-    public void onSetlistClick(Setlists.Setlist setlist, SharedViewWidget sharedViewWidget) {
+    public void onSetlistClick(Setlist setlist, SharedViewWidget sharedViewWidget) {
         Map<String, String> properties = new HashMap<>();
         properties.put(FirebaseAnalytics.Param.CONTENT_TYPE, AnalyticsInteractor.CONTENT_TYPE_SETLIST);
         properties.put(FirebaseAnalytics.Param.ITEM_ID, setlist.getId());

@@ -2,7 +2,7 @@ package com.coreywjohnson.setlists;
 
 import com.coreywjohnson.setlists.data.SetlistService;
 import com.coreywjohnson.setlists.interfaces.PaginatableRequest;
-import com.coreywjohnson.setlists.models.Setlists;
+import com.coreywjohnson.setlists.models.Setlist;
 import com.coreywjohnson.setlists.presenters.common.PaginatablePresenter;
 import com.coreywjohnson.setlists.presenters.common.Presenter;
 import com.coreywjohnson.setlists.views.common.PaginatableView;
@@ -24,16 +24,16 @@ import static org.mockito.Mockito.verify;
  * Created by corey on 16-Aug-16.
  */
 public class PaginatablePresenterTests {
-    PaginatablePresenter<Setlists.Setlist> mPresenter;
+    PaginatablePresenter<Setlist> mPresenter;
     @Mock
-    PaginatableView<Setlists.Setlist> mView;
+    PaginatableView<Setlist> mView;
     @Mock
-    PaginatableRequest<Setlists.Setlist> mRequest;
+    PaginatableRequest<Setlist> mRequest;
 
     @Before
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
-        mPresenter = new PaginatablePresenter<Setlists.Setlist>(mView, mRequest) {
+        mPresenter = new PaginatablePresenter<Setlist>(mView, mRequest) {
             @Override
             public void onCreate(boolean isRestoring) {
 
@@ -64,16 +64,16 @@ public class PaginatablePresenterTests {
 
     @Test
     public void testOnSuccess_withLoadCountZero_viewShowData() {
-        ArrayList<Setlists.Setlist> setlists = new ArrayList<>();
-        setlists.add(new Setlists.Setlist());
+        ArrayList<Setlist> setlists = new ArrayList<>();
+        setlists.add(new Setlist());
         mPresenter.onSuccess(setlists, 1);
         verify(mView).showDataState();
     }
 
     @Test
     public void testOnSuccess_withLoadCountNotZero_viewShowDataOnce() {
-        ArrayList<Setlists.Setlist> setlists = new ArrayList<>();
-        setlists.add(new Setlists.Setlist());
+        ArrayList<Setlist> setlists = new ArrayList<>();
+        setlists.add(new Setlist());
         mPresenter.onSuccess(setlists, 2);
         mPresenter.onSuccess(setlists, 2);
         verify(mView, times(1)).showDataState();
@@ -81,24 +81,24 @@ public class PaginatablePresenterTests {
 
     @Test
     public void testOnSuccess_hideLoading() {
-        ArrayList<Setlists.Setlist> setlists = new ArrayList<>();
-        setlists.add(new Setlists.Setlist());
+        ArrayList<Setlist> setlists = new ArrayList<>();
+        setlists.add(new Setlist());
         mPresenter.onSuccess(setlists, 2);
         verify(mView).hideLoading();
     }
 
     @Test
     public void testOnSuccess_withMoreData_notifyView() {
-        ArrayList<Setlists.Setlist> setlists = new ArrayList<>();
-        setlists.add(new Setlists.Setlist());
+        ArrayList<Setlist> setlists = new ArrayList<>();
+        setlists.add(new Setlist());
         mPresenter.onSuccess(setlists, 2);
         verify(mView).addItems(setlists, true);
     }
 
     @Test
     public void testOnSuccess_withoutMoreData_notifyView() {
-        ArrayList<Setlists.Setlist> setlists = new ArrayList<>();
-        setlists.add(new Setlists.Setlist());
+        ArrayList<Setlist> setlists = new ArrayList<>();
+        setlists.add(new Setlist());
         mPresenter.onSuccess(setlists, 1);
         verify(mView).addItems(setlists, false);
     }
@@ -142,9 +142,9 @@ public class PaginatablePresenterTests {
         state.pageNo = 3;
         state.loadCount = totalLoadCount - requestItemCount;
 
-        ArrayList<Setlists.Setlist> setlists = new ArrayList<>();
+        ArrayList<Setlist> setlists = new ArrayList<>();
         for (int i = 0; i < requestItemCount; i++) {
-            setlists.add(new Setlists.Setlist());
+            setlists.add(new Setlist());
         }
 
         mPresenter.restorePresenterState(state);
@@ -155,9 +155,9 @@ public class PaginatablePresenterTests {
     @Test
     public void testGetState_getsCorrectState() {
         int itemCount = 5;
-        ArrayList<Setlists.Setlist> setlists = new ArrayList<>();
+        ArrayList<Setlist> setlists = new ArrayList<>();
         for (int i = 0; i < itemCount; i++) {
-            setlists.add(new Setlists.Setlist());
+            setlists.add(new Setlist());
         }
 
         mPresenter.onLoadMore();

@@ -11,7 +11,7 @@ import com.coreywjohnson.setlists.R;
 import com.coreywjohnson.setlists.adapter.SetlistAdapter;
 import com.coreywjohnson.setlists.databinding.WidgetSetlistBinding;
 import com.coreywjohnson.setlists.interfaces.SharedViewWidget;
-import com.coreywjohnson.setlists.models.Setlists;
+import com.coreywjohnson.setlists.models.Setlist;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -36,7 +36,7 @@ public class SetlistWidget extends RecyclerView.ViewHolder implements SharedView
         return new SetlistWidget(binding);
     }
 
-    public void setSetlist(final Setlists.Setlist setlist) {
+    public void setSetlist(final Setlist setlist) {
         mBinding.setSetlist(setlist);
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
         try {

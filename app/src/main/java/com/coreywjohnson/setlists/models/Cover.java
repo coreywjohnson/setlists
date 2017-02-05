@@ -8,14 +8,10 @@ import java.io.Serializable;
 /**
  * Created by coreyjohnson on 29/11/2016.
  */
-public class Artist implements Serializable {
+public class Cover implements Serializable {
 
     @Element(name = "url", required = false)
     String url;
-
-
-    @Attribute(name = "disambiguation", required = false)
-    String disambiguation;
 
 
     @Attribute(name = "mbid", required = false)
@@ -30,25 +26,12 @@ public class Artist implements Serializable {
     String sortName;
 
 
-    @Attribute(name = "tmid", required = false)
-    int tmid;
-
-
     public String getUrl() {
         return this.url;
     }
 
     public void setUrl(String _value) {
         this.url = _value;
-    }
-
-
-    public String getDisambiguation() {
-        return this.disambiguation;
-    }
-
-    public void setDisambiguation(String _value) {
-        this.disambiguation = _value;
     }
 
 
@@ -76,15 +59,6 @@ public class Artist implements Serializable {
 
     public void setSortName(String _value) {
         this.sortName = _value;
-    }
-
-
-    public int getTmid() {
-        return this.tmid;
-    }
-
-    public void setTmid(int _value) {
-        this.tmid = _value;
     }
 
 
