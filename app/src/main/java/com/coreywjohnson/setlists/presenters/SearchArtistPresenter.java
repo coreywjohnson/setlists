@@ -41,6 +41,7 @@ public class SearchArtistPresenter extends PaginatablePresenter<Artist> {
         if (!isRestoring) {
             showFavorites();
         }
+        ;
     }
 
     public void onCreateView() {
@@ -107,6 +108,8 @@ public class SearchArtistPresenter extends PaginatablePresenter<Artist> {
         super.onError(error);
         if (!error.equals(SetlistService.NOT_FOUND_MESSAGE)) {
             mView.onError(error);
+        } else {
+            mDisplayState = DisplayState.DISPLAYING_EMPTY_SEARCH;
         }
     }
 
