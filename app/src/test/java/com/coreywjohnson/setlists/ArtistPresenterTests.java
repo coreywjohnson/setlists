@@ -6,7 +6,7 @@ import com.coreywjohnson.setlists.interactors.GetArtistsSetlistsInteractor;
 import com.coreywjohnson.setlists.interfaces.SharedViewWidget;
 import com.coreywjohnson.setlists.interfaces.interactors.ArtistInteractor;
 import com.coreywjohnson.setlists.models.Artist;
-import com.coreywjohnson.setlists.models.Setlists;
+import com.coreywjohnson.setlists.models.Setlist;
 import com.coreywjohnson.setlists.presenters.ArtistPresenter;
 import com.coreywjohnson.setlists.views.ArtistView;
 import com.google.firebase.analytics.FirebaseAnalytics;
@@ -77,7 +77,7 @@ public class ArtistPresenterTests {
 
     @Test
     public void testOnSetlistClick_sendAnalytics() {
-        Setlists.Setlist setlist = new Setlists.Setlist();
+        Setlist setlist = new Setlist();
         setlist.setId("1234");
         SharedViewWidget mock = mock(SharedViewWidget.class);
         mPresenter.onSetlistClick(setlist, mock);
@@ -89,7 +89,7 @@ public class ArtistPresenterTests {
 
     @Test
     public void testOnSetlistClick_openSetlist() {
-        Setlists.Setlist setlist = new Setlists.Setlist();
+        Setlist setlist = new Setlist();
         SharedViewWidget mock = mock(SharedViewWidget.class);
         mPresenter.onSetlistClick(setlist, mock);
         verify(mArtistView).openSetlist(setlist, mock);
