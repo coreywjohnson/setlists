@@ -18,9 +18,9 @@ import com.coreywjohnson.setlists.adapter.ArtistAdapter;
 import com.coreywjohnson.setlists.adapter.common.BaseAdapter;
 import com.coreywjohnson.setlists.components.DaggerSearchArtistComponent;
 import com.coreywjohnson.setlists.components.SearchArtistComponent;
-import com.coreywjohnson.setlists.databinding.FragmentSearchBinding;
+import com.coreywjohnson.setlists.databinding.FragmentSearchArtistBinding;
 import com.coreywjohnson.setlists.helpers.ViewHelper;
-import com.coreywjohnson.setlists.models.Artists;
+import com.coreywjohnson.setlists.models.Artist;
 import com.coreywjohnson.setlists.modules.SearchArtistModule;
 import com.coreywjohnson.setlists.presenters.SearchArtistPresenter;
 import com.coreywjohnson.setlists.presenters.common.Presenter;
@@ -39,7 +39,7 @@ public class SearchArtistFragment extends BaseFragment implements SearchArtistVi
     ArtistAdapter mAdapter;
     @Inject
     SearchArtistPresenter mPresenter;
-    FragmentSearchBinding mBinding;
+    FragmentSearchArtistBinding mBinding;
 
     public static SearchArtistFragment newInstance() {
 
@@ -63,6 +63,7 @@ public class SearchArtistFragment extends BaseFragment implements SearchArtistVi
             mPresenter.restorePresenterState((Presenter.PresenterState) savedInstanceState.getSerializable(PRESENTER_STATE));
             mAdapter.restoreAdapterState((BaseAdapter.AdapterState) savedInstanceState.getSerializable(ADAPTER_STATE));
         }
+        mPresenter.onCreate(savedInstanceState != null);
     }
 
     @Nullable
@@ -73,7 +74,7 @@ public class SearchArtistFragment extends BaseFragment implements SearchArtistVi
         mBinding.recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mBinding.recyclerView.setAdapter(mAdapter);
         mBinding.refreshView.setOnRefreshListener(this);
-        mBinding.dataWidget.showData();
+        mPresenter.onCreateView();
 
         return mBinding.getRoot();
     }
@@ -116,7 +117,7 @@ public class SearchArtistFragment extends BaseFragment implements SearchArtistVi
 
     @Override
     protected int getLayout() {
-        return R.layout.fragment_search;
+        return R.layout.fragment_search_artist;
     }
 
     @Override
@@ -130,7 +131,7 @@ public class SearchArtistFragment extends BaseFragment implements SearchArtistVi
     }
 
     @Override
-    public void showArtist(Artists.Artist artist) {
+    public void showArtist(Artist artist) {
         getFragmentManager()
                 .beginTransaction()
                 .replace(R.id.fragment_container, ArtistFragment.newInstance(artist))
@@ -149,12 +150,24 @@ public class SearchArtistFragment extends BaseFragment implements SearchArtistVi
     }
 
     @Override
-    public void onArtistClick(Artists.Artist artist) {
+    public void showAdapterFavoritesHeader() {
+        mAdapter.addHeader(0, getString(R.string.txt_favorite_artists));
+    }
+
+    @Override
+    public void showNoFavoritesState() {
+        if (mBinding != null) {
+            mBinding.dataWidget.showChild(2);
+        }
+    }
+
+    @Override
+    public void onArtistClick(Artist artist) {
         mPresenter.onArtistClick(artist);
     }
 
     @Override
-    public void addItems(List<Artists.Artist> items, boolean hasMore) {
+    public void addItems(List<Artist> items, boolean hasMore) {
         if (mAdapter != null) {
             mAdapter.addItems(items, hasMore);
         }

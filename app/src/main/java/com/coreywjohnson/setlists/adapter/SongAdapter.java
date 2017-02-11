@@ -5,7 +5,8 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import com.coreywjohnson.setlists.adapter.common.BaseAdapter;
-import com.coreywjohnson.setlists.models.Setlists;
+import com.coreywjohnson.setlists.models.Set;
+import com.coreywjohnson.setlists.models.Song;
 import com.coreywjohnson.setlists.widgets.SongWidget;
 
 import javax.inject.Inject;
@@ -13,7 +14,7 @@ import javax.inject.Inject;
 /**
  * Created by corey on 14-May-16.
  */
-public class SongAdapter extends BaseAdapter<Setlists.Song> {
+public class SongAdapter extends BaseAdapter<Song> {
 
     @Inject
     public SongAdapter() {
@@ -38,9 +39,9 @@ public class SongAdapter extends BaseAdapter<Setlists.Song> {
         }
     }
 
-    private int getSongPosition(Setlists.Song item) {
+    private int getSongPosition(Song item) {
         int position = 0;
-        for (Setlists.Song song : mAdapterData) {
+        for (Song song : mAdapterData) {
             if (item == song) {
                 return position;
             }
@@ -49,5 +50,20 @@ public class SongAdapter extends BaseAdapter<Setlists.Song> {
             }
         }
         return -1;
+    }
+
+    public void addSet(Set set) {
+        addItems(set.getSong());
+
+        // add header
+        if (set.getName() != null && !set.getName().isEmpty()) {
+            addHeader(getItemCount() - set.getSong().size(), set.getName());
+        } else {
+            if (mHeaders.size() > 0) {
+                addHeader(getItemCount() - set.getSong().size(), String.format("Encore %d", mHeaders.size() + 1));
+            } else if (getItemCount() - set.getSong().size() != 0) {
+                addHeader(getItemCount() - set.getSong().size(), "Encore");
+            }
+        }
     }
 }

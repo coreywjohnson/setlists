@@ -9,7 +9,7 @@
 
         <variable
             name="song"
-            type="com.coreywjohnson.setlists.models.Setlists.Song" />
+            type="com.coreywjohnson.setlists.models.Song" />
 
         <import type="android.view.View" />
     </data>
@@ -56,7 +56,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:text='@{song.name}'
+            android:text='@{song.getName(context)}'
             android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
 
         <TextView

@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.neenbedankt.android-apt'
 apply plugin: 'com.github.triplet.play'
+apply plugin: 'realm-android'
 
 def keystorePropertiesFile = rootProject.file("C:\\android/keystore.properties")
 def keystoreProperties = new Properties()
@@ -11,8 +12,8 @@ def playProperties = new Properties()
 playProperties.load(new FileInputStream(playPropertiesFile))
 
 android {
-    compileSdkVersion 24
-    buildToolsVersion "24.0.2"
+    compileSdkVersion 25
+    buildToolsVersion "25.0.2"
 
     dataBinding {
         enabled = true
@@ -21,9 +22,9 @@ android {
     defaultConfig {
         applicationId "com.coreywjohnson.setlists"
         minSdkVersion 17
-        targetSdkVersion 24
-        versionCode 11
-        versionName "0.4.4 Alpha"
+        targetSdkVersion 25
+        versionCode 12
+        versionName "0.5 Alpha"
     }
     signingConfigs {
         config {
@@ -52,7 +53,7 @@ play {
 }
 
 ext {
-    supportLibraryVersion = '24.2.0'
+    supportLibraryVersion = '25.1.1'
     firebaseVersion = '9.2.0'
     daggerVersion = '2.2'
     retrofitVersion = '2.0.2'

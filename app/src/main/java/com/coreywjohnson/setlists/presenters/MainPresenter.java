@@ -1,7 +1,5 @@
 package com.coreywjohnson.setlists.presenters;
 
-import android.util.Log;
-
 import com.coreywjohnson.setlists.presenters.common.Presenter;
 import com.coreywjohnson.setlists.views.MainView;
 

@@ -7,6 +7,8 @@ import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,8 +21,8 @@ import com.coreywjohnson.setlists.components.ArtistComponent;
 import com.coreywjohnson.setlists.components.DaggerArtistComponent;
 import com.coreywjohnson.setlists.databinding.FragmentArtistBinding;
 import com.coreywjohnson.setlists.interfaces.SharedViewWidget;
-import com.coreywjohnson.setlists.models.Artists;
-import com.coreywjohnson.setlists.models.Setlists;
+import com.coreywjohnson.setlists.models.Artist;
+import com.coreywjohnson.setlists.models.Setlist;
 import com.coreywjohnson.setlists.modules.ArtistModule;
 import com.coreywjohnson.setlists.presenters.ArtistPresenter;
 import com.coreywjohnson.setlists.presenters.common.Presenter;
@@ -42,8 +44,9 @@ public class ArtistFragment extends BaseFragment implements ArtistView, SetlistA
     @Inject
     SetlistAdapter mAdapter;
     private SearchSetlistFragment.SearchFragmentListener mListener;
+    private MenuItem mFavoriteItem;
 
-    public static ArtistFragment newInstance(Artists.Artist artist) {
+    public static ArtistFragment newInstance(Artist artist) {
 
         Bundle args = new Bundle();
         args.putSerializable(ARTIST, artist);
@@ -62,7 +65,7 @@ public class ArtistFragment extends BaseFragment implements ArtistView, SetlistA
                 .build();
         artistComponent.inject(this);
         setHasOptionsMenu(true);
-        mPresenter.setArtist((Artists.Artist) getArguments().getSerializable(ARTIST));
+        mPresenter.setArtist((Artist) getArguments().getSerializable(ARTIST));
         mPresenter.onCreate(savedInstanceState != null);
         if (savedInstanceState != null) {
             mPresenter.restorePresenterState((Presenter.PresenterState) savedInstanceState.getSerializable(PRESENTER_STATE));
@@ -74,7 +77,7 @@ public class ArtistFragment extends BaseFragment implements ArtistView, SetlistA
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_artist, container, false);
-        ((MainView) getActivity()).setToolbar(mBinding.toolbar, false, ((Artists.Artist) getArguments().getSerializable(ARTIST)).getName());
+        ((MainView) getActivity()).setToolbar(mBinding.toolbar, false, ((Artist) getArguments().getSerializable(ARTIST)).getName());
 
         mBinding.recyclerView.setAdapter(mAdapter);
         mBinding.recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -88,6 +91,13 @@ public class ArtistFragment extends BaseFragment implements ArtistView, SetlistA
         });
 
         return mBinding.getRoot();
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        mFavoriteItem = menu.findItem(R.id.artist_favorite);
+        mPresenter.onFavoriteItemInit();
     }
 
     @Override
@@ -124,7 +134,7 @@ public class ArtistFragment extends BaseFragment implements ArtistView, SetlistA
     }
 
     @Override
-    public void onSetlistClick(Setlists.Setlist setlist, SharedViewWidget sharedViewWidget) {
+    public void onSetlistClick(Setlist setlist, SharedViewWidget sharedViewWidget) {
         mPresenter.onSetlistClick(setlist, sharedViewWidget);
     }
 
@@ -134,7 +144,7 @@ public class ArtistFragment extends BaseFragment implements ArtistView, SetlistA
     }
 
     @Override
-    public void addItems(List<Setlists.Setlist> items, boolean hasMore) {
+    public void addItems(List<Setlist> items, boolean hasMore) {
         if (mAdapter != null) {
             mAdapter.addItems(items, hasMore);
         }
@@ -176,8 +186,31 @@ public class ArtistFragment extends BaseFragment implements ArtistView, SetlistA
     }
 
     @Override
-    public void openSetlist(Setlists.Setlist setlist, SharedViewWidget sharedViewWidget) {
+    public void openSetlist(Setlist setlist, SharedViewWidget sharedViewWidget) {
         mListener.onSetlistClick(setlist, sharedViewWidget);
+    }
+
+    @Override
+    public void setupFavoriteCheckListener() {
+        mFavoriteItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+                mPresenter.onFavoriteItemChecked(menuItem.isChecked());
+                return true;
+            }
+        });
+    }
+
+    @Override
+    public void showFavorited() {
+        mFavoriteItem.setChecked(true);
+        mFavoriteItem.setIcon(R.drawable.ic_favorite_filled);
+    }
+
+    @Override
+    public void showUnfavorited() {
+        mFavoriteItem.setChecked(false);
+        mFavoriteItem.setIcon(R.drawable.ic_favourite_unfilled);
     }
 
     @Override

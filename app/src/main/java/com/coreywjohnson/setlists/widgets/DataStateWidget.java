@@ -44,50 +44,53 @@ public class DataStateWidget extends FrameLayout {
     }
 
     public void showData() {
-        setChildVisible(getChildAt(DATA_VIEW_POSITION));
-        setChildGone(getChildAt(EMPTY_VIEW_POSITION));
-        if (hasLoadingView()) {
-            setChildGone(getChildAt(LOADING_VIEW_POSITION));
-        }
+        showChild(DATA_VIEW_POSITION);
     }
 
     public void showEmpty() {
-        setChildGone(getChildAt(DATA_VIEW_POSITION));
-        setChildVisible(getChildAt(EMPTY_VIEW_POSITION));
-        if (hasLoadingView()) {
-            setChildGone(getChildAt(LOADING_VIEW_POSITION));
-        }
+        showChild(EMPTY_VIEW_POSITION);
     }
 
     public void showLoading() throws Exception {
-        if (!hasLoadingView()) {
-            throw new Exception("Loading view has not been provided. Please provide a third view!");
-        }
-        setChildGone(getChildAt(DATA_VIEW_POSITION));
-        setChildGone(getChildAt(EMPTY_VIEW_POSITION));
-        setChildVisible(getChildAt(LOADING_VIEW_POSITION));
+        showChild(LOADING_VIEW_POSITION);
     }
 
     public void setDataView(View view) {
-        removeViewAt(DATA_VIEW_POSITION);
-        addView(view, DATA_VIEW_POSITION);
+        replaceChildAt(DATA_VIEW_POSITION, view);
     }
 
     public void setEmptyView(View view) {
-        removeViewAt(EMPTY_VIEW_POSITION);
-        addView(view, EMPTY_VIEW_POSITION);
+        replaceChildAt(EMPTY_VIEW_POSITION, view);
     }
 
     public void setLoadingView(View view) {
-        removeViewAt(LOADING_VIEW_POSITION);
-        addView(view, LOADING_VIEW_POSITION);
+        replaceChildAt(LOADING_VIEW_POSITION, view);
     }
 
-    private boolean hasDataAndEmptyViews() {
+    public void replaceChildAt(int index, View view) {
+        removeViewAt(index);
+        addView(view, index);
+    }
+
+    public void showChild(int index) {
+        int childCount = getChildCount();
+        if (index >= childCount) {
+            throw new IllegalArgumentException("Invalid index provided! DataStateWidget only has " + childCount + " child views.");
+        }
+        for (int i = 0; i < childCount; i++) {
+            if (i == index) {
+                setChildVisible(getChildAt(i));
+            } else {
+                setChildGone(getChildAt(i));
+            }
+        }
+    }
+
+    public boolean hasDataAndEmptyViews() {
         return getChildCount() >= 2;
     }
 
-    private boolean hasLoadingView() {
+    public boolean hasLoadingView() {
         return getChildCount() >= 3;
     }
 

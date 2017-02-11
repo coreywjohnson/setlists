@@ -1,4 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="setlist_spacing">8dp</dimen>
+
+    <!-- Empty State -->
+    <dimen name="empty_state_top_offset">80dp</dimen>
+    <dimen name="empty_state_icon_size">96dp</dimen>
+    <dimen name="empty_state_text_horiz_offset">60dp</dimen>
+    <dimen name="empty_state_text_vert_offset">10dp</dimen>
+    <dimen name="empty_state_text_size">18sp</dimen>
 </resources>
