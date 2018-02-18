@@ -3,13 +3,13 @@ apply plugin: 'com.neenbedankt.android-apt'
 apply plugin: 'com.github.triplet.play'
 apply plugin: 'realm-android'
 
-def keystorePropertiesFile = rootProject.file("C:\\android/keystore.properties")
-def keystoreProperties = new Properties()
-keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+// def keystorePropertiesFile = rootProject.file("C:\\android/keystore.properties")
+// def keystoreProperties = new Properties()
+// keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 
-def playPropertiesFile = rootProject.file("C:\\android/play.properties")
-def playProperties = new Properties()
-playProperties.load(new FileInputStream(playPropertiesFile))
+// def playPropertiesFile = rootProject.file("C:\\android/play.properties")
+// def playProperties = new Properties()
+// playProperties.load(new FileInputStream(playPropertiesFile))
 
 android {
     compileSdkVersion 25
@@ -26,19 +26,19 @@ android {
         versionCode 12
         versionName "0.5 Alpha"
     }
-    signingConfigs {
-        config {
-            keyAlias keystoreProperties['keyAlias']
-            keyPassword keystoreProperties['keyPassword']
-            storeFile file(keystoreProperties['storeFile'])
-            storePassword keystoreProperties['storePassword']
-        }
-    }
+    // signingConfigs {
+    //     config {
+    //         keyAlias keystoreProperties['keyAlias']
+    //         keyPassword keystoreProperties['keyPassword']
+    //         storeFile file(keystoreProperties['storeFile'])
+    //         storePassword keystoreProperties['storePassword']
+    //     }
+    // }
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.config
+            // signingConfig signingConfigs.config
         }
         debug {
             applicationIdSuffix ".debug"
@@ -46,11 +46,11 @@ android {
     }
 }
 
-play {
-    serviceAccountEmail = playProperties['playEmail']
-    pk12File = file(playProperties['playKey'])
-    track = playProperties['playTrack']
-}
+// play {
+//     serviceAccountEmail = playProperties['playEmail']
+//     pk12File = file(playProperties['playKey'])
+//     track = playProperties['playTrack']
+// }
 
 ext {
     supportLibraryVersion = '25.1.1'
