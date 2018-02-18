@@ -17,6 +17,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -28,6 +29,7 @@ import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 /**
  * Created by corey on 20-Nov-16.
@@ -49,6 +51,9 @@ public class SearchArtistPresenterTests {
 
     @Test
     public void testOnCreate_notRestoring_showFavorites() {
+        ArrayList<Artist> artists = new ArrayList<Artist>();
+        artists.add(new Artist());
+        when(mArtistInteractor.getFavoriteArtists()).thenReturn(artists);
         mPresenter.onCreate(false);
         verify(mView).showAdapterFavoritesHeader();
         verify(mView).addItems(any(List.class), eq(false));

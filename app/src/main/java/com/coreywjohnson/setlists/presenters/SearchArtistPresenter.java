@@ -41,7 +41,6 @@ public class SearchArtistPresenter extends PaginatablePresenter<Artist> {
         if (!isRestoring) {
             showFavorites();
         }
-        ;
     }
 
     public void onCreateView() {
